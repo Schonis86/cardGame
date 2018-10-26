@@ -1,3 +1,5 @@
+package sample;
+
 public class GameCard {
     private int hp;
     private String name;

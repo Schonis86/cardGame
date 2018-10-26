@@ -1,9 +1,9 @@
-public class Card {
+public class GameCard {
     private int hp;
     private String name;
     private boolean isUsed;
 
-    public Card(String name){
+    public GameCard(String name){
         hp = 0; //Random 1-7
         this.name = name;
         isUsed = false;

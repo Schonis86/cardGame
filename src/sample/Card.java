@@ -1,7 +1,7 @@
 public class Card {
-    int hp;
-    String name;
-    boolean isUsed;
+    private int hp;
+    private String name;
+    private boolean isUsed;
 
     public Card(String name){
         hp = 0; //Random 1-7
@@ -26,4 +26,3 @@ public class Card {
         return isUsed;
     }
 }
-//test

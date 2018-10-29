@@ -2,25 +2,51 @@ package test;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import app.controllers.Game;
+
+//@ExtendWith(MockitoExtension.class)
 class GameTest {
 
-
-    @BeforeAll
-    void setUp() {
-    }
+//    @Mock
+//    Game mockedGame;
+    Game game = new Game();
+//
+//    @BeforeAll
+//    static void setUp() {
+//        game = new Game();
+//    }
 
     @Test
-    void seedDecks() {
-
+    void devideCards() {
+//        game.devideCards();
+//        assertEquals(10, game.getPlayer1Cards());
     }
 
     @Test
     void toggleTurn() {
+        assertEquals(0, game.getTurnCounter());
+        assertTrue(game.isPlayer1Turn());
+        game.toggleTurn();
+        assertEquals(1, game.getTurnCounter());
+        assertFalse(game.isPlayer1Turn());
+        game.toggleTurn();
+        assertEquals(2, game.getTurnCounter());
+        assertTrue(game.isPlayer1Turn());
+
+//        verify(mockedGame, times(2)).print("test");
+//        verify(mockedGame, times(2)).getUserInput();
     }
 
     @Test
-    void print() {
+    void print(String message) {
+
     }
 
     @Test
@@ -49,6 +75,7 @@ class GameTest {
 
     @Test
     void roundCheck() {
+
     }
 
     @Test
@@ -57,5 +84,7 @@ class GameTest {
 
     @Test
     void randomNumber() {
+        int result = game.randomNumber(10);
+        assertTrue(result > 0 && result <= 10);
     }
 }

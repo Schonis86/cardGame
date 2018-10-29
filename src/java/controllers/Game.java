@@ -1,7 +1,9 @@
 package java.controllers;
 
+import javax.smartcardio.Card;
 import java.entities.GameCard;
 import java.entities.Player;
+import java.util.List;
 
 public class Game {
 
@@ -16,47 +18,47 @@ public class Game {
         Player player2 = new Player();
     }
 
-    public toggleTurn() {
+    public void toggleTurn() {
 
     }
 
-    public print() {
+    public void print() {
 
     }
 
-    public printWinningMessage() {
+    public void printWinningMessage() {
 
     }
 
-    public playCard(Card card) {
+    public void playCard(Card card) {
 
     }
 
-    public attack(Card card, Card card2) {
+    public void attack(Card card, Card card2) {
 
     }
 
-    public attackPlayer() {
+    public void attackPlayer() {
 
     }
 
-    public getUserInput() {
+    public void  getUserInput() {
 
     }
 
-    public checkDeath() {
+    public void checkDeath() {
 
     }
 
-    public roundCheck() {
+    public void roundCheck() {
 
     }
 
-    public killPlayer() {
+    public void killPlayer() {
 
     }
 
-    public randomNumber() {
+    public void randomNumber() {
 
     }
 }

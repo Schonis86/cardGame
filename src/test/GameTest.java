@@ -38,6 +38,8 @@ class GameTest {
         assertTrue(game.isPlayer1Turn());
         game.toggleTurn();
         assertFalse(game.isPlayer1Turn());
+        game.toggleTurn();
+        assertTrue(game.isPlayer1Turn());
     }
 
     @Test

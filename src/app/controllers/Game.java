@@ -43,17 +43,18 @@ public class Game {
         return player2Cards;
     }
 
-    public int devideCards() {
+    public void devideCards() {
 //        List<GameCard> player1Deck;
 //        List<GameCard> player2Deck;
 //        Collections.shuffle(allCards);
 //        player1Deck = allCards.subList(0, deck.size() / 2);
 //        player2Deck = allCards.subList(deck.size() / 2, deck.size());
 //        return 10;
+
     }
 
     public void toggleTurn() {
-
+        setPlayer1Turn(!player1Turn);
     }
 
     public void print() {

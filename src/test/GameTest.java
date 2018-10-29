@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 class GameTest {
 
+
     @BeforeAll
     void setUp() {
     }

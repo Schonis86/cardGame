@@ -73,7 +73,7 @@ public class Player {
     public void reduceHp(int value) {
 
     }
-    public void ineaseHp(int value) {
+    public void increaseHp(int value) {
 
     }
 

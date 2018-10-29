@@ -110,8 +110,8 @@ public class Game {
 
     }
 
-    public void randomNumber() {
-
+    public int randomNumber(int maxValue) {
+        return 0;
     }
 }
 

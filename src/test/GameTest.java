@@ -93,5 +93,7 @@ class GameTest {
 
     @Test
     void randomNumber() {
+        int result = game.randomNumber(10);
+        assertTrue(result > 0 && result <= 10);
     }
 }

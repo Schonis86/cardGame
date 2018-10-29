@@ -1,4 +1,4 @@
-package sample;
+package java.entities;
 
 public class GameCard {
     private int hp;

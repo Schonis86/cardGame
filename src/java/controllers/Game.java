@@ -1,4 +1,7 @@
-package sample;
+package java.controllers;
+
+import java.entities.GameCard;
+import java.entities.Player;
 
 public class Game {
 

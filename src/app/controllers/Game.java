@@ -6,6 +6,7 @@ import javax.smartcardio.Card;
 
 import app.entities.Player;
 import java.util.List;
+import java.util.Random;
 
 public class Game {
 
@@ -72,6 +73,11 @@ public class Game {
     public void toggleTurn() {
         setPlayer1Turn(!player1Turn);
         setTurnCounter(getTurnCounter() + 1);
+
+        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
+        print(message);
+
+        getUserInput();
     }
 
     public void print(String message) {
@@ -111,7 +117,8 @@ public class Game {
     }
 
     public int randomNumber(int maxValue) {
-        return 0;
+        Random random = new Random();
+        return random.nextInt(maxValue) + 1;
     }
 }
 

@@ -1,35 +1,26 @@
 package test;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import app.controllers.Game;
-import app.entities.GameCard;
-import java.util.ArrayList;
-import java.util.List;
 
 //@ExtendWith(MockitoExtension.class)
 class GameTest {
 
-    List<GameCard> deck;
+//    @Mock
+//    Game mockedGame;
     Game game = new Game();
-
-//    @BeforeEach
-//    void mockedDeck() {
-//        deck = new ArrayList<>();
-//        for(int i = 0; i < 10; i++) {
-//            GameCard card = new GameCard(i + 1 + "");
 //
-//            deck.add(card);
-//        }
+//    @BeforeAll
+//    static void setUp() {
+//        game = new Game();
 //    }
 
     @Test
@@ -49,8 +40,8 @@ class GameTest {
         assertEquals(2, game.getTurnCounter());
         assertTrue(game.isPlayer1Turn());
 
-        game.print("test");
-        game.getUserInput();
+//        verify(mockedGame, times(2)).print("test");
+//        verify(mockedGame, times(2)).getUserInput();
     }
 
     @Test

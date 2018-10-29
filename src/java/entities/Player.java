@@ -1,6 +1,7 @@
 package java.entities;
 
 import java.entities.GameCard;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -10,12 +11,16 @@ public class Player {
     private List<GameCard> cardsOnTable;
     private boolean hasPlayedCard;
 
-    public Player(int hp, List<GameCard> cardsOnHand, List<GameCard> cardsInDeck, List<GameCard> cardsOnTable) {
-        this.hp = hp;
-        this.cardsOnHand = cardsOnHand;
-        this.cardsInDeck = cardsInDeck;
-        this.cardsOnTable = cardsOnTable;
+    public Player(List<GameCard> deck) {
+        this.hp = 10;
+        this.cardsInDeck = deck;
+        this.cardsOnHand = getStartCards();
+        this.cardsOnTable = new ArrayList<>();
         this.hasPlayedCard = false;
+    }
+
+    public List<GameCard> getStartCards() {
+        return null;
     }
 
     public int getHp() {

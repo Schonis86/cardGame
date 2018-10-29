@@ -1,6 +1,5 @@
-package java.entities;
+package app.entities;
 
-import java.entities.GameCard;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package java.entities;
+package app.entities;
 
 public class GameCard {
     private int hp;
@@ -10,6 +10,7 @@ public class GameCard {
         this.name = name;
         isUsed = false;
     }
+
     public void increaseHp(int value){
     }
 

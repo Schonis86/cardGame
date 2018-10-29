@@ -23,6 +23,14 @@ public class Game {
         this.player1Turn = true;
     }
 
+    public int getRoundCounter() {
+        return roundCounter;
+    }
+
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
     public boolean isPlayer1Turn() {
         return player1Turn;
     }
@@ -57,7 +65,7 @@ public class Game {
         setPlayer1Turn(!player1Turn);
     }
 
-    public void print() {
+    public void print(String message) {
 
     }
 

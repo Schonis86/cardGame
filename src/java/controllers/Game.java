@@ -14,8 +14,8 @@ public class Game {
     List<GameCard> allCards;
 
     public Game() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+//        Player player1 = new Player();
+//        Player player2 = new Player();
     }
 
     public void toggleTurn() {

@@ -27,6 +27,14 @@ public class Game {
         return roundCounter;
     }
 
+    public void setRoundCounter(int roundCounter) {
+        this.roundCounter = roundCounter;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
+    }
+
     public int getTurnCounter() {
         return turnCounter;
     }
@@ -63,6 +71,7 @@ public class Game {
 
     public void toggleTurn() {
         setPlayer1Turn(!player1Turn);
+        setTurnCounter(getTurnCounter() + 1);
     }
 
     public void print(String message) {

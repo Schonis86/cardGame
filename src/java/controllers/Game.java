@@ -12,10 +12,21 @@ public class Game {
     private int roundCounter = 0;
     private int turnCounter = 0;
     List<GameCard> allCards;
+    List<GameCard> player1Cards;
+    List<GameCard> player2Cards;
 
     public Game() {
-//        Player player1 = new Player();
-//        Player player2 = new Player();
+        devideCards();
+        Player player1 = new Player(player1Cards);
+        Player player2 = new Player(player2Cards);
+    }
+
+    private void devideCards() {
+
+    }
+
+    private List<GameCard> seedDecks() {
+         return null;
     }
 
     public void toggleTurn() {

@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 class GameTest {
 
@@ -9,47 +10,52 @@ class GameTest {
     void setUp() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
+    void seedDecks() {
+
+    }
+
+    @Test
     void toggleTurn() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void print() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void printWinningMessage() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void playCard() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void attack() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void attackPlayer() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getUserInput() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void checkDeath() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void roundCheck() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void killPlayer() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void randomNumber() {
     }
 }

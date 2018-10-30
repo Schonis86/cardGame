@@ -123,6 +123,9 @@ public class Game {
     }
 
     public void roundCheck() {
+        if(turnCounter%2!=0){
+            roundCounter++;
+        }
     }
 
     public void killPlayer() {

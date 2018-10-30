@@ -11,6 +11,7 @@ import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.spy;
 
 class PlayerTest {
@@ -24,8 +25,8 @@ class PlayerTest {
 
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList<>();
-        for(int i = 0; i < deckSize; i++) {
-            GameCard card = new GameCard("kort" + (i+1));
+        for (int i = 0; i < deckSize; i++) {
+            GameCard card = new GameCard("kort" + (i + 1));
             deck.add(card);
         }
         return deck;
@@ -33,9 +34,10 @@ class PlayerTest {
 
     @Test
     void getStartCards() {
-
-
-
+        exampleList = getDeck(10);
+        Player playerSpy = spy(new Player(exampleList));
+        assertEquals(10, playerSpy.getCardsInDeck().size());
+        
     }
 
     @Test
@@ -80,11 +82,6 @@ class PlayerTest {
 
     @Test
     void drawCard() {
-        Player playerSpy = spy(Player.class);
-        exampleList = getDeck(10);
-
-
-
 
 
     }

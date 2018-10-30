@@ -5,6 +5,8 @@ import app.entities.GameCard;
 import javax.smartcardio.Card;
 
 import app.entities.Player;
+import org.junit.jupiter.api.function.Executable;
+import org.mockito.internal.matchers.Null;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,6 +100,10 @@ public class Game {
 
     }
 
+    public void  getUserInput() {
+
+    }
+
     public void printWinningMessage() {
 
     }
@@ -114,12 +120,11 @@ public class Game {
 
     }
 
-    public void  getUserInput() {
-
-    }
-
-    public void checkDeath() {
-
+    public boolean isPlayerDead(Player player) {
+        if(player == null || player.getHp() == 0) {
+            return true;
+        }
+        else return false;
     }
 
     public void roundCheck() {

@@ -2,6 +2,7 @@ package test;
 
 
 import app.entities.GameCard;
+import app.entities.Player;
 import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,17 +12,20 @@ import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
 import org.mockito.Mock;
+import sun.invoke.empty.Empty;
 
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.List;
 
-//@ExtendWith(MockitoExtension.class)
+
 class GameTest {
 
     @Mock
     private List<GameCard> mockDeck;
     private Game game;
     private final int DECK_SIZE = 20;
+
 
     @BeforeEach
     void setUpDeck() {
@@ -81,6 +85,9 @@ class GameTest {
 
     @Test
     void playCard() {
+
+
+
     }
 
     @Test
@@ -93,10 +100,20 @@ class GameTest {
 
     @Test
     void getUserInput() {
+        //
     }
 
     @Test
-    void checkDeath() {
+    void isPlayerDead() {
+        Player player = mock(Player.class);
+        when(player.getHp()).thenReturn(1);
+        assertFalse(game.isPlayerDead(player));
+
+        when(player.getHp()).thenReturn(0);
+        assertTrue(game.isPlayerDead(player));
+
+        player = null;
+        assertTrue(game.isPlayerDead(player));
     }
 
     @Test

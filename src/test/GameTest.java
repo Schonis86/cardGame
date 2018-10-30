@@ -15,13 +15,14 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
-//@ExtendWith(MockitoExtension.class)
+
 class GameTest {
 
     @Mock
     private List<GameCard> mockDeck;
     private Game game;
     private final int DECK_SIZE = 20;
+
 
     @BeforeEach
     void setUpDeck() {
@@ -81,6 +82,9 @@ class GameTest {
 
     @Test
     void playCard() {
+
+
+
     }
 
     @Test

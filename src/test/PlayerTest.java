@@ -23,7 +23,7 @@ class PlayerTest {
     @Test
     void getStartCards() {
         Player playerSpy = spy(Player.class);
-        playerSpy.setCardsInDeck();
+
 
 
     }

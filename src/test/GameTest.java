@@ -1,27 +1,30 @@
 package test;
 
-import org.junit.jupiter.api.BeforeAll;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
 
 //@ExtendWith(MockitoExtension.class)
 class GameTest {
 
-//    @Mock
+    //    @Mock
 //    Game mockedGame;
-    Game game = new Game();
+    Game game;
 //
 //    @BeforeAll
 //    static void setUp() {
 //        game = new Game();
 //    }
+
+    @BeforeEach
+    void setUp() {
+        game = new Game();
+    }
 
     @Test
     void devideCards() {
@@ -31,21 +34,39 @@ class GameTest {
 
     @Test
     void toggleTurn() {
-        assertEquals(0, game.getTurnCounter());
+
+        Game gameSpy = spy(Game.class);
+        gameSpy.toggleTurn();
+        verify(gameSpy, times(1)).print("Player 2 turn");
+        gameSpy.toggleTurn();
+        verify(gameSpy, times(1)).print("Player 1 turn");
+
+        int resultTurnCounter = gameSpy.getTurnCounter();
+        assertEquals(2,resultTurnCounter);
+
+        verify(gameSpy, times(2)).getUserInput();
+
+        //// SÅHÄR KAN VI ANVÄNDA SPY/MOCK I DET METODER VI BEHÖVER OCH FORTSÄTTA ATT ANVÄNDA BARA VANLIG JUNIT I RESTEN!
+
+
+  /*      assertEquals(0, game.getTurnCounter());
         assertTrue(game.isPlayer1Turn());
         game.toggleTurn();
         assertEquals(1, game.getTurnCounter());
         assertFalse(game.isPlayer1Turn());
         game.toggleTurn();
         assertEquals(2, game.getTurnCounter());
-        assertTrue(game.isPlayer1Turn());
+        assertTrue(game.isPlayer1Turn());*/
 
-//        verify(mockedGame, times(2)).print("test");
-//        verify(mockedGame, times(2)).getUserInput();
+        //  verify(gameSpy, times(1)).getUserInput();
+
+
+/*       verify(mockedGame, times(2)).print("test");
+        verify(mockedGame, times(2)).getUserInput();*/
     }
 
     @Test
-    void print(String message) {
+    void print() {
 
     }
 

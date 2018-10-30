@@ -20,6 +20,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.mockito:mockito-all:1.10.19" level="project" />
-    <orderEntry type="library" name="byte-buddy-1.9.0" level="project" />
   </component>
 </module>

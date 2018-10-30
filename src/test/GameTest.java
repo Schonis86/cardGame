@@ -20,6 +20,7 @@ class GameTest {
 //    Game mockedGame;
     Game game;
     List<GameCard> deck;
+    final int DECK_SIZE = 20;
 //
 //    @BeforeAll
 //    static void setUp() {
@@ -29,7 +30,7 @@ class GameTest {
     @BeforeEach
     void setUp() {
         deck = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < DECK_SIZE; i++) {
             GameCard card = new GameCard("kort" + (i+1));
             deck.add(card);
         }
@@ -39,8 +40,14 @@ class GameTest {
     @Test
     void devideCards() {
         game.devideCards();
-        assertEquals(10, game.getPlayer1Cards());
+        int deckSizePlayer1 = game.getPlayer1Cards().size();
+        int deckSizePlayer2 = game.getPlayer2Cards().size();
+        assertEquals(DECK_SIZE/2, deckSizePlayer1);
+        assertEquals(DECK_SIZE/2, deckSizePlayer2);
     }
+
+//    @Test
+//    void
 
     @Test
     void toggleTurn() {

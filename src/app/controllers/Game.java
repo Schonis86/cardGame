@@ -5,6 +5,8 @@ import app.entities.GameCard;
 import javax.smartcardio.Card;
 
 import app.entities.Player;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +25,14 @@ public class Game {
         Player player1 = new Player(player1Cards);
         Player player2 = new Player(player2Cards);
         this.player1Turn = true;
+    }
+
+    public void setPlayer1Cards(List<GameCard> player1Cards) {
+        this.player1Cards = player1Cards;
+    }
+
+    public void setPlayer2Cards(List<GameCard> player2Cards) {
+        this.player2Cards = player2Cards;
     }
 
     public int getRoundCounter() {
@@ -62,13 +72,9 @@ public class Game {
     }
 
     public void devideCards() {
-//        List<GameCard> player1Deck;
-//        List<GameCard> player2Deck;
-//        Collections.shuffle(allCards);
-//        player1Deck = allCards.subList(0, deck.size() / 2);
-//        player2Deck = allCards.subList(deck.size() / 2, deck.size());
-//        return 10;
-
+        Collections.shuffle(allCards);
+        setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
+        setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
     }
 
     public void toggleTurn() {

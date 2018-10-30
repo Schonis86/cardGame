@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlayerTest {
 
-   List <GameCard> deck;
-   Player player;
+    List<GameCard> deck;
+    Player player;
 
     @Mock
     GameCard card;
@@ -42,7 +42,7 @@ class PlayerTest {
         player.reduceHp(DAMAGE);
         int hp2 = player.getHp();
 
-        assertEquals(hp2, hp1-DAMAGE);
+        assertEquals(hp2, hp1 - DAMAGE);
     }
 
     @Test
@@ -53,7 +53,7 @@ class PlayerTest {
         player.reduceHp(OVERKILL);
         int hp2 = player.getHp();
 
-        assertEquals(hp2, hp1-OVERKILL);
+        assertEquals(hp2, hp1 - OVERKILL);
     }
 
     @Test

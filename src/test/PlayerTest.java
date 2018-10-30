@@ -5,27 +5,30 @@ import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-import javax.smartcardio.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.spy;
 
 class PlayerTest {
 
-    List<GameCard> exampleList;
+   List <GameCard> deck;
+
+    @Mock
+    GameCard card;
 
     @BeforeEach
     void setUp() {
-        exampleList = new ArrayList<>();
+        deck = new ArrayList<>();
     }
 
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList<>();
-        for(int i = 0; i < deckSize; i++) {
-            GameCard card = new GameCard("kort" + (i+1));
+        for (int i = 0; i < deckSize; i++) {
             deck.add(card);
         }
         return deck;
@@ -33,8 +36,6 @@ class PlayerTest {
 
     @Test
     void getStartCards() {
-
-
 
     }
 
@@ -80,28 +81,13 @@ class PlayerTest {
 
     @Test
     void drawCard() {
-        Player playerSpy = spy(Player.class);
-        exampleList = getDeck(10);
-
-
-
-
+        deck = getDeck(10);
+        Player player = new Player(deck);
+        player.drawCard();
+        assertEquals(1, player.getCardsOnHand().size());
+        assertEquals(9, player.getCardsInDeck().size());
 
     }
 
-    @Test
-    void playCard() {
-    }
 
-    @Test
-    void killCard() {
-    }
-
-    @Test
-    void reduceHp() {
-    }
-
-    @Test
-    void increaseHp() {
-    }
 }

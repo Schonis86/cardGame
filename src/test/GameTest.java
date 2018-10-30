@@ -117,6 +117,7 @@ class GameTest {
         game.toggleTurn();
         assertEquals(4,game.getRoundCounter());
         assertEquals(7,game.getTurnCounter());
+        assertEquals(7,game.getTurnCounter());
         assertTrue(game.getRoundCounter()*2==game.getTurnCounter()||game.getRoundCounter()*2-1==game.getTurnCounter());
     }
 

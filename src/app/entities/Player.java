@@ -63,6 +63,12 @@ public class Player {
     }
 
     public void drawCard() {
+        if(cardsInDeck.size() > 0){
+            cardsOnHand.add(cardsInDeck.get(cardsInDeck.size() -1));
+            cardsOnHand.remove(cardsOnHand.size() - 1);
+        }else{
+            System.out.println("can't draw card!");
+        }
 
     }
 

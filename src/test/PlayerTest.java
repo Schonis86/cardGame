@@ -1,6 +1,5 @@
 package test;
 
-import app.controllers.Game;
 import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.spy;
 
 class PlayerTest {
 
@@ -40,9 +38,22 @@ class PlayerTest {
     void reduceHp() {
         int hp1 = player.getHp();
         final int DAMAGE = 5;
+
         player.reduceHp(DAMAGE);
         int hp2 = player.getHp();
+
         assertEquals(hp2, hp1-DAMAGE);
+    }
+
+    @Test
+    void reduceHpWithMoreThanPlayerHave() {
+        int hp1 = player.getHp();
+        final int OVERKILL = 20;
+
+        player.reduceHp(OVERKILL);
+        int hp2 = player.getHp();
+
+        assertEquals(hp2, hp1-OVERKILL);
     }
 
     @Test

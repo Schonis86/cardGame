@@ -1,11 +1,30 @@
 package test;
 
+import app.controllers.Game;
+import app.entities.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.smartcardio.Card;
+
+import java.util.List;
+
+import static org.mockito.Mockito.spy;
 
 class PlayerTest {
 
+    List<Card> exampleCards;
+
+    @BeforeEach
+    void setUp() {
+
+    }
+
     @Test
     void getStartCards() {
+        Player playerSpy = spy(Player.class);
+        playerSpy.setCardsInDeck();
+
 
     }
 

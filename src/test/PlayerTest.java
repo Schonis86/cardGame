@@ -1,6 +1,5 @@
 package test;
 
-import app.controllers.Game;
 import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,18 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.spy;
 
 class PlayerTest {
 
    List <GameCard> deck;
+   Player player;
 
     @Mock
     GameCard card;
 
     @BeforeEach
     void setUp() {
-        deck = new ArrayList<>();
+        deck = getDeck(20);
+        player = new Player(deck);
     }
 
     List<GameCard> getDeck(int deckSize) {
@@ -35,48 +35,25 @@ class PlayerTest {
     }
 
     @Test
-    void getStartCards() {
+    void reduceHp() {
+        int hp1 = player.getHp();
+        final int DAMAGE = 5;
 
+        player.reduceHp(DAMAGE);
+        int hp2 = player.getHp();
+
+        assertEquals(hp2, hp1-DAMAGE);
     }
 
     @Test
-    void getHp() {
-    }
+    void reduceHpWithMoreThanPlayerHave() {
+        int hp1 = player.getHp();
+        final int OVERKILL = 20;
 
-    @Test
-    void setHp() {
-    }
+        player.reduceHp(OVERKILL);
+        int hp2 = player.getHp();
 
-    @Test
-    void getCardsOnHand() {
-    }
-
-    @Test
-    void setCardsOnHand() {
-    }
-
-    @Test
-    void getCardsInDeck() {
-    }
-
-    @Test
-    void setCardsInDeck() {
-    }
-
-    @Test
-    void getCardsOnTable() {
-    }
-
-    @Test
-    void setCardsOnTable() {
-    }
-
-    @Test
-    void isHasPlayedCard() {
-    }
-
-    @Test
-    void setHasPlayedCard() {
+        assertEquals(hp2, hp1-OVERKILL);
     }
 
     @Test

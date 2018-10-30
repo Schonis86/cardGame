@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlayerTest {
 
-   List <GameCard> deck;
-   Player player;
+    List<GameCard> deck;
+    Player player;
 
     @Mock
     GameCard card;
@@ -74,7 +74,6 @@ class PlayerTest {
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
-
     }
 
 

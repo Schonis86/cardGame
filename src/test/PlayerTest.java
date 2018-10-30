@@ -64,7 +64,7 @@ class PlayerTest {
         player.increaseHp(HEAL);
         int hpAfter = player.getHp();
 
-        assertEquals(hpAfter, hpBefore + hpAfter);
+        assertEquals(hpAfter, hpBefore + HEAL);
     }
 
     @Test

@@ -120,8 +120,10 @@ public class Game {
     }
 
     public boolean isPlayerDead(Player player) {
-
-        return true;
+        if(player == null || player.getHp() == 0) {
+            return true;
+        }
+        else return false;
     }
 
     public void roundCheck() {

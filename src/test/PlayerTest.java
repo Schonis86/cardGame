@@ -36,24 +36,35 @@ class PlayerTest {
 
     @Test
     void reduceHp() {
-        int hp1 = player.getHp();
+        int hpBefore = player.getHp();
         final int DAMAGE = 5;
 
         player.reduceHp(DAMAGE);
-        int hp2 = player.getHp();
+        int hpAfter = player.getHp();
 
-        assertEquals(hp2, hp1 - DAMAGE);
+        assertEquals(hpAfter, hpBefore-DAMAGE);
     }
 
     @Test
     void reduceHpWithMoreThanPlayerHave() {
-        int hp1 = player.getHp();
+        int hpBefore = player.getHp();
         final int OVERKILL = 20;
 
         player.reduceHp(OVERKILL);
-        int hp2 = player.getHp();
+        int hpAfter = player.getHp();
 
-        assertEquals(hp2, hp1 - OVERKILL);
+        assertEquals(hpAfter, hpBefore-OVERKILL);
+    }
+
+    @Test
+    void increaseHp() {
+        int hpBefore = player.getHp();
+        final int HEAL = 10;
+
+        player.increaseHp(HEAL);
+        int hpAfter = player.getHp();
+
+        assertEquals(hpAfter, hpBefore + HEAL);
     }
 
     @Test

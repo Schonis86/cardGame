@@ -87,8 +87,11 @@ public class Player {
         setHp(newHp);
     }
 
-    public void increaseHp(int value) {
+    public void increaseHp(int heal) {
+        int oldHp = getHp();
+        int newHp = oldHp + heal;
 
+        setHp(newHp);
     }
 
 }

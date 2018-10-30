@@ -17,7 +17,8 @@ public class Game {
     private List<GameCard> player1Cards;
     private List<GameCard> player2Cards;
 
-    public Game() {
+    public Game(List<GameCard> deck) {
+        this.allCards = deck;
         devideCards();
         Player player1 = new Player(player1Cards);
         Player player2 = new Player(player2Cards);

@@ -16,14 +16,14 @@ import static org.mockito.Mockito.spy;
 
 class PlayerTest {
 
-    List<GameCard> exampleList;
+   List <GameCard> deck;
 
     @Mock
     GameCard card;
 
     @BeforeEach
     void setUp() {
-        exampleList = new ArrayList<>();
+        deck = new ArrayList<>();
     }
 
     List<GameCard> getDeck(int deckSize) {
@@ -81,27 +81,13 @@ class PlayerTest {
 
     @Test
     void drawCard() {
-        exampleList = getDeck(10);
-        Player player = new Player(exampleList);
+        deck = getDeck(10);
+        Player player = new Player(deck);
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
 
     }
 
-    @Test
-    void playCard() {
-    }
 
-    @Test
-    void killCard() {
-    }
-
-    @Test
-    void reduceHp() {
-    }
-
-    @Test
-    void increaseHp() {
-    }
 }

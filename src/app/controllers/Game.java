@@ -86,6 +86,7 @@ public class Game {
     public void toggleTurn() {
         setPlayer1Turn(!player1Turn);
         setTurnCounter(getTurnCounter() + 1);
+        roundCheck();
 
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
         print(message);
@@ -122,7 +123,6 @@ public class Game {
     }
 
     public void roundCheck() {
-
     }
 
     public void killPlayer() {

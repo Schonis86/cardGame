@@ -1,6 +1,7 @@
 package test;
 
 
+import app.entities.GameCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,12 +10,16 @@ import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //@ExtendWith(MockitoExtension.class)
 class GameTest {
 
     //    @Mock
 //    Game mockedGame;
     Game game;
+    List<GameCard> deck;
 //
 //    @BeforeAll
 //    static void setUp() {
@@ -23,18 +28,24 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-//        game = new Game();
+        deck = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            GameCard card = new GameCard("kort" + (i+1));
+            deck.add(card);
+        }
+        game = new Game(deck);
     }
 
     @Test
     void devideCards() {
-//        game.devideCards();
-//        assertEquals(10, game.getPlayer1Cards());
+        game.devideCards();
+        assertEquals(10, game.getPlayer1Cards());
     }
 
     @Test
     void toggleTurn() {
-        Game gameSpy = spy(Game.class);
+
+        Game gameSpy = spy(new Game(deck));
 
         assertTrue(gameSpy.isPlayer1Turn());
         gameSpy.toggleTurn();

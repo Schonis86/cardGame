@@ -5,8 +5,8 @@ import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-import javax.smartcardio.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,9 @@ class PlayerTest {
 
     List<GameCard> exampleList;
 
+    @Mock
+    GameCard card;
+
     @BeforeEach
     void setUp() {
         exampleList = new ArrayList<>();
@@ -26,7 +29,6 @@ class PlayerTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList<>();
         for (int i = 0; i < deckSize; i++) {
-            GameCard card = new GameCard("kort" + (i + 1));
             deck.add(card);
         }
         return deck;
@@ -34,10 +36,7 @@ class PlayerTest {
 
     @Test
     void getStartCards() {
-        exampleList = getDeck(10);
-        Player playerSpy = spy(new Player(exampleList));
-        assertEquals(10, playerSpy.getCardsInDeck().size());
-        
+
     }
 
     @Test
@@ -82,7 +81,11 @@ class PlayerTest {
 
     @Test
     void drawCard() {
-
+        exampleList = getDeck(10);
+        Player player = new Player(exampleList);
+        player.drawCard();
+        assertEquals(1, player.getCardsOnHand().size());
+        assertEquals(9, player.getCardsInDeck().size());
 
     }
 

@@ -13,7 +13,7 @@ public class Player {
     public Player(List<GameCard> deck) {
         this.hp = 10;
         this.cardsInDeck = deck;
-        this.cardsOnHand = getStartCards();
+        this.cardsOnHand = new ArrayList<>();
         this.cardsOnTable = new ArrayList<>();
         this.hasPlayedCard = false;
     }

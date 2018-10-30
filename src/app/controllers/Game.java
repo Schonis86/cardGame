@@ -6,6 +6,7 @@ import javax.smartcardio.Card;
 
 import app.entities.Player;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -21,10 +22,12 @@ public class Game {
 
     public Game(List<GameCard> deck) {
         this.allCards = deck;
-        devideCards();
+        divideCards();
         Player player1 = new Player(player1Cards);
         Player player2 = new Player(player2Cards);
         this.player1Turn = true;
+        this.player1Cards = new ArrayList<>();
+        this.player2Cards = new ArrayList<>();
     }
 
     public void setPlayer1Cards(List<GameCard> player1Cards) {
@@ -71,10 +74,13 @@ public class Game {
         return player2Cards;
     }
 
-    public void devideCards() {
-        Collections.shuffle(allCards);
-        setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
-        setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
+    public void divideCards() {
+        if(allCards != null) {
+            Collections.shuffle(allCards);
+            setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
+            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
+        }
+
     }
 
     public void toggleTurn() {

@@ -2,6 +2,7 @@ package test;
 
 
 import app.entities.GameCard;
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,42 +18,41 @@ import java.util.List;
 //@ExtendWith(MockitoExtension.class)
 class GameTest {
 
-    //    @Mock
-//    Game mockedGame;
-    Game game;
-    List<GameCard> deck;
-    final int DECK_SIZE = 20;
-//
-//    @BeforeAll
-//    static void setUp() {
-//        game = new Game();
-//    }
+    @Mock
+    private List<GameCard> mockDeck;
+    private Game game;
+    private final int DECK_SIZE = 20;
 
     @BeforeEach
-    void setUp() {
-        deck = new ArrayList<>();
-        for(int i = 0; i < DECK_SIZE; i++) {
+    void setUpDeck() {
+        game = new Game(mockDeck);
+    }
+
+    List<GameCard> getDeck(int deckSize) {
+        List<GameCard> deck = new ArrayList<>();
+        for(int i = 0; i < deckSize; i++) {
             GameCard card = new GameCard("kort" + (i+1));
             deck.add(card);
         }
-        game = new Game(deck);
+        return deck;
     }
 
     @Test
-    void devideCards() {
-        game.devideCards();
+    void divideCards() {
+        List<GameCard> deck = getDeck(DECK_SIZE);
+        game = new Game(deck);
+
+        game.divideCards();
         int deckSizePlayer1 = game.getPlayer1Cards().size();
         int deckSizePlayer2 = game.getPlayer2Cards().size();
         assertEquals(DECK_SIZE/2, deckSizePlayer1);
         assertEquals(DECK_SIZE/2, deckSizePlayer2);
     }
 
-//    @Test
-//    void
-
     @Test
     void toggleTurn() {
 
+        List<GameCard> deck = getDeck(0);
         Game gameSpy = spy(new Game(deck));
 
         assertTrue(gameSpy.isPlayer1Turn());

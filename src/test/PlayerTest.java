@@ -86,7 +86,6 @@ class PlayerTest {
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
-
     }
 
 

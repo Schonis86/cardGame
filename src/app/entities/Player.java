@@ -80,9 +80,13 @@ public class Player {
 
     }
 
-    public void reduceHp(int value) {
+    public void reduceHp(int damage) {
+        int oldHp = getHp();
+        int newHp = oldHp - damage;
 
+        setHp(newHp);
     }
+
     public void increaseHp(int value) {
 
     }

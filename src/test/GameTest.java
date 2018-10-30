@@ -26,11 +26,15 @@ class GameTest {
 
     @Test
     void toggleTurn() {
-
         Game gameSpy = spy(Game.class);
+
+        assertTrue(gameSpy.isPlayer1Turn());
         gameSpy.toggleTurn();
+        assertFalse(gameSpy.isPlayer1Turn());
         verify(gameSpy, times(1)).print("Player 2 turn");
+
         gameSpy.toggleTurn();
+        assertTrue(gameSpy.isPlayer1Turn());
         verify(gameSpy, times(1)).print("Player 1 turn");
 
         int resultTurnCounter = gameSpy.getTurnCounter();

@@ -34,35 +34,21 @@ class GameTest {
 
     @Test
     void toggleTurn() {
-
         Game gameSpy = spy(Game.class);
+
+        assertTrue(gameSpy.isPlayer1Turn());
         gameSpy.toggleTurn();
+        assertFalse(gameSpy.isPlayer1Turn());
         verify(gameSpy, times(1)).print("Player 2 turn");
+
         gameSpy.toggleTurn();
+        assertTrue(gameSpy.isPlayer1Turn());
         verify(gameSpy, times(1)).print("Player 1 turn");
 
         int resultTurnCounter = gameSpy.getTurnCounter();
         assertEquals(2,resultTurnCounter);
 
         verify(gameSpy, times(2)).getUserInput();
-
-        //// SÅHÄR KAN VI ANVÄNDA SPY/MOCK I DET METODER VI BEHÖVER OCH FORTSÄTTA ATT ANVÄNDA BARA VANLIG JUNIT I RESTEN!
-
-
-  /*      assertEquals(0, game.getTurnCounter());
-        assertTrue(game.isPlayer1Turn());
-        game.toggleTurn();
-        assertEquals(1, game.getTurnCounter());
-        assertFalse(game.isPlayer1Turn());
-        game.toggleTurn();
-        assertEquals(2, game.getTurnCounter());
-        assertTrue(game.isPlayer1Turn());*/
-
-        //  verify(gameSpy, times(1)).getUserInput();
-
-
-/*       verify(mockedGame, times(2)).print("test");
-        verify(mockedGame, times(2)).getUserInput();*/
     }
 
     @Test

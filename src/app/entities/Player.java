@@ -73,8 +73,9 @@ public class Player {
     }
 
     public void playCard(int index) {
-        //minska med 1 kort från handslistan
-        //öka med 1 kort på bordslistan
+
+        cardsOnTable.add( cardsOnHand.get(index) );
+        cardsOnHand.remove( index );
 
     }
 

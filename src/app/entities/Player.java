@@ -77,7 +77,7 @@ public class Player {
     }
 
     public void killCard(String cardName) {
-
+        cardsOnTable.removeIf(card -> card.getName().equals(cardName));
     }
 
     public void reduceHp(int damage) {

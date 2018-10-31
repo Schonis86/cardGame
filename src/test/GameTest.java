@@ -96,6 +96,14 @@ class GameTest {
 
     @Test
     void attackPlayer() {
+        Player player1 = new Player(mockDeck);
+        int attackNumber = game.randomNumber(5);
+
+        int hpAfterAttack = player1.getHp()- attackNumber;
+
+        player1.reduceHp(attackNumber);
+        assertEquals(player1.getHp(),hpAfterAttack);
+
     }
 
     @Test

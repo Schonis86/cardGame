@@ -72,7 +72,9 @@ public class Player {
 
     }
 
-    public void playCard() {
+    public void playCard(int index) {
+        //minska med 1 kort från handslistan
+        //öka med 1 kort på bordslistan
 
     }
 

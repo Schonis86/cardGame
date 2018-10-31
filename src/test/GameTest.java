@@ -96,14 +96,26 @@ class GameTest {
 
     @Test
     void attackPlayer() {
-        Player player1 = new Player(mockDeck);
+        Player player = new Player(mockDeck);
+
         int attackNumber = game.randomNumber(5);
+        int hpAfterAttack = player.getHp() - attackNumber;
+        game.attackPlayer(player,attackNumber);
+        assertEquals(player.getHp(),hpAfterAttack);
 
-        int hpAfterAttack = player1.getHp()- attackNumber;
 
-        player1.reduceHp(attackNumber);
-        assertEquals(player1.getHp(),hpAfterAttack);
+    }
 
+    @Test
+    void attackPlayerWhenHpIsBellow0(){
+        Game game = spy(new Game(mockDeck));
+        Player player = new Player(mockDeck);
+
+        int attackNumber = 10;
+        int hpAfterAttack = player.getHp() - attackNumber;
+        game.attackPlayer(player, attackNumber);
+        assertEquals(0,hpAfterAttack);
+        verify(game,times(1)).killPlayer(player);
     }
 
     @Test

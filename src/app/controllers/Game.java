@@ -5,8 +5,6 @@ import app.entities.GameCard;
 import javax.smartcardio.Card;
 
 import app.entities.Player;
-import org.junit.jupiter.api.function.Executable;
-import org.mockito.internal.matchers.Null;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,8 +114,13 @@ public class Game {
 
     }
 
-    public void attackPlayer() {
+    public void attackPlayer(Player player,int attackNumber) {
 
+        player.reduceHp(attackNumber);
+
+        if (player.getHp()< 1){
+            killPlayer(player);
+        }
     }
 
     public boolean isPlayerDead(Player player) {
@@ -133,8 +136,8 @@ public class Game {
         }
     }
 
-    public void killPlayer() {
-
+    public void killPlayer(Player player) {
+        System.out.println("player killed");
     }
 
     public int randomNumber(int maxValue) {

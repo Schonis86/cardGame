@@ -8,9 +8,10 @@ import org.mockito.Mock;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
@@ -74,6 +75,21 @@ class PlayerTest {
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
+    }
+
+
+    @Test
+    void killCard() {
+        List<GameCard> cardsOnTable = new ArrayList<>();
+        GameCard card = new GameCard("card 1");
+        cardsOnTable.add(card);
+
+        Player player = new Player(deck);
+        player.setCardsOnTable(cardsOnTable);
+        player.killCard("Card 3");
+        assertEquals(0, player.getCardsOnTable().size() );
+//        assertFalse(!cardsOnTable.contains(card.getName() == "Card 3"));
+
     }
 
 

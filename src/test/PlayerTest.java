@@ -87,14 +87,42 @@ class PlayerTest {
         cardsOnTable.add(card1);
         cardsOnTable.add(card2);
         cardsOnTable.add(card3);
+        card2.setHp(5);
+
+        Player player = new Player(deck);
+        player.setCardsOnTable(cardsOnTable);
+
+        player.killCard("card 2");
+        assertEquals(3, player.getCardsOnTable().size() );
+        assertTrue(cardsOnTable.contains(card2));
+
+        card2.setHp(0);
+        player.killCard("card 2");
+        assertEquals(2, player.getCardsOnTable().size() );
+        assertFalse(cardsOnTable.contains(card2));
+
+    }
+
+
+    @Test
+    void checkIfGameCardHpIsZero() {
+        List<GameCard> cardsOnTable = new ArrayList<>();
+        GameCard card1 = new GameCard("card 1");
+        GameCard card2 = new GameCard("card 2");
+        GameCard card3 = new GameCard("card 3");
+        cardsOnTable.add(card1);
+        cardsOnTable.add(card2);
+        cardsOnTable.add(card3);
+        card2.setHp(5);
 
         Player player = new Player(deck);
         player.setCardsOnTable(cardsOnTable);
         player.killCard("card 2");
-        assertEquals(2, player.getCardsOnTable().size() );
-        assertFalse(cardsOnTable.contains(card2));
-        cardsOnTable.forEach(c -> System.out.println(c.getName()));
+        assertEquals(5, card2.getHp());
+
+        card2.setHp(0);
+        player.killCard("card 2");
+        assertEquals(0, card2.getHp());
 
     }
-
 }

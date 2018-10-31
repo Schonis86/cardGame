@@ -17,6 +17,10 @@ public class GameCard {
     public void decreaseHp(int value){
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public int getHp(){
         return hp;
     }

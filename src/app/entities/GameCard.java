@@ -40,4 +40,8 @@ public class GameCard {
     public boolean getIsUsed(){
         return isUsed;
     }
+
+    public String getName() {
+        return name;
+    }
 }

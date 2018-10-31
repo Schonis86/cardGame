@@ -77,7 +77,17 @@ public class Player {
     }
 
     public void killCard(String cardName) {
-        cardsOnTable.removeIf(card -> card.getName().equals(cardName));
+
+        GameCard card = cardsOnTable
+                .stream()
+                .filter(c -> c.getName().equals(cardName))
+                .findFirst()
+                .get();
+
+        if (card.getHp() == 0) {
+            cardsOnTable.removeIf(c -> c.getName().equals(cardName));
+        }
+
     }
 
     public void reduceHp(int damage) {

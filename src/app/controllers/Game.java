@@ -115,10 +115,8 @@ public class Game {
     }
 
     public void attackPlayer(Player player,int attackNumber) {
-
         player.reduceHp(attackNumber);
-
-        if (player.getHp()< 1){
+        if (isPlayerDead(player)){
             killPlayer(player);
         }
     }

@@ -49,7 +49,7 @@ class PlayerTest {
     @Test
     void reduceHpWithMoreThanPlayerHave() {
         int hpBefore = player.getHp();
-        final int OVERKILL = 20;
+        final int OVERKILL = hpBefore + 1;
 
         player.reduceHp(OVERKILL);
         int hpAfter = player.getHp();
@@ -65,7 +65,7 @@ class PlayerTest {
         player.increaseHp(HEAL);
         int hpAfter = player.getHp();
 
-        assertEquals(hpAfter, hpBefore + HEAL);
+        assertEquals(hpAfter - 10, hpBefore);
     }
 
     @Test

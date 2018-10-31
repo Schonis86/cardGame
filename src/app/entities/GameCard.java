@@ -11,10 +11,22 @@ public class GameCard {
         isUsed = false;
     }
 
-    public void increaseHp(int value){
+    public void increaseHp(int heal) {
+        int oldHp = getHp();
+        int newHp = oldHp + heal;
+
+        setHp(newHp);
     }
 
-    public void decreaseHp(int value){
+    public void decreaseHp(int damage) {
+        int oldHp = getHp();
+        int newHp = oldHp - damage;
+
+        setHp(newHp);
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
     public void setHp(int hp) {

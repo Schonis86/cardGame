@@ -2,8 +2,11 @@ package test;
 
 import app.entities.GameCard;
 import app.entities.Player;
+import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.Mock;
 
 
@@ -11,7 +14,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+<<<<<<< Updated upstream
 import static org.junit.jupiter.api.Assertions.*;
+=======
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+>>>>>>> Stashed changes
 
 class PlayerTest {
 
@@ -75,6 +86,21 @@ class PlayerTest {
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
+    }
+
+    @Test
+    void playCard() {
+
+        deck = getDeck(5);
+        player.setCardsOnHand(deck);
+
+        assertFalse(player.isHasPlayedCard());
+        player.playCard( 1 );
+        assertTrue(player.isHasPlayedCard());
+
+        assertEquals(4, player.getCardsOnHand().size());
+        assertEquals(1, player.getCardsOnTable().size());
+
     }
 
 

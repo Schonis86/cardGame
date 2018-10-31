@@ -81,16 +81,20 @@ class PlayerTest {
     @Test
     void killCard() {
         List<GameCard> cardsOnTable = new ArrayList<>();
-        GameCard card = new GameCard("card 1");
-        cardsOnTable.add(card);
+        GameCard card1 = new GameCard("card 1");
+        GameCard card2 = new GameCard("card 2");
+        GameCard card3 = new GameCard("card 3");
+        cardsOnTable.add(card1);
+        cardsOnTable.add(card2);
+        cardsOnTable.add(card3);
 
         Player player = new Player(deck);
         player.setCardsOnTable(cardsOnTable);
-        player.killCard("Card 3");
-        assertEquals(0, player.getCardsOnTable().size() );
-//        assertFalse(!cardsOnTable.contains(card.getName() == "Card 3"));
+        player.killCard("card 2");
+        assertEquals(2, player.getCardsOnTable().size() );
+        assertFalse(cardsOnTable.contains(card2));
+        cardsOnTable.forEach(c -> System.out.println(c.getName()));
 
     }
-
 
 }

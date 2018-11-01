@@ -1,5 +1,3 @@
-package test;
-
 import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;

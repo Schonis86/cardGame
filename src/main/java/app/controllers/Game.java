@@ -3,13 +3,11 @@ package app.controllers;
 import app.entities.GameCard;
 
 import javax.smartcardio.Card;
+import javax.swing.text.StyledEditorKit;
 
 import app.entities.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 
@@ -32,7 +30,7 @@ public class Game {
         this.player2Cards = new ArrayList<>();
     }
 
-   
+
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);
@@ -47,6 +45,7 @@ public class Game {
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
 
+
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
         print(message);
 
@@ -58,6 +57,46 @@ public class Game {
     }
 
     public void getUserInput() {
+        Player defendingPlayer;
+        Player attackingPlayer;
+        Boolean endTurn = false;
+        if (isPlayer1Turn()) {
+            attackingPlayer = player1;
+            defendingPlayer = player2;
+            print("Player 1 turn");
+        } else {
+            attackingPlayer = player2;
+            defendingPlayer = player1;
+            print("Player 2 turn");
+        }
+        while (!endTurn) {
+            print("Choose option:");
+            Scanner scanner = new Scanner(System.in);
+            int option = scanner.nextInt();
+
+            switch (option) {
+                case 1:
+                    int index = 0;
+                    while (index < 1 || index > attackingPlayer.getCardsOnHand().size()) {
+                        print("Choose card to play!");
+                        index = scanner.nextInt();
+                    }
+                    attackingPlayer.playCard(index - 1);
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+
+                default:
+
+            }
+
+
+        }
+
 
     }
 
@@ -71,31 +110,29 @@ public class Game {
         int player1FightingPoints;
         int player2FightingPoints;
 
-        if(player1Turn){
+        if (player1Turn) {
             player1Card = attackingCard;
             player2Card = defendingCard;
             player1Card.setIsUsed(true);
-        }
-        else{
+        } else {
             player2Card = attackingCard;
             player1Card = defendingCard;
             player2Card.setIsUsed(true);
         }
-        do{
+        do {
             player1FightingPoints = randomNumber(6);
             player2FightingPoints = randomNumber(6);
-        } while(player1FightingPoints==player2FightingPoints);
+        } while (player1FightingPoints == player2FightingPoints);
 
-        int fightResult = player1FightingPoints-player2FightingPoints;
-        if(fightResult<0){
+        int fightResult = player1FightingPoints - player2FightingPoints;
+        if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);
-        }else{
+        } else {
             player2Card.decreaseHp(fightResult);
         }
         player1.killCard(player1Card.getName());
         player2.killCard(player2Card.getName());
     }
-
 
 
     public void attackPlayer(Player player, int attackNumber) {

@@ -17,6 +17,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -65,5 +66,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+
   </component>
 </module>

@@ -74,6 +74,7 @@ public class Player {
 
     public void playCard(int index) {
 
+
         if ( !hasPlayedCard ) {
             cardsOnTable.add(cardsOnHand.get(index));
             cardsOnHand.remove(index);

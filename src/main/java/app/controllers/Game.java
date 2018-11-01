@@ -7,6 +7,7 @@ import javax.swing.text.StyledEditorKit;
 
 import app.entities.Player;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Game {
@@ -31,10 +32,14 @@ public class Game {
 
 
     public void divideCards() {
+        System.out.println(allCards.size());
         if (allCards != null) {
             Collections.shuffle(allCards);
+
             setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
-            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
+            setPlayer2Cards(allCards.subList(0, allCards.size() / 2));
+            System.out.println(player1Cards.size());
+            System.out.println(player2Cards.size());
         }
 
     }

@@ -16,10 +16,15 @@ public class Player {
         this.cardsOnHand = new ArrayList();
         this.cardsOnTable = new ArrayList();
         this.hasPlayedCard = false;
+        getStartCards();
     }
 
-    public List<GameCard> getStartCards() {
-        return null;
+    public void getStartCards() {
+        drawCard();
+        drawCard();
+        drawCard();
+        drawCard();
+        drawCard();
     }
 
     public int getHp() {
@@ -79,6 +84,10 @@ public class Player {
             cardsOnTable.add(cardsOnHand.get(index));
             cardsOnHand.remove(index);
             hasPlayedCard = true;
+            System.out.println("Played card: "+ index+1);
+        }
+        else{
+            System.out.println("You can only play one card!");
         }
 
     }

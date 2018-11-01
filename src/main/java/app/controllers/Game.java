@@ -19,12 +19,14 @@ public class Game {
     private List<GameCard> allCards;
     private List<GameCard> player1Cards;
     private List<GameCard> player2Cards;
+    private Player player1;
+    private Player player2;
 
     public Game(List<GameCard> deck) {
         this.allCards = deck;
         divideCards();
-        Player player1 = new Player(player1Cards);
-        Player player2 = new Player(player2Cards);
+        player1 = new Player(player1Cards);
+        player2 = new Player(player2Cards);
         this.player1Turn = true;
         this.player1Cards = new ArrayList<>();
         this.player2Cards = new ArrayList<>();
@@ -110,9 +112,38 @@ public class Game {
 
     }
 
-    public void attack(GameCard card, GameCard card2) {
+    public void attack(GameCard attackingCard, GameCard defendingCard) {
+        GameCard player1Card;
+        GameCard player2Card;
+        int player1FightingPoints;
+        int player2FightingPoints;
 
+        if(player1Turn){
+            player1Card = attackingCard;
+            player2Card = defendingCard;
+            player1Card.setIsUsed(true);
+        }
+        else{
+            player2Card = attackingCard;
+            player1Card = defendingCard;
+            player2Card.setIsUsed(true);
+        }
+        do{
+            player1FightingPoints = randomNumber(6);
+            player2FightingPoints = randomNumber(6);
+        } while(player1FightingPoints==player2FightingPoints);
+
+        int fightResult = player1FightingPoints-player2FightingPoints;
+        if(fightResult<0){
+            player1Card.decreaseHp(-fightResult);
+        }else{
+            player2Card.decreaseHp(fightResult);
+        }
+        player1.killCard(player1Card.getName());
+        player2.killCard(player2Card.getName());
     }
+
+
 
     public void attackPlayer(Player player,int attackNumber) {
         player.reduceHp(attackNumber);

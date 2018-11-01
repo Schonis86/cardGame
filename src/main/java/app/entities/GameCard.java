@@ -5,6 +5,22 @@ public class GameCard {
     private String name;
     private boolean isUsed;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
+
+    public Boolean isCardDead() {
+        return this.hp < 1;
+    }
+
     public GameCard(String name){
         hp = 0; //Random 1-7
         this.name = name;

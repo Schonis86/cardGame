@@ -91,7 +91,7 @@ public class Player {
                 .findFirst()
                 .get();
 
-        if (card.isCardDead) {
+        if (card.isCardDead()) {
             cardsOnTable.removeIf(c -> c.getName().equals(cardName));
         }
 

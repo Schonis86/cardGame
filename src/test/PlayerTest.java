@@ -2,8 +2,11 @@ package test;
 
 import app.entities.GameCard;
 import app.entities.Player;
+import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.Mock;
 
 
@@ -75,6 +78,21 @@ class PlayerTest {
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
+    }
+
+    @Test
+    void playCard() {
+
+        deck = getDeck(5);
+        player.setCardsOnHand(deck);
+
+        assertFalse(player.isHasPlayedCard());
+        player.playCard( 1 );
+        assertTrue(player.isHasPlayedCard());
+
+        assertEquals(4, player.getCardsOnHand().size());
+        assertEquals(1, player.getCardsOnTable().size());
+
     }
 
 

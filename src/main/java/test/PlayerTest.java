@@ -2,19 +2,17 @@ package test;
 
 import app.entities.GameCard;
 import app.entities.Player;
-import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 
 import org.mockito.Mock;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class PlayerTest {
 
@@ -31,7 +29,7 @@ class PlayerTest {
     }
 
     List<GameCard> getDeck(int deckSize) {
-        List<GameCard> deck = new ArrayList<>();
+        List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
             deck.add(card);
         }
@@ -98,7 +96,7 @@ class PlayerTest {
 
     @Test
     void killCard() {
-        List<GameCard> cardsOnTable = new ArrayList<>();
+        List<GameCard> cardsOnTable = new ArrayList();
         GameCard card1 = new GameCard("card 1");
         GameCard card2 = new GameCard("card 2");
         cardsOnTable.add(card1);

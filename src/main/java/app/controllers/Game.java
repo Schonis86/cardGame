@@ -32,50 +32,7 @@ public class Game {
         this.player2Cards = new ArrayList<>();
     }
 
-    public void setPlayer1Cards(List<GameCard> player1Cards) {
-        this.player1Cards = player1Cards;
-    }
-
-    public void setPlayer2Cards(List<GameCard> player2Cards) {
-        this.player2Cards = player2Cards;
-    }
-
-    public int getRoundCounter() {
-        return roundCounter;
-    }
-
-    public void setRoundCounter(int roundCounter) {
-        this.roundCounter = roundCounter;
-    }
-
-    public void setTurnCounter(int turnCounter) {
-        this.turnCounter = turnCounter;
-    }
-
-    public int getTurnCounter() {
-        return turnCounter;
-    }
-
-    public boolean isPlayer1Turn() {
-        return player1Turn;
-    }
-
-    public void setPlayer1Turn(boolean player1Turn) {
-        this.player1Turn = player1Turn;
-    }
-
-    public List<GameCard> getAllCards() {
-        return allCards;
-    }
-
-    public List<GameCard> getPlayer1Cards() {
-        return player1Cards;
-    }
-
-    public List<GameCard> getPlayer2Cards() {
-        return player2Cards;
-    }
-
+   
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);

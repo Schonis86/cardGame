@@ -1,9 +1,5 @@
-package test;
-
-
 import app.entities.GameCard;
 import app.entities.Player;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,9 +8,7 @@ import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
 import org.mockito.Mock;
-import sun.invoke.empty.Empty;
 
-import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +27,7 @@ class GameTest {
     }
 
     List<GameCard> getDeck(int deckSize) {
-        List<GameCard> deck = new ArrayList<>();
+        List<GameCard> deck = new ArrayList();
         for(int i = 0; i < deckSize; i++) {
             GameCard card = new GameCard("kort" + (i+1));
             deck.add(card);

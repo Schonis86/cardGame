@@ -77,7 +77,7 @@ public class Game {
     }
 
     public void divideCards() {
-        if(allCards != null) {
+        if (allCards != null) {
             Collections.shuffle(allCards);
             setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
             setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
@@ -100,11 +100,7 @@ public class Game {
 
     }
 
-    public void  getUserInput() {
-
-    }
-
-    public void printWinningMessage() {
+    public void getUserInput() {
 
     }
 
@@ -145,22 +141,21 @@ public class Game {
 
 
 
-    public void attackPlayer(Player player,int attackNumber) {
+    public void attackPlayer(Player player, int attackNumber) {
         player.reduceHp(attackNumber);
-        if (isPlayerDead(player)){
+        if (isPlayerDead(player)) {
             killPlayer(player);
         }
     }
 
     public boolean isPlayerDead(Player player) {
-        if(player == null || player.getHp() == 0) {
+        if (player == null || player.getHp() == 0) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
     public void roundCheck() {
-        if(turnCounter%2!=0){
+        if (turnCounter % 2 != 0) {
             roundCounter++;
         }
     }
@@ -172,6 +167,50 @@ public class Game {
     public int randomNumber(int maxValue) {
         Random random = new Random();
         return random.nextInt(maxValue) + 1;
+    }
+
+    public void setPlayer1Cards(List<GameCard> player1Cards) {
+        this.player1Cards = player1Cards;
+    }
+
+    public void setPlayer2Cards(List<GameCard> player2Cards) {
+        this.player2Cards = player2Cards;
+    }
+
+    public int getRoundCounter() {
+        return roundCounter;
+    }
+
+    public void setRoundCounter(int roundCounter) {
+        this.roundCounter = roundCounter;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
+    }
+
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
+    public boolean isPlayer1Turn() {
+        return player1Turn;
+    }
+
+    public void setPlayer1Turn(boolean player1Turn) {
+        this.player1Turn = player1Turn;
+    }
+
+    public List<GameCard> getAllCards() {
+        return allCards;
+    }
+
+    public List<GameCard> getPlayer1Cards() {
+        return player1Cards;
+    }
+
+    public List<GameCard> getPlayer2Cards() {
+        return player2Cards;
     }
 }
 

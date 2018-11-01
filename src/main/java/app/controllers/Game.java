@@ -26,8 +26,7 @@ public class Game {
         player1 = new Player(player1Cards);
         player2 = new Player(player2Cards);
         this.player1Turn = true;
-        this.player1Cards = new ArrayList<>();
-        this.player2Cards = new ArrayList<>();
+        toggleTurn();
     }
 
 
@@ -53,7 +52,7 @@ public class Game {
     }
 
     public void print(String message) {
-
+        System.out.println("***** " + message + " *****");
     }
 
     public void getUserInput() {
@@ -69,40 +68,56 @@ public class Game {
             defendingPlayer = player1;
             print("Player 2 turn");
         }
+
         while (!endTurn) {
-            print("Choose option:");
+            System.out.println("Choose option:");
+            System.out.println("1. Play card");
+            System.out.println("2. Attack Card");
+            System.out.println("3. Attack Player");
+            System.out.println("4. End Turn");
             Scanner scanner = new Scanner(System.in);
-            int option = scanner.nextInt();
+            int option = Integer.parseInt(scanner.nextLine());
+
+            int chosenCard;
 
             switch (option) {
                 case 1:
-                    int index = 0;
-                    while (index < 1 || index > attackingPlayer.getCardsOnHand().size()) {
+                    chosenCard = 0;
+                    System.out.println(attackingPlayer.getCardsOnHand().size());
+                    while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
                         print("Choose card to play!");
-                        index = scanner.nextInt();
+                        chosenCard = Integer.parseInt(scanner.nextLine());
+
                     }
-                    attackingPlayer.playCard(index - 1);
+                    attackingPlayer.playCard(chosenCard - 1);
                     break;
                 case 2:
-
+                    int attackCardNumber = 0;
+                    int defendingCardNumber = 0;
+                    while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size()) {
+                        System.out.println("Choose a card to attack with");
+                        attackCardNumber = scanner.nextInt();
+                    }
+                    while (defendingCardNumber < 1 || defendingCardNumber > defendingPlayer.getCardsOnTable().size()) {
+                        System.out.println("Choose a card to attack");
+                        defendingCardNumber = scanner.nextInt();
+                    }
+                    GameCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
+                    GameCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
+                    attack(attackingCard, defendingCard);
                     break;
                 case 3:
-
+                    attackPlayer(defendingPlayer, randomNumber(5));
                     break;
-
+                case 4:
+                    endTurn = true;
                 default:
-
+                    System.out.println("Invalid option");
             }
-
-
+            toggleTurn();
         }
-
-
     }
 
-    public void playCard(Card card) {
-
-    }
 
     public void attack(GameCard attackingCard, GameCard defendingCard) {
         GameCard player1Card;
@@ -132,6 +147,7 @@ public class Game {
         }
         player1.getIsCardDead(player1Card.getName());
         player2.getIsCardDead(player2Card.getName());
+        System.out.println(player1Card.getName() + " has attacked " + player2Card.getName());
     }
 
 

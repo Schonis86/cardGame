@@ -99,8 +99,8 @@ class GameTest {
         game.attack(attackingCard, defendingCard);
         assertTrue(attackingCard.getIsUsed()==true);
         assertTrue(attackingCard.getHp()<hpAttackingCard||defendingCard.getHp()<hpDefendingCard);
-        verify(player1, times(1)).killCard("0");
-        verify(player2, times(1)).killCard("1");
+        verify(player1, times(1)).getIsCardDead("0");
+        verify(player2, times(1)).getIsCardDead("1");
     };
 
 

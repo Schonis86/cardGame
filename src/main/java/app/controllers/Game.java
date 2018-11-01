@@ -110,7 +110,7 @@ public class Game {
 
     }
 
-    public void attack(Card card, Card card2) {
+    public void attack(GameCard card, GameCard card2) {
 
     }
 

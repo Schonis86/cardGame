@@ -104,13 +104,13 @@ class PlayerTest {
         Player player = new Player(deck);
         player.setCardsOnTable(cardsOnTable);
 
-        player.killCard("card 2");
+        player.getIsCardDead("card 2");
         assertEquals(2, player.getCardsOnTable().size() );
         assertTrue(cardsOnTable.contains(card2));
         assertEquals(5, card2.getHp());
 
         card2.setHp(0);
-        player.killCard("card 2");
+        player.getIsCardDead("card 2");
         assertEquals(1, player.getCardsOnTable().size() );
         assertFalse(cardsOnTable.contains(card2));
         assertEquals(0, card2.getHp());

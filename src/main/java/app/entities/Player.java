@@ -83,7 +83,7 @@ public class Player {
 
     }
 
-    public void killCard(String cardName) {
+    public void getIsCardDead(String cardName) {
 
         GameCard card = cardsOnTable
                 .stream()
@@ -91,7 +91,7 @@ public class Player {
                 .findFirst()
                 .get();
 
-        if (card.getHp() == 0) {
+        if (card.isCardDead()) {
             cardsOnTable.removeIf(c -> c.getName().equals(cardName));
         }
 

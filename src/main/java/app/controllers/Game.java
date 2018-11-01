@@ -92,8 +92,8 @@ public class Game {
         }else{
             player2Card.decreaseHp(fightResult);
         }
-        player1.killCard(player1Card.getName());
-        player2.killCard(player2Card.getName());
+        player1.getIsCardDead(player1Card.getName());
+        player2.getIsCardDead(player2Card.getName());
     }
 
 

@@ -25,7 +25,8 @@ public class Game {
         divideCards();
         player1 = new Player(player1Cards);
         player2 = new Player(player2Cards);
-        this.player1Turn = true;
+        System.out.println("Lina");
+        this.player1Turn = false;
         toggleTurn();
     }
 
@@ -33,8 +34,12 @@ public class Game {
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);
-            setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
-            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
+            ArrayList<GameCard> p1List = new ArrayList<GameCard>(allCards.subList(0, allCards.size()/2));
+            ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size()/2, allCards.size()));
+            setPlayer1Cards(p1List);
+            setPlayer2Cards(p2List);
+//            setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
+//            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
         }
 
     }
@@ -111,11 +116,13 @@ public class Game {
                     break;
                 case 4:
                     endTurn = true;
+                    break;
                 default:
                     System.out.println("Invalid option");
             }
-            toggleTurn();
+
         }
+        toggleTurn();
     }
 
 

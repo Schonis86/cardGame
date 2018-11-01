@@ -2,8 +2,11 @@ package test;
 
 import app.entities.GameCard;
 import app.entities.Player;
+import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.Mock;
 
 
@@ -12,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class PlayerTest {
 
@@ -75,6 +79,21 @@ class PlayerTest {
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
+    }
+
+    @Test
+    void playCard() {
+
+        deck = getDeck(5);
+        player.setCardsOnHand(deck);
+
+        player.playCard( 1 );
+        player.setHasPlayedCard( true );
+
+        assertEquals(4, player.getCardsOnHand().size());
+        assertEquals(2, player.getCardsOnTable().size());
+
+        //testa så att man inte kan spela > 1 kort samtidigt
     }
 
 

@@ -72,7 +72,10 @@ public class Player {
 
     }
 
-    public void playCard() {
+    public void playCard(int index) {
+
+        cardsOnTable.add( cardsOnHand.get(index) );
+        cardsOnHand.remove( index );
 
     }
 

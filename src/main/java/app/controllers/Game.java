@@ -23,11 +23,75 @@ public class Game {
     public Game(List<GameCard> deck) {
         this.allCards = deck;
         divideCards();
-        Player player1 = new Player(player1Cards);
-        Player player2 = new Player(player2Cards);
         this.player1Turn = true;
         this.player1Cards = new ArrayList<>();
         this.player2Cards = new ArrayList<>();
+        Player player1 = new Player(player1Cards);
+        Player player2 = new Player(player2Cards);
+    }
+
+    public void divideCards() {
+        if (allCards != null) {
+            Collections.shuffle(allCards);
+            setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
+            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
+        }
+
+    }
+
+    public void toggleTurn() {
+        setPlayer1Turn(!player1Turn);
+        setTurnCounter(getTurnCounter() + 1);
+        roundCheck();
+
+        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
+        print(message);
+
+        getUserInput();
+    }
+
+    public void print(String message) {
+
+    }
+
+    public void getUserInput() {
+
+    }
+
+    public void playCard(Card card) {
+
+    }
+
+    public void attack(Card card, Card card2) {
+
+    }
+
+    public void attackPlayer(Player player, int attackNumber) {
+        player.reduceHp(attackNumber);
+        if (isPlayerDead(player)) {
+            killPlayer(player);
+        }
+    }
+
+    public boolean isPlayerDead(Player player) {
+        if (player == null || player.getHp() == 0) {
+            return true;
+        } else return false;
+    }
+
+    public void roundCheck() {
+        if (turnCounter % 2 != 0) {
+            roundCounter++;
+        }
+    }
+
+    public void killPlayer(Player player) {
+        System.out.println("player killed");
+    }
+
+    public int randomNumber(int maxValue) {
+        Random random = new Random();
+        return random.nextInt(maxValue) + 1;
     }
 
     public void setPlayer1Cards(List<GameCard> player1Cards) {
@@ -72,75 +136,6 @@ public class Game {
 
     public List<GameCard> getPlayer2Cards() {
         return player2Cards;
-    }
-
-    public void divideCards() {
-        if(allCards != null) {
-            Collections.shuffle(allCards);
-            setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
-            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
-        }
-
-    }
-
-    public void toggleTurn() {
-        setPlayer1Turn(!player1Turn);
-        setTurnCounter(getTurnCounter() + 1);
-        roundCheck();
-
-        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
-        print(message);
-
-        getUserInput();
-    }
-
-    public void print(String message) {
-
-    }
-
-    public void  getUserInput() {
-
-    }
-
-    public void printWinningMessage() {
-
-    }
-
-    public void playCard(Card card) {
-
-    }
-
-    public void attack(Card card, Card card2) {
-
-    }
-
-    public void attackPlayer(Player player,int attackNumber) {
-        player.reduceHp(attackNumber);
-        if (isPlayerDead(player)){
-            killPlayer(player);
-        }
-    }
-
-    public boolean isPlayerDead(Player player) {
-        if(player == null || player.getHp() == 0) {
-            return true;
-        }
-        else return false;
-    }
-
-    public void roundCheck() {
-        if(turnCounter%2!=0){
-            roundCounter++;
-        }
-    }
-
-    public void killPlayer(Player player) {
-        System.out.println("player killed");
-    }
-
-    public int randomNumber(int maxValue) {
-        Random random = new Random();
-        return random.nextInt(maxValue) + 1;
     }
 }
 

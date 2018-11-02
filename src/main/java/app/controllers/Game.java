@@ -24,8 +24,8 @@ public class Game {
     public Game(List<GameCard> deck) {
         this.allCards = deck;
         divideCards();
-        player1 = new Player(player1Cards);
-        player2 = new Player(player2Cards);
+        player1 = new Player(player1Cards, "Jonas");
+        player2 = new Player(player2Cards, "Robin");
         System.out.println("Lina");
         this.player1Turn = false;
         toggleTurn();
@@ -44,22 +44,20 @@ public class Game {
     }
 
     public void toggleTurn() {
+
         setPlayer1Turn(!player1Turn);
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
-        print(message);
+        Print.actionMessage(message);
 
         getUserInput();
-    }
-
-    public void print(String message) {
-        Print.actionMessage(message);
     }
 
     public void getUserInput() {
         Player defendingPlayer;
         Player attackingPlayer;
+
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -93,7 +91,7 @@ public class Game {
                     attackingPlayer.playCard(chosenCard - 1);
                     break;
                 case 2:
-                    if(attackingPlayer.getCardsOnTable().size()==0 || defendingPlayer.getCardsOnHand().size()==0){
+                    if(attackingPlayer.getCardsOnTable().size()==0 || defendingPlayer.getCardsOnTable().size()==0){
                         Print.actionMessage("Attack not possible!");
                         break;
                     }
@@ -114,11 +112,16 @@ public class Game {
                     attack(attackingCard, defendingCard);
                     break;
                 case 3:
-                    if(defendingPlayer.getCardsOnTable().size()!=0){
+
+                    if(defendingPlayer.getCardsOnTable().size()!=0 || attackingPlayer.getCardsOnTable().size() == 0){
                         Print.actionMessage("Can not attack player");
                         break;
+                    }else{
+                        int number = randomNumber(5);
+                        attackPlayer(defendingPlayer, number);
+                        Print.actionMessage(attackingPlayer.getName() + " attacked " + defendingPlayer.getName() + " with " + number + " damage!" );
                     }
-                    attackPlayer(defendingPlayer, randomNumber(5));
+
                     break;
                 case 4:
                     endTurn = true;
@@ -128,6 +131,7 @@ public class Game {
             }
 
         }
+        attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
     }
 

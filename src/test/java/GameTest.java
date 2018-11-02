@@ -1,5 +1,6 @@
 import app.entities.GameCard;
 import app.entities.Player;
+import app.gui.Print;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 
 class GameTest {
+
 
     @Mock
     private List<GameCard> mockDeck;
@@ -32,8 +34,8 @@ class GameTest {
 
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
-        for(int i = 0; i < deckSize; i++) {
-            GameCard card = new GameCard("kort" + (i+1));
+        for (int i = 0; i < deckSize; i++) {
+            GameCard card = new GameCard("kort" + (i + 1));
             deck.add(card);
         }
         return deck;
@@ -47,8 +49,8 @@ class GameTest {
         game.divideCards();
         int deckSizePlayer1 = game.getPlayer1Cards().size();
         int deckSizePlayer2 = game.getPlayer2Cards().size();
-        assertEquals(DECK_SIZE/2, deckSizePlayer1);
-        assertEquals(DECK_SIZE/2, deckSizePlayer2);
+        assertEquals(DECK_SIZE / 2, deckSizePlayer1);
+        assertEquals(DECK_SIZE / 2, deckSizePlayer2);
     }
 
     @Test
@@ -60,14 +62,14 @@ class GameTest {
         assertTrue(gameSpy.isPlayer1Turn());
         gameSpy.toggleTurn();
         assertFalse(gameSpy.isPlayer1Turn());
-        verify(gameSpy, times(1)).print("Player 2 turn");
+  //      verify(gameSpy, times(1)).print("Player 2 turn");
 
         gameSpy.toggleTurn();
         assertTrue(gameSpy.isPlayer1Turn());
-        verify(gameSpy, times(1)).print("Player 1 turn");
+    //    verify(gameSpy, times(1)).print("Player 1 turn");
 
         int resultTurnCounter = gameSpy.getTurnCounter();
-        assertEquals(2,resultTurnCounter);
+        assertEquals(2, resultTurnCounter);
 
         verify(gameSpy, times(2)).getUserInput();
     }
@@ -85,50 +87,51 @@ class GameTest {
     void playCard() {
 
 
-
     }
 
     @Test
     void attack() {
-        List<GameCard> attackingCards= getDeck(3);
+        List<GameCard> attackingCards = getDeck(3);
         List<GameCard> defendingCards = getDeck(3);
         GameCard attackingCard = attackingCards.get(0);
         GameCard defendingCard = defendingCards.get(1);
         int hpAttackingCard = attackingCard.getHp();
         int hpDefendingCard = defendingCard.getHp();
         game.attack(attackingCard, defendingCard);
-        assertTrue(attackingCard.getIsUsed()==true);
-        assertTrue(attackingCard.getHp()<hpAttackingCard||defendingCard.getHp()<hpDefendingCard);
+        assertTrue(attackingCard.getIsUsed() == true);
+        assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
         verify(player1, times(1)).getIsCardDead("0");
         verify(player2, times(1)).getIsCardDead("1");
-    };
+    }
+
+    ;
 
 
     @Test
     void attackPlayer() {
         Game game = spy(new Game(mockDeck));
-        Player player = new Player(mockDeck);
+        Player player = new Player(mockDeck,"test");
 
         int attackNumber = game.randomNumber(5);
         int hpAfterAttack = player.getHp() - attackNumber;
-        game.attackPlayer(player,attackNumber);
-        assertEquals(player.getHp(),hpAfterAttack);
-        verify(game,times(1)).isPlayerDead(player);
+        game.attackPlayer(player, attackNumber);
+        assertEquals(player.getHp(), hpAfterAttack);
+        verify(game, times(1)).isPlayerDead(player);
 
 
     }
 
     @Test
-    void attackPlayerWhenHpIsBellow0(){
+    void attackPlayerWhenHpIsBellow0() {
         Game game = spy(new Game(mockDeck));
-        Player player = new Player(mockDeck);
+        Player player = new Player(mockDeck,"test");
 
         int attackNumber = 10;
         int hpAfterAttack = player.getHp() - attackNumber;
         game.attackPlayer(player, attackNumber);
-        assertEquals(0,hpAfterAttack);
-        verify(game,times(1)).isPlayerDead(player);
-        verify(game,times(1)).killPlayer(player);
+        assertEquals(0, hpAfterAttack);
+        verify(game, times(1)).isPlayerDead(player);
+        verify(game, times(1)).killPlayer(player);
     }
 
     @Test
@@ -151,24 +154,24 @@ class GameTest {
 
     @Test
     void roundCheck() {
-        assertEquals(0,game.getRoundCounter());
+        assertEquals(0, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(1,game.getRoundCounter());
+        assertEquals(1, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(1,game.getRoundCounter());
+        assertEquals(1, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(2,game.getRoundCounter());
+        assertEquals(2, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(2,game.getRoundCounter());
+        assertEquals(2, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(3,game.getRoundCounter());
+        assertEquals(3, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(3,game.getRoundCounter());
+        assertEquals(3, game.getRoundCounter());
         game.toggleTurn();
-        assertEquals(4,game.getRoundCounter());
-        assertEquals(7,game.getTurnCounter());
-        assertEquals(7,game.getTurnCounter());
-        assertTrue(game.getRoundCounter()*2==game.getTurnCounter()||game.getRoundCounter()*2-1==game.getTurnCounter());
+        assertEquals(4, game.getRoundCounter());
+        assertEquals(7, game.getTurnCounter());
+        assertEquals(7, game.getTurnCounter());
+        assertTrue(game.getRoundCounter() * 2 == game.getTurnCounter() || game.getRoundCounter() * 2 - 1 == game.getTurnCounter());
     }
 
     @Test

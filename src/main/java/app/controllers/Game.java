@@ -123,7 +123,7 @@ public class Game {
                     attack(attackingCard, defendingCard);
                     break;
                 case 3:
-            ////// FIXA CARISALREDY USED SAKEN 
+            ////// FIXA CARISALREDY USED SAKEN
                     if(defendingPlayer.getCardsOnTable().size()!=0 || attackingPlayer.getCardsOnTable().size() == 0){
                         Print.actionMessage("Can not attack player");
                         break;

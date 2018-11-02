@@ -47,7 +47,7 @@ public class Game {
         setPlayer1Turn(!player1Turn);
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
-        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
+        String message = isPlayer1Turn() ? "   Player 1 turn    " : "   Player 2 turn    ";
         print(message);
 
         getUserInput();

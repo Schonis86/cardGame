@@ -23,7 +23,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         deck = getDeck(20);
-        player = new Player(deck);
+        player = new Player(deck,"test");
     }
 
     List<GameCard> getDeck(int deckSize) {
@@ -70,7 +70,7 @@ class PlayerTest {
     @Test
     void drawCard() {
         deck = getDeck(10);
-        Player player = new Player(deck);
+        Player player = new Player(deck,"test");
         player.drawCard();
         assertEquals(1, player.getCardsOnHand().size());
         assertEquals(9, player.getCardsInDeck().size());
@@ -101,7 +101,7 @@ class PlayerTest {
         cardsOnTable.add(card2);
         card2.setHp(5);
 
-        Player player = new Player(deck);
+        Player player = new Player(deck,"test");
         player.setCardsOnTable(cardsOnTable);
 
         player.getIsCardDead("card 2");

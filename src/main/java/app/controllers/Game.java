@@ -24,9 +24,8 @@ public class Game {
     public Game(List<GameCard> deck) {
         this.allCards = deck;
         divideCards();
-        player1 = new Player(player1Cards);
-        player2 = new Player(player2Cards);
-        System.out.println("Lina");
+        player1 = new Player(player1Cards, "Jonas");
+        player2 = new Player(player2Cards, "Robin");
         this.player1Turn = false;
         toggleTurn();
     }
@@ -45,6 +44,7 @@ public class Game {
 
     public void toggleTurn() {
         setPlayer1Turn(!player1Turn);
+
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
@@ -73,6 +73,7 @@ public class Game {
     public void getUserInput() {
         Player defendingPlayer;
         Player attackingPlayer;
+
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -81,7 +82,7 @@ public class Game {
             attackingPlayer = player2;
             defendingPlayer = player1;
         }
-
+        attackingPlayer.setCardsToUnUsed();
         while (!endTurn) {
             Print.cardsVisibleForActivePlayer(attackingPlayer,defendingPlayer);
             System.out.println("Choose option:");
@@ -106,17 +107,28 @@ public class Game {
                     attackingPlayer.playCard(chosenCard - 1);
                     break;
                 case 2:
-                    if(attackingPlayer.getCardsOnTable().size()==0 || defendingPlayer.getCardsOnHand().size()==0){
+                    if(attackingPlayer.getCardsOnTable().size()==0 || defendingPlayer.getCardsOnTable().size()==0){
                         Print.actionMessage("Attack not possible!");
                         break;
                     }
                     int attackCardNumber = 0;
                     int defendingCardNumber = 0;
-                    while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size()) {
+                    Boolean cardIsPlayed = true;
+                    while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size()|| cardIsPlayed == true) {
                         Print.actionMessage("Choose a card to attack with");
                         Print.optionList(attackingPlayer.getCardsOnTable());
                         attackCardNumber = scanner.nextInt();
+                        if(attackCardNumber > 0 && attackCardNumber <= attackingPlayer.getCardsOnTable().size()){
+                            cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackCardNumber-1).isUsed();
+                            if(cardIsPlayed){
+                                Print.actionMessage("Card has already attacked in this round! \n");
+                                ///BREAKEN SKA HOPPA UR CASE 2
+
+                                break;
+                            }
+                        }
                     }
+
                     while (defendingCardNumber < 1 || defendingCardNumber > defendingPlayer.getCardsOnTable().size()) {
                         Print.actionMessage("Choose a card to attack");
                         Print.optionList(defendingPlayer.getCardsOnTable());
@@ -127,11 +139,16 @@ public class Game {
                     attack(attackingCard, defendingCard);
                     break;
                 case 3:
-                    if(defendingPlayer.getCardsOnTable().size()!=0){
+            ////// FIXA CARISALREDY USED SAKEN
+                    if(defendingPlayer.getCardsOnTable().size()!=0 || attackingPlayer.getCardsOnTable().size() == 0){
                         Print.actionMessage("Can not attack player");
                         break;
+                    }else{
+                        int number = randomNumber(5);
+                        attackPlayer(defendingPlayer, number);
+                        Print.actionMessage(attackingPlayer.getName() + " attacked " + defendingPlayer.getName() + " with " + number + " damage!" );
                     }
-                    attackPlayer(defendingPlayer, randomNumber(5));
+
                     break;
                 case 4:
                     endTurn = true;
@@ -141,11 +158,8 @@ public class Game {
             }
 
         }
+        attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
-
-
-
-
     }
 
 
@@ -183,15 +197,21 @@ public class Game {
 
     public void attackPlayer(Player player, int attackNumber) {
         player.reduceHp(attackNumber);
-        if (isPlayerDead(player)) {
-            killPlayer(player);
-        }
+        isPlayerDead(player);
     }
 
-    public boolean isPlayerDead(Player player) {
-        if (player == null || player.getHp() == 0) {
-            return true;
-        } else return false;
+    public void isPlayerDead(Player player) {
+        if(player == null || player.getHp() <= 0) {
+            if (isPlayer1Turn()){
+                System.out.print(player1.getName() + " HAS WON!");
+                System.exit(0);
+            }else{
+                System.out.print(player2.getName() + " HAS WON!");
+                System.exit(0);
+            }
+
+        }
+
     }
 
     public void roundCheck() {

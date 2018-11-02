@@ -128,4 +128,8 @@ public class Player {
         setHp(newHp);
     }
 
+    public void setCardsToUnUsed(){
+        cardsOnTable.forEach(card -> card.setIsUsed(false));
+    }
+
 }

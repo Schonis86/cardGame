@@ -170,25 +170,25 @@ public class Game {
 
     public void attackPlayer(Player player, int attackNumber) {
         player.reduceHp(attackNumber);
-        if (isPlayerDead(player)) {
-            killPlayer(player);
-        }
+        isPlayerDead(player);
     }
 
-    public boolean isPlayerDead(Player player) {
-        if (player == null || player.getHp() == 0) {
-            return true;
-        } else return false;
+    public void isPlayerDead(Player player) {
+        if(player == null || player.getHp() == 0) {
+            if (isPlayer1Turn()){
+                System.out.print("Player 1 has won!");
+            }else{
+                System.out.println("Player 2 has won!");
+            }
+            System.exit(0);
+        }
+
     }
 
     public void roundCheck() {
         if (turnCounter % 2 != 0) {
             roundCounter++;
         }
-    }
-
-    public void killPlayer(Player player) {
-        System.out.println("player killed");
     }
 
     public int randomNumber(int maxValue) {

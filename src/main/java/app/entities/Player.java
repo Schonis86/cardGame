@@ -6,13 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    private String name;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private int hp;
     private List<GameCard> cardsOnHand;
     private List<GameCard> cardsInDeck;
     private List<GameCard> cardsOnTable;
     private boolean hasPlayedCard;
 
-    public Player(List<GameCard> deck) {
+    public Player(List<GameCard> deck, String name) {
+        this.name = name;
         this.hp = 10;
         this.cardsInDeck = deck;
         this.cardsOnHand = new ArrayList();
@@ -80,7 +90,6 @@ public class Player {
     }
 
     public void playCard(int index) {
-
 
         if ( !hasPlayedCard ) {
             cardsOnTable.add(cardsOnHand.get(index));

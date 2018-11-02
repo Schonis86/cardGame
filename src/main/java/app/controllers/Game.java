@@ -50,6 +50,19 @@ public class Game {
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
         print(message);
 
+        // drawCard
+        if ( isPlayer1Turn()) {
+            if ( player1.getCardsOnHand().size() < 5 ) {
+                player1.drawCard();
+            }
+        }
+        else {
+            if ( player2.getCardsOnHand().size() < 5 ) {
+                player2.drawCard();
+            }
+        }
+
+
         getUserInput();
     }
 
@@ -129,6 +142,10 @@ public class Game {
 
         }
         toggleTurn();
+
+
+
+
     }
 
 

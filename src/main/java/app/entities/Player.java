@@ -1,5 +1,7 @@
 package app.entities;
 
+import app.gui.Print;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,16 +86,14 @@ public class Player {
             cardsOnTable.add(cardsOnHand.get(index));
             cardsOnHand.remove(index);
             hasPlayedCard = true;
-            System.out.println("Played card: "+ index+1);
+            Print.actionMessage("Played card: " + (index + 1));
         }
         else{
-            System.out.println("You can only play one card!");
+            Print.actionMessage("You can only play one card!");
         }
-
     }
 
     public void getIsCardDead(String cardName) {
-
         GameCard card = cardsOnTable
                 .stream()
                 .filter(c -> c.getName().equals(cardName))
@@ -103,7 +103,6 @@ public class Player {
         if (card.isCardDead()) {
             cardsOnTable.removeIf(c -> c.getName().equals(cardName));
         }
-
     }
 
     public void reduceHp(int damage) {

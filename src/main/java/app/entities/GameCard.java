@@ -22,7 +22,7 @@ public class GameCard {
     }
 
     public GameCard(String name){
-        hp = 0; //Random 1-7
+        hp = 4; //Random 1-7
         this.name = name;
         isUsed = false;
     }

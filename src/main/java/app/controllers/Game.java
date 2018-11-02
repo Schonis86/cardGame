@@ -6,6 +6,7 @@ import javax.smartcardio.Card;
 import javax.swing.text.StyledEditorKit;
 
 import app.entities.Player;
+import app.gui.Print;
 
 import java.util.*;
 
@@ -38,8 +39,6 @@ public class Game {
             ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size()/2, allCards.size()));
             setPlayer1Cards(p1List);
             setPlayer2Cards(p2List);
-//            setPlayer1Cards(allCards.subList(0, allCards.size() / 2));
-//            setPlayer2Cards(allCards.subList(allCards.size() / 2, allCards.size()));
         }
 
     }
@@ -48,8 +47,6 @@ public class Game {
         setPlayer1Turn(!player1Turn);
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
-
-
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
         print(message);
 
@@ -57,7 +54,7 @@ public class Game {
     }
 
     public void print(String message) {
-        System.out.println("***** " + message + " *****");
+        Print.actionMessage(message);
     }
 
     public void getUserInput() {
@@ -67,19 +64,19 @@ public class Game {
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
             defendingPlayer = player2;
-            print("Player 1 turn");
         } else {
             attackingPlayer = player2;
             defendingPlayer = player1;
-            print("Player 2 turn");
         }
 
         while (!endTurn) {
+            Print.cardsVisibleForActivePlayer(attackingPlayer,defendingPlayer);
             System.out.println("Choose option:");
             System.out.println("1. Play card");
             System.out.println("2. Attack Card");
             System.out.println("3. Attack Player");
             System.out.println("4. End Turn");
+
             Scanner scanner = new Scanner(System.in);
             int option = Integer.parseInt(scanner.nextLine());
 
@@ -88,23 +85,28 @@ public class Game {
             switch (option) {
                 case 1:
                     chosenCard = 0;
-                    System.out.println(attackingPlayer.getCardsOnHand().size());
                     while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
-                        print("Choose card to play!");
+                        Print.actionMessage("Choose card to play!");
+                        Print.optionList(attackingPlayer.getCardsOnHand());
                         chosenCard = Integer.parseInt(scanner.nextLine());
-
                     }
                     attackingPlayer.playCard(chosenCard - 1);
                     break;
                 case 2:
+                    if(attackingPlayer.getCardsOnTable().size()==0 || defendingPlayer.getCardsOnHand().size()==0){
+                        Print.actionMessage("Attack not possible!");
+                        break;
+                    }
                     int attackCardNumber = 0;
                     int defendingCardNumber = 0;
                     while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size()) {
-                        System.out.println("Choose a card to attack with");
+                        Print.actionMessage("Choose a card to attack with");
+                        Print.optionList(attackingPlayer.getCardsOnTable());
                         attackCardNumber = scanner.nextInt();
                     }
                     while (defendingCardNumber < 1 || defendingCardNumber > defendingPlayer.getCardsOnTable().size()) {
-                        System.out.println("Choose a card to attack");
+                        Print.actionMessage("Choose a card to attack");
+                        Print.optionList(defendingPlayer.getCardsOnTable());
                         defendingCardNumber = scanner.nextInt();
                     }
                     GameCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
@@ -112,6 +114,10 @@ public class Game {
                     attack(attackingCard, defendingCard);
                     break;
                 case 3:
+                    if(defendingPlayer.getCardsOnTable().size()!=0){
+                        Print.actionMessage("Can not attack player");
+                        break;
+                    }
                     attackPlayer(defendingPlayer, randomNumber(5));
                     break;
                 case 4:

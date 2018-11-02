@@ -26,7 +26,6 @@ public class Game {
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
         player2 = new Player(player2Cards, "Robin");
-        System.out.println("Lina");
         this.player1Turn = false;
         toggleTurn();
     }
@@ -48,8 +47,9 @@ public class Game {
 
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
-        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
-        Print.actionMessage(message);
+
+       /* String message = isPlayer1Turn() ? "    Player 1 turn     " : "    Player 2 turn     ";
+        Print.actionMessage(message);*/
 
         getUserInput();
     }

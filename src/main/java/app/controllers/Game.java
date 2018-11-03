@@ -7,6 +7,7 @@ import javax.swing.text.StyledEditorKit;
 
 import app.entities.Player;
 import app.gui.Print;
+import net.bytebuddy.implementation.bytecode.Throw;
 
 import java.util.*;
 
@@ -34,8 +35,8 @@ public class Game {
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);
-            ArrayList<GameCard> p1List = new ArrayList<GameCard>(allCards.subList(0, allCards.size()/2));
-            ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size()/2, allCards.size()));
+            ArrayList<GameCard> p1List = new ArrayList<GameCard>(allCards.subList(0, allCards.size() / 2));
+            ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size() / 2, allCards.size()));
             setPlayer1Cards(p1List);
             setPlayer2Cards(p2List);
         }
@@ -68,82 +69,102 @@ public class Game {
         }
         attackingPlayer.setCardsToUnUsed();
         while (!endTurn) {
-            Print.cardsVisibleForActivePlayer(attackingPlayer,defendingPlayer);
-            System.out.println("Choose option:");
-            System.out.println("1. Play card");
-            System.out.println("2. Attack Card");
-            System.out.println("3. Attack Player");
-            System.out.println("4. End Turn");
+            try {
+                Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
+                System.out.println("Choose option:");
+                System.out.println("1. Play card");
+                System.out.println("2. Attack Card");
+                System.out.println("3. Attack Player");
+                System.out.println("4. End Turn");
 
-            Scanner scanner = new Scanner(System.in);
-            int option = Integer.parseInt(scanner.nextLine());
+                Scanner scanner = new Scanner(System.in);
+                int option = Integer.parseInt(scanner.nextLine());
 
-            int chosenCard;
+                int chosenCard;
 
-            switch (option) {
-                case 1:
-                    chosenCard = 0;
-                    while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
-                        Print.actionMessage("Choose card to play!");
-                        Print.optionList(attackingPlayer.getCardsOnHand());
-                        chosenCard = Integer.parseInt(scanner.nextLine());
-                    }
-                    attackingPlayer.playCard(chosenCard - 1);
-                    break;
-                case 2:
-                    if(attackingPlayer.getCardsOnTable().size()==0 || defendingPlayer.getCardsOnTable().size()==0){
-                        Print.actionMessage("Attack not possible!");
+                switch (option) {
+                    case 1:
+                        chosenCard = 0;
+                        while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
+                            Print.actionMessage("Choose card to play!");
+                            Print.optionList(attackingPlayer.getCardsOnHand());
+                            chosenCard = Integer.parseInt(scanner.nextLine());
+                        }
+                        attackingPlayer.playCard(chosenCard - 1);
                         break;
-                    }
-                    int attackCardNumber = 0;
-                    int defendingCardNumber = 0;
-                    Boolean cardIsPlayed = true;
-                    while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size()|| cardIsPlayed == true) {
-                        Print.actionMessage("Choose a card to attack with");
-                        Print.optionList(attackingPlayer.getCardsOnTable());
-                        attackCardNumber = scanner.nextInt();
-                        if(attackCardNumber > 0 && attackCardNumber <= attackingPlayer.getCardsOnTable().size()){
-                            cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackCardNumber-1).isUsed();
-                            if(cardIsPlayed){
-                                Print.actionMessage("Card has already attacked in this round! \n");
-                                ///BREAKEN SKA HOPPA UR CASE 2
-
-                                break;
+                    case 2:
+                        if (attackingPlayer.getCardsOnTable().size() == 0 || defendingPlayer.getCardsOnTable().size() == 0) {
+                            Print.actionMessage("Attack not possible!");
+                            break;
+                        }
+                        int attackCardNumber = 0;
+                        int defendingCardNumber = 0;
+                        boolean cardIsPlayed = true;
+                        while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size() || cardIsPlayed) {
+                            Print.actionMessage("Choose a card to attack with");
+                            Print.optionList(attackingPlayer.getCardsOnTable());
+                            attackCardNumber = scanner.nextInt();
+                            if (attackCardNumber > 0 && attackCardNumber <= attackingPlayer.getCardsOnTable().size()) {
+                                cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1).isUsed();
+                                if (cardIsPlayed) {
+                                    Print.actionMessage("Card has already attacked in this round! \n");
+                                    throw new Exception("Card has alredy been used!");
+                                }
                             }
                         }
-                    }
 
-                    while (defendingCardNumber < 1 || defendingCardNumber > defendingPlayer.getCardsOnTable().size()) {
-                        Print.actionMessage("Choose a card to attack");
-                        Print.optionList(defendingPlayer.getCardsOnTable());
-                        defendingCardNumber = scanner.nextInt();
-                    }
-                    GameCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
-                    GameCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
-                    attack(attackingCard, defendingCard);
-                    break;
-                case 3:
-            ////// FIXA CARISALREDY USED SAKEN
-                    if(defendingPlayer.getCardsOnTable().size()!=0 || attackingPlayer.getCardsOnTable().size() == 0){
-                        Print.actionMessage("Can not attack player");
+                        while (defendingCardNumber < 1 || defendingCardNumber > defendingPlayer.getCardsOnTable().size()) {
+                            Print.actionMessage("Choose a card to attack");
+                            Print.optionList(defendingPlayer.getCardsOnTable());
+                            defendingCardNumber = scanner.nextInt();
+                        }
+                        GameCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
+                        GameCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
+                        attack(attackingCard, defendingCard);
                         break;
-                    }else{
-                        int number = randomNumber(5);
-                        attackPlayer(defendingPlayer, number);
-                        Print.actionMessage(attackingPlayer.getName() + " attacked " + defendingPlayer.getName() + " with " + number + " damage!" );
-                    }
+                    case 3:
 
-                    break;
-                case 4:
-                    endTurn = true;
-                    break;
-                default:
-                    System.out.println("Invalid option");
+                        if (defendingPlayer.getCardsOnTable().size() != 0 || attackingPlayer.getCardsOnTable().size() == 0) {
+                            Print.actionMessage("Can not attack player");
+                            break;
+                        } else {
+                            Print.actionMessage("Choose a card to attack player with");
+                            int attackPlayerCardNumber = 0;
+                            cardIsPlayed = true;
+                            while (attackPlayerCardNumber < 1 || attackPlayerCardNumber > attackingPlayer.getCardsOnTable().size() || cardIsPlayed) {
+                                Print.actionMessage("Choose card to play!");
+                                Print.optionList(attackingPlayer.getCardsOnTable());
+                                attackPlayerCardNumber = Integer.parseInt(scanner.nextLine());
+                                if (attackPlayerCardNumber > 0 && attackPlayerCardNumber <= attackingPlayer.getCardsOnTable().size()) {
+                                    cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1).isUsed();
+                                    if (cardIsPlayed) {
+                                        Print.actionMessage("Card has already attacked in this round! \n");
+                                        throw new Exception("Card has alredy been used!");
+                                    }
+                                }
+                            }
+                            //  GameCard attackingPlayerCard = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1);
+                            //Korten har ingen damage än så vi kör randomNumber
+                            int number = randomNumber(5);
+                            attackPlayer(defendingPlayer, number);
+                            Print.actionMessage(attackingPlayer.getName() + " attacked " + defendingPlayer.getName() + " with " + number + " damage!");
+                            attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1).setIsUsed(true);
+                        }
+
+                        break;
+                    case 4:
+                        endTurn = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
             }
-
+            attackingPlayer.setHasPlayedCard(false);
+            toggleTurn();
         }
-        attackingPlayer.setHasPlayedCard(false);
-        toggleTurn();
     }
 
 
@@ -185,11 +206,11 @@ public class Game {
     }
 
     public void isPlayerDead(Player player) {
-        if(player == null || player.getHp() <= 0) {
-            if (isPlayer1Turn()){
+        if (player == null || player.getHp() <= 0) {
+            if (isPlayer1Turn()) {
                 System.out.print(player1.getName() + " HAS WON!");
                 System.exit(0);
-            }else{
+            } else {
                 System.out.print(player2.getName() + " HAS WON!");
                 System.exit(0);
             }

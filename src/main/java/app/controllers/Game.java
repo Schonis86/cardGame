@@ -93,6 +93,9 @@ public class Game {
                         attackingPlayer.playCard(chosenCard - 1);
                         break;
                     case 2:
+                        if (roundCounter <= 1) {
+                            throw new Exception("cant make attack move first round!");
+                        }
                         if (attackingPlayer.getCardsOnTable().size() == 0 || defendingPlayer.getCardsOnTable().size() == 0) {
                             Print.actionMessage("Attack not possible!");
                             break;
@@ -107,8 +110,7 @@ public class Game {
                             if (attackCardNumber > 0 && attackCardNumber <= attackingPlayer.getCardsOnTable().size()) {
                                 cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1).isUsed();
                                 if (cardIsPlayed) {
-                                    Print.actionMessage("Card has already attacked in this round! \n");
-                                    throw new Exception("Card has alredy been used!");
+                                    throw new Exception("card has already attacked playing this round!");
                                 }
                             }
                         }
@@ -123,7 +125,9 @@ public class Game {
                         attack(attackingCard, defendingCard);
                         break;
                     case 3:
-
+                        if (roundCounter <= 1) {
+                            throw new Exception("cant make attack move first round!");
+                        }
                         if (defendingPlayer.getCardsOnTable().size() != 0 || attackingPlayer.getCardsOnTable().size() == 0) {
                             Print.actionMessage("Can not attack player");
                             break;
@@ -138,8 +142,7 @@ public class Game {
                                 if (attackPlayerCardNumber > 0 && attackPlayerCardNumber <= attackingPlayer.getCardsOnTable().size()) {
                                     cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1).isUsed();
                                     if (cardIsPlayed) {
-                                        Print.actionMessage("Card has already attacked in this round! \n");
-                                        throw new Exception("Card has alredy been used!");
+                                        throw new Exception("card has already attacked playing this round!");
                                     }
                                 }
                             }
@@ -160,11 +163,11 @@ public class Game {
                 }
 
             } catch (Exception e) {
-                System.out.println(e);
+                Print.actionMessage(e.getMessage());
             }
-            attackingPlayer.setHasPlayedCard(false);
-            toggleTurn();
         }
+        attackingPlayer.setHasPlayedCard(false);
+        toggleTurn();
     }
 
 

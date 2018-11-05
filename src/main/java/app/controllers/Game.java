@@ -103,6 +103,7 @@ public class Game {
                         while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
                             Print.actionMessage("Choose card to play!");
                             Print.optionList(attackingPlayer.getCardsOnHand());
+                            System.out.println(" ");
                             chosenCard = Integer.parseInt(scanner.nextLine());
                         }
                         attackingPlayer.playCard(chosenCard - 1);

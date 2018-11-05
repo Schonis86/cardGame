@@ -95,7 +95,8 @@ public class Player {
             cardsOnTable.add(cardsOnHand.get(index));
             cardsOnHand.remove(index);
             hasPlayedCard = true;
-            Print.actionMessage("Played card: " + (index + 1));
+            Print.actionMessage("    Played card: " + (index + 1) + "    ");
+            System.out.println(" ");
         }
         else{
             Print.actionMessage("You can only play one card!");

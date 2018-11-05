@@ -218,7 +218,8 @@ public class Game {
         }
         player1.getIsCardDead(player1Card.getName());
         player2.getIsCardDead(player2Card.getName());
-        Print.actionMessage(player1Card.getName() + " HAS ATTACKED " + player2Card.getName());
+
+            Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
     }
 
 

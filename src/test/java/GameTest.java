@@ -56,17 +56,17 @@ class GameTest {
 
     @Test
     void attack() {
-/*        List<GameCard> attackingCards = getDeck(3);
-        List<GameCard> defendingCards = getDeck(3);
-        GameCard attackingCard = attackingCards.get(0);
-        GameCard defendingCard = defendingCards.get(1);
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
+        player1.playCard(0);
+        player2.playCard(0);
+        GameCard attackingCard = player1.getCardsOnTable().get(0);
+        GameCard defendingCard = player2.getCardsOnTable().get(0);
         int hpAttackingCard = attackingCard.getHp();
         int hpDefendingCard = defendingCard.getHp();
         game.attack(attackingCard, defendingCard);
         assertTrue(attackingCard.getIsUsed() == true);
         assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
-        verify(player1, times(1)).getIsCardDead("0");
-        verify(player2, times(1)).getIsCardDead("1");*/
     }
 
 

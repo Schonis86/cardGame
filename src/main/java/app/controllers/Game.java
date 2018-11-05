@@ -30,7 +30,7 @@ public class Game {
         this.player1Turn = false;
     }
 
-    public void start(){
+    public void start() {
         toggleTurn();
     }
 
@@ -55,13 +55,12 @@ public class Game {
 //        Print.actionMessage(message);
 
         // drawCard
-        if ( isPlayer1Turn()) {
-            if ( player1.getCardsOnHand().size() < 5 ) {
+        if (isPlayer1Turn()) {
+            if (player1.getCardsOnHand().size() < 5) {
                 player1.drawCard();
             }
-        }
-        else {
-            if ( player2.getCardsOnHand().size() < 5 ) {
+        } else {
+            if (player2.getCardsOnHand().size() < 5) {
                 player2.drawCard();
             }
         }
@@ -69,7 +68,6 @@ public class Game {
 
         getUserInput();
     }
-
 
 
     public void getUserInput() {
@@ -219,27 +217,25 @@ public class Game {
         player1.getIsCardDead(player1Card.getName());
         player2.getIsCardDead(player2Card.getName());
 
-            Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+        Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
     }
 
 
     public void attackPlayer(Player player, int attackNumber) {
         player.reduceHp(attackNumber);
-        isPlayerDead(player);
+        if (isPlayerDead(player)) {
+            Print.actionMessage(player.getName() + " died!");
+            if (player1Turn) {
+                Print.actionMessage(player1.getName() + " won!");
+            } else {
+                Print.actionMessage(player2.getName() + " won!");
+            }
+            System.exit(0);
+        }
     }
 
-    public void isPlayerDead(Player player) {
-        if (player == null || player.getHp() <= 0) {
-            if (isPlayer1Turn()) {
-                System.out.print(player1.getName() + " HAS WON!");
-                System.exit(0);
-            } else {
-                System.out.print(player2.getName() + " HAS WON!");
-                System.exit(0);
-            }
-
-        }
-
+    public Boolean isPlayerDead(Player player) {
+        return player == null || player.getHp() <= 0;
     }
 
     public void roundCheck() {

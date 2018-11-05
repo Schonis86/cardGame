@@ -56,20 +56,20 @@ class GameTest {
 
     @Test
     void attack() {
-/*        List<GameCard> attackingCards = getDeck(3);
-        List<GameCard> defendingCards = getDeck(3);
-        GameCard attackingCard = attackingCards.get(0);
-        GameCard defendingCard = defendingCards.get(1);
-        int hpAttackingCard = attackingCard.getHp();
-        int hpDefendingCard = defendingCard.getHp();
-        game.attack(attackingCard, defendingCard);
-        assertTrue(attackingCard.getIsUsed() == true);
-        assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
-        verify(player1, times(1)).getIsCardDead("0");
-        verify(player2, times(1)).getIsCardDead("1");*/
+
     }
 
 
+    @Test
+    void isPlayerDead() {
+        Player player = new Player(getDeck(DECK_SIZE), "test");
+        player.setHp(-1);
+        assertTrue(game.isPlayerDead(player));
+
+        player.setHp(10);
+        assertFalse(game.isPlayerDead(player));
+
+    }
 
     @Test
     void attackPlayer() {
@@ -86,8 +86,8 @@ class GameTest {
         int attackNumber = 10;
         int hpAfterAttack = game.getPlayer1().getHp() - attackNumber;
         game.attackPlayer(game.getPlayer1(), attackNumber);
-        assertEquals(0, hpAfterAttack);
-        verify(game, times(1)).isPlayerDead(game.getPlayer1());
+        assertEquals(20, hpAfterAttack);
+
 
     }
 

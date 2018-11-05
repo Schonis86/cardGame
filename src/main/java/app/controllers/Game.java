@@ -256,6 +256,14 @@ public class Game {
         return random.nextInt(maxValue) + 1;
     }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
     public void setPlayer1Cards(List<GameCard> player1Cards) {
         this.player1Cards = player1Cards;
     }

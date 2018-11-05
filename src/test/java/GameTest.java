@@ -18,8 +18,6 @@ import java.util.List;
 @ExtendWith(MockitoExtension.class)
 class GameTest {
 
-    @Mock
-    private List<GameCard> mockDeck;
     private Game game;
     private final int DECK_SIZE = 20;
     @Mock
@@ -30,7 +28,7 @@ class GameTest {
 
     @BeforeEach
     void setUpDeck() {
-        game = new Game(mockDeck);
+        game = new Game(getDeck(DECK_SIZE));
     }
 
     List<GameCard> getDeck(int deckSize) {
@@ -54,7 +52,7 @@ class GameTest {
         assertEquals(DECK_SIZE / 2, deckSizePlayer2);
     }
 
-    @Test
+/*    @Test
     void toggleTurn() {
 
         List<GameCard> deck = getDeck(0);
@@ -73,22 +71,8 @@ class GameTest {
         assertEquals(2, resultTurnCounter);
 
         verify(gameSpy, times(2)).getUserInput();
-    }
+    }*/
 
-    @Test
-    void print() {
-
-    }
-
-    @Test
-    void printWinningMessage() {
-    }
-
-    @Test
-    void playCard() {
-
-
-    }
 
     @Test
     void attack() {
@@ -105,55 +89,31 @@ class GameTest {
         verify(player2, times(1)).getIsCardDead("1");
     }
 
-    ;
-
-
     @Test
     void attackPlayer() {
-        Game game = spy(new Game(mockDeck));
-        Player player = new Player(mockDeck,"test");
+
+        Player player = new Player(getDeck(10),"test");
 
         int attackNumber = game.randomNumber(5);
         int hpAfterAttack = player.getHp() - attackNumber;
         game.attackPlayer(player, attackNumber);
         assertEquals(player.getHp(), hpAfterAttack);
-        verify(game, times(1)).isPlayerDead(player);
-
 
     }
 
     @Test
     void attackPlayerWhenHpIsBellow0() {
-        Game game = spy(new Game(mockDeck));
-        Player player = new Player(mockDeck,"test");
+        Game game = spy(new Game(getDeck(10)));
+        Player player = new Player(getDeck(10),"test");
 
         int attackNumber = 10;
         int hpAfterAttack = player.getHp() - attackNumber;
         game.attackPlayer(player, attackNumber);
         assertEquals(0, hpAfterAttack);
         verify(game, times(1)).isPlayerDead(player);
-    //    verify(game, times(1)).killPlayer(player);
-    }
-
-    @Test
-    void getUserInput() {
-        //
     }
 
 /*    @Test
-    void isPlayerDead() {
-        Player player = mock(Player.class);
-        when(player.getHp()).thenReturn(1);
-        assertFalse(game.isPlayerDead(player));
-
-        when(player.getHp()).thenReturn(0);
-        assertTrue(game.isPlayerDead(player));
-
-        player = null;
-        assertTrue(game.isPlayerDead(player));
-    }*/
-
-    @Test
     void roundCheck() {
         assertEquals(0, game.getRoundCounter());
         game.toggleTurn();
@@ -173,11 +133,7 @@ class GameTest {
         assertEquals(7, game.getTurnCounter());
         assertEquals(7, game.getTurnCounter());
         assertTrue(game.getRoundCounter() * 2 == game.getTurnCounter() || game.getRoundCounter() * 2 - 1 == game.getTurnCounter());
-    }
-
-    @Test
-    void killPlayer() {
-    }
+    }*/
 
     @Test
     void randomNumber() {

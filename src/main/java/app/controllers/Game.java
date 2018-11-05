@@ -51,12 +51,26 @@ public class Game {
 
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
+//        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
+//        Print.actionMessage(message);
 
-       /* String message = isPlayer1Turn() ? "    Player 1 turn     " : "    Player 2 turn     ";
-        Print.actionMessage(message);*/
+        // drawCard
+        if ( isPlayer1Turn()) {
+            if ( player1.getCardsOnHand().size() < 5 ) {
+                player1.drawCard();
+            }
+        }
+        else {
+            if ( player2.getCardsOnHand().size() < 5 ) {
+                player2.drawCard();
+            }
+        }
+
 
         getUserInput();
     }
+
+
 
     public void getUserInput() {
         Player defendingPlayer;
@@ -74,11 +88,12 @@ public class Game {
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                System.out.println("Choose option:");
-                System.out.println("1. Play card");
-                System.out.println("2. Attack Card");
-                System.out.println("3. Attack Player");
-                System.out.println("4. End Turn");
+                Print.actionMessage("    CHOOSE OPTION     ");
+                System.out.print("| 1. PLAY CARD |");
+                System.out.print("| 2. ATTACK CARD |");
+                System.out.print("| 3. ATTACK PLAYER |");
+                System.out.print("| 4. END TURN |");
+                System.out.println("\n\n");
 
                 Scanner scanner = new Scanner(System.in);
                 int option = Integer.parseInt(scanner.nextLine());
@@ -91,6 +106,7 @@ public class Game {
                         while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
                             Print.actionMessage("Choose card to play!");
                             Print.optionList(attackingPlayer.getCardsOnHand());
+                            System.out.println(" ");
                             chosenCard = Integer.parseInt(scanner.nextLine());
                         }
                         attackingPlayer.playCard(chosenCard - 1);
@@ -202,7 +218,7 @@ public class Game {
         }
         player1.getIsCardDead(player1Card.getName());
         player2.getIsCardDead(player2Card.getName());
-        System.out.println(player1Card.getName() + " has attacked " + player2Card.getName());
+        Print.actionMessage(player1Card.getName() + " HAS ATTACKED " + player2Card.getName());
     }
 
 
@@ -229,6 +245,10 @@ public class Game {
         if (turnCounter % 2 != 0) {
             roundCounter++;
         }
+    }
+
+    public void killPlayer(Player player) {
+        System.out.println("player killed");
     }
 
     public int randomNumber(int maxValue) {

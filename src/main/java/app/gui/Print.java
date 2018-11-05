@@ -20,7 +20,8 @@ public class Print {
     public static void cardsVisibleForActivePlayer(Player attackingPlayer, Player defendingPlayer) {
         System.out.println("********************************************************************");
         actionMessage("     " + attackingPlayer.getName() + " turn       ");
-        System.out.println("********************************************************************");
+        System.out.println("**** "+attackingPlayer.getName()+" HP: "+attackingPlayer.getHp()+"" +
+                " ******************************** "+defendingPlayer.getName()+" HP: "+defendingPlayer.getHp()+" ****");
 
         actionMessage(" Enemy Cards On Table ");
         if (defendingPlayer.getCardsOnTable().size() == 0) {

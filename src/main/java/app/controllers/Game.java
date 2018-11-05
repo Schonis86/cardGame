@@ -48,12 +48,26 @@ public class Game {
 
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
+        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
+        Print.actionMessage(message);
 
-       /* String message = isPlayer1Turn() ? "    Player 1 turn     " : "    Player 2 turn     ";
-        Print.actionMessage(message);*/
+        // drawCard
+        if ( isPlayer1Turn()) {
+            if ( player1.getCardsOnHand().size() < 5 ) {
+                player1.drawCard();
+            }
+        }
+        else {
+            if ( player2.getCardsOnHand().size() < 5 ) {
+                player2.drawCard();
+            }
+        }
+
 
         getUserInput();
     }
+
+
 
     public void getUserInput() {
         Player defendingPlayer;
@@ -226,6 +240,10 @@ public class Game {
         if (turnCounter % 2 != 0) {
             roundCounter++;
         }
+    }
+
+    public void killPlayer(Player player) {
+        System.out.println("player killed");
     }
 
     public int randomNumber(int maxValue) {

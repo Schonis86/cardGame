@@ -48,7 +48,7 @@ public class Game {
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
         String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
-        print(message);
+        Print.actionMessage(message);
 
         // drawCard
         if ( isPlayer1Turn()) {
@@ -66,9 +66,7 @@ public class Game {
         getUserInput();
     }
 
-    public void print(String message) {
-        Print.actionMessage(message);
-    }
+
 
     public void getUserInput() {
         Player defendingPlayer;

@@ -28,6 +28,9 @@ public class Game {
         player1 = new Player(player1Cards, "Jonas");
         player2 = new Player(player2Cards, "Robin");
         this.player1Turn = false;
+    }
+
+    public void start(){
         toggleTurn();
     }
 

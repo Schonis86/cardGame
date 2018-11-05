@@ -33,5 +33,6 @@ public class Main{
                 deck.add(card);
             }
         Game game = new Game(deck);
+            game.start();
     }
 }

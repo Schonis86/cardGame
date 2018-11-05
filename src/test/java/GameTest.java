@@ -8,14 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@ExtendWith(MockitoExtension.class)
 class GameTest {
-
 
     @Mock
     private List<GameCard> mockDeck;

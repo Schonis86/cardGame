@@ -72,8 +72,8 @@ class PlayerTest {
         deck = getDeck(10);
         Player player = new Player(deck,"test");
         player.drawCard();
-        assertEquals(1, player.getCardsOnHand().size());
-        assertEquals(9, player.getCardsInDeck().size());
+        assertEquals(6, player.getCardsOnHand().size());
+        assertEquals(4, player.getCardsInDeck().size());
     }
 
     @Test

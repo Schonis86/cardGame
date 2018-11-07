@@ -56,6 +56,15 @@ class GameTest {
 
     @Test
     void attack() {
+        List<GameCard> attackingCards= getDeck(3);
+        List<GameCard> defendingCards = getDeck(3);
+        GameCard attackingCard = attackingCards.get(0);
+        GameCard defendingCard = defendingCards.get(1);
+        int hpAttackingCard = attackingCard.getHp();
+        int hpDefendingCard = defendingCard.getHp();
+        game.attack(attackingCard, defendingCard);
+        assertTrue(attackingCard.getIsUsed()==true);
+        assertTrue(attackingCard.getHp()<hpAttackingCard||defendingCard.getHp()<hpDefendingCard);
 
     }
 

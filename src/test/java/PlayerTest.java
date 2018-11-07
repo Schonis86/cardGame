@@ -17,18 +17,19 @@ class PlayerTest {
     List<GameCard> deck;
     Player player;
 
-    @Mock
+
     GameCard card;
 
     @BeforeEach
     void setUp() {
         deck = getDeck(20);
-        player = new Player(deck,"test");
+        player = new Player(deck, "test");
     }
 
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
+            card = new GameCard("Card " + 1);
             deck.add(card);
         }
         return deck;
@@ -42,7 +43,7 @@ class PlayerTest {
         player.reduceHp(DAMAGE);
         int hpAfter = player.getHp();
 
-        assertEquals(hpAfter, hpBefore-DAMAGE);
+        assertEquals(hpAfter, hpBefore - DAMAGE);
     }
 
     @Test
@@ -53,7 +54,7 @@ class PlayerTest {
         player.reduceHp(OVERKILL);
         int hpAfter = player.getHp();
 
-        assertEquals(hpAfter, hpBefore-OVERKILL);
+        assertEquals(hpAfter, hpBefore - OVERKILL);
     }
 
     @Test
@@ -70,7 +71,7 @@ class PlayerTest {
     @Test
     void drawCard() {
         deck = getDeck(10);
-        Player player = new Player(deck,"test");
+        Player player = new Player(deck, "test");
         player.drawCard();
         assertEquals(6, player.getCardsOnHand().size());
         assertEquals(4, player.getCardsInDeck().size());
@@ -83,7 +84,7 @@ class PlayerTest {
         player.setCardsOnHand(deck);
 
         assertFalse(player.isHasPlayedCard());
-        player.playCard( 1 );
+        player.playCard(1);
         assertTrue(player.isHasPlayedCard());
 
         assertEquals(4, player.getCardsOnHand().size());
@@ -91,8 +92,25 @@ class PlayerTest {
 
     }
 
-
     @Test
+    void removeCardIfDead() {
+        deck = getDeck(5);
+        player.setCardsOnTable(deck);
+
+        player.removeCardIfDead();
+        assertEquals(5, player.getCardsOnTable().size());
+        assertEquals(0, player.getGraveYard().size());
+
+        deck.get(3).decreaseHp(4);
+
+        player.removeCardIfDead();
+        assertEquals(4, player.getCardsOnTable().size());
+        assertEquals(1, player.getGraveYard().size());
+
+
+    }
+
+ /*   @Test
     void killCard() {
         List<GameCard> cardsOnTable = new ArrayList();
         GameCard card1 = new GameCard("card 1");
@@ -104,16 +122,16 @@ class PlayerTest {
         Player player = new Player(deck,"test");
         player.setCardsOnTable(cardsOnTable);
 
-        player.getIsCardDead("card 2");
+        player.removeCardIfDead();
         assertEquals(2, player.getCardsOnTable().size() );
         assertTrue(cardsOnTable.contains(card2));
         assertEquals(5, card2.getHp());
 
         card2.setHp(0);
-        player.getIsCardDead("card 2");
+        player.removeCardIfDead();
         assertEquals(1, player.getCardsOnTable().size() );
         assertFalse(cardsOnTable.contains(card2));
         assertEquals(0, card2.getHp());
 
-    }
+    }*/
 }

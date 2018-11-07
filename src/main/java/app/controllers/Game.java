@@ -137,11 +137,11 @@ public class Game {
                         CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
                         boolean DidPlayer1LoseAttack = attack(attackingCard, defendingCard);
                         if(DidPlayer1LoseAttack){
-                            player1.getIsCardDead();
+                            player1.removeCardIfDead();
                             break;
                         }
                         else{
-                            player2.getIsCardDead();
+                            player2.removeCardIfDead();
                             break;}
 
 

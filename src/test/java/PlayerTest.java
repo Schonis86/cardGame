@@ -1,4 +1,4 @@
-import app.entities.GameCard;
+import app.entities.CreatureCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    List<GameCard> deck;
+    List<CreatureCard> deck;
     Player player;
 
     @Mock
-    GameCard card;
+    CreatureCard card;
 
     @BeforeEach
     void setUp() {
@@ -26,8 +26,8 @@ class PlayerTest {
         player = new Player(deck,"test");
     }
 
-    List<GameCard> getDeck(int deckSize) {
-        List<GameCard> deck = new ArrayList();
+    List<CreatureCard> getDeck(int deckSize) {
+        List<CreatureCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
             deck.add(card);
         }
@@ -94,9 +94,9 @@ class PlayerTest {
 
     @Test
     void killCard() {
-        List<GameCard> cardsOnTable = new ArrayList();
-        GameCard card1 = new GameCard("card 1");
-        GameCard card2 = new GameCard("card 2");
+        List<CreatureCard> cardsOnTable = new ArrayList();
+        CreatureCard card1 = new CreatureCard("card 1");
+        CreatureCard card2 = new CreatureCard("card 2");
         cardsOnTable.add(card1);
         cardsOnTable.add(card2);
         card2.setHp(5);

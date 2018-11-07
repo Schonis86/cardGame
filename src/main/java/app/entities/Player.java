@@ -16,12 +16,12 @@ public class Player {
     }
 
     private int hp;
-    private List<GameCard> cardsOnHand;
-    private List<GameCard> cardsInDeck;
-    private List<GameCard> cardsOnTable;
+    private List<CreatureCard> cardsOnHand;
+    private List<CreatureCard> cardsInDeck;
+    private List<CreatureCard> cardsOnTable;
     private boolean hasPlayedCard;
 
-    public Player(List<GameCard> deck, String name) {
+    public Player(List<CreatureCard> deck, String name) {
         this.name = name;
         this.hp = 10;
         this.cardsInDeck = deck;
@@ -47,27 +47,27 @@ public class Player {
         this.hp = hp;
     }
 
-    public List<GameCard> getCardsOnHand() {
+    public List<CreatureCard> getCardsOnHand() {
         return cardsOnHand;
     }
 
-    public void setCardsOnHand(List<GameCard> cardsOnHand) {
+    public void setCardsOnHand(List<CreatureCard> cardsOnHand) {
         this.cardsOnHand = cardsOnHand;
     }
 
-    public List<GameCard> getCardsInDeck() {
+    public List<CreatureCard> getCardsInDeck() {
         return cardsInDeck;
     }
 
-    public void setCardsInDeck(List<GameCard> cardsInDeck) {
+    public void setCardsInDeck(List<CreatureCard> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
 
-    public List<GameCard> getCardsOnTable() {
+    public List<CreatureCard> getCardsOnTable() {
         return cardsOnTable;
     }
 
-    public void setCardsOnTable(List<GameCard> cardsOnTable) {
+    public void setCardsOnTable(List<CreatureCard> cardsOnTable) {
         this.cardsOnTable = cardsOnTable;
     }
 
@@ -109,7 +109,7 @@ public class Player {
     //TODO: Kanske döpa om metoden till removeCardIfDead eller liknande?
     public void getIsCardDead(String cardName) {
         //TODO: Kanske ändra så att vi streamar och plockar bort alla döda kort bara rakt av?
-        GameCard card = cardsOnTable
+        CreatureCard card = cardsOnTable
                 .stream()
                 .filter(c -> c.getName().equals(cardName))
                 .findFirst()

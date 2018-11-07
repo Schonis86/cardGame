@@ -1,11 +1,6 @@
 package app;
 
-import app.entities.GameCard;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import app.entities.CreatureCard;
 
 import app.controllers.Game;
 
@@ -27,9 +22,9 @@ public class Main{
     public static void main(String[] args) {
 //        launch(args);
 
-            List<GameCard> deck = new ArrayList();
+            List<CreatureCard> deck = new ArrayList();
             for(int i = 0; i < 20; i++) {
-                GameCard card = new GameCard("kort" + (i+1));
+                CreatureCard card = new CreatureCard("kort" + (i+1));
                 deck.add(card);
             }
         Game game = new Game(deck);

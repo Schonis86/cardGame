@@ -11,4 +11,6 @@ public class MagicCard {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

@@ -214,6 +214,7 @@ public class Game {
         } else {
             player2Card.decreaseHp(fightResult);
         }
+        //TODO: Behöver vi göra bägge dessa anrop? Kan man inte flytta in dem i if/else satsen?
         player1.getIsCardDead(player1Card.getName());
         player2.getIsCardDead(player2Card.getName());
 

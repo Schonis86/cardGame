@@ -32,11 +32,11 @@ public class Player {
     }
 
     public void getStartCards() {
-        drawCard();
-        drawCard();
-        drawCard();
-        drawCard();
-        drawCard();
+        final int N_CARDS_ON_HAND_AT_START = 5;
+
+        for(int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
+            drawCard();
+        }
     }
 
     public int getHp() {
@@ -80,9 +80,12 @@ public class Player {
     }
 
     public void drawCard() {
-        if (cardsInDeck.size() > 0) {
-            cardsOnHand.add(cardsInDeck.get(cardsInDeck.size() - 1));
-            cardsInDeck.remove(cardsInDeck.size() - 1);
+        final int N_CARDS_IN_DECK = cardsInDeck.size();
+        final int INDEX_OF_LAST_CARD = N_CARDS_IN_DECK - 1;
+
+        if (N_CARDS_IN_DECK > 0) {
+            cardsOnHand.add(cardsInDeck.get(INDEX_OF_LAST_CARD));
+            cardsInDeck.remove(INDEX_OF_LAST_CARD);
         } else {
             System.out.println("can't draw card!");
         }
@@ -91,7 +94,7 @@ public class Player {
 
     public void playCard(int index) {
 
-        if ( !hasPlayedCard ) {
+        if (!hasPlayedCard) {
             cardsOnTable.add(cardsOnHand.get(index));
             cardsOnHand.remove(index);
             hasPlayedCard = true;
@@ -103,7 +106,9 @@ public class Player {
         }
     }
 
+    //TODO: Kanske döpa om metoden till removeCardIfDead eller liknande?
     public void getIsCardDead(String cardName) {
+        //TODO: Kanske ändra så att vi streamar och plockar bort alla döda kort bara rakt av?
         GameCard card = cardsOnTable
                 .stream()
                 .filter(c -> c.getName().equals(cardName))

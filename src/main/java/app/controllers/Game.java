@@ -139,8 +139,16 @@ public class Game {
                         }
                         GameCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
                         GameCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
-                        attack(attackingCard, defendingCard);
-                        break;
+                        boolean DidPlayer1LoseAttack = attack(attackingCard, defendingCard);
+                        if(DidPlayer1LoseAttack){
+                            player1.getIsCardDead();
+                            break;
+                        }
+                        else{
+                            player2.getIsCardDead();
+                            break;}
+
+
                     case 3:
                         if (roundCounter <= 1) {
                             throw new Exception("cant make attack move first round!");
@@ -188,11 +196,12 @@ public class Game {
     }
 
 
-    public void attack(GameCard attackingCard, GameCard defendingCard) {
+    public boolean attack(GameCard attackingCard, GameCard defendingCard) {
         GameCard player1Card;
         GameCard player2Card;
         int player1FightingPoints;
         int player2FightingPoints;
+        boolean didPlayer1LoseAttack;
 
         if (player1Turn) {
             player1Card = attackingCard;
@@ -209,16 +218,15 @@ public class Game {
         } while (player1FightingPoints == player2FightingPoints);
 
         int fightResult = player1FightingPoints - player2FightingPoints;
+        Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
         if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);
+            didPlayer1LoseAttack = true;
         } else {
             player2Card.decreaseHp(fightResult);
+            didPlayer1LoseAttack = false;
         }
-        //TODO: Behöver vi göra bägge dessa anrop? Kan man inte flytta in dem i if/else satsen?
-        player1.getIsCardDead(player1Card.getName());
-        player2.getIsCardDead(player2Card.getName());
-
-        Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+        return didPlayer1LoseAttack;
     }
 
 

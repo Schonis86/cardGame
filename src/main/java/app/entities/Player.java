@@ -117,7 +117,10 @@ public class Player {
     }
 
     public void removeCardIfDead() {
-        getCardsOnTable().removeIf(card -> card.getHp() == 0);
+        cardsOnTable.stream()
+                .filter(c -> c.getHp() == 0)
+                .forEach(card -> graveYard.add(card));
+        cardsOnTable.removeIf(card -> card.getHp() == 0);
     }
 
     public void reduceHp(int damage) {

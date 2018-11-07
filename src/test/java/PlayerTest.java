@@ -17,7 +17,7 @@ class PlayerTest {
     List<GameCard> deck;
     Player player;
 
-    @Mock
+
     GameCard card;
 
     @BeforeEach
@@ -29,6 +29,7 @@ class PlayerTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
+            card = new GameCard("Card " + 1);
             deck.add(card);
         }
         return deck;
@@ -91,6 +92,20 @@ class PlayerTest {
 
     }
 
+    @Test
+    void removeCardIfDead() {
+        deck = getDeck(5);
+        player.setCardsOnTable(deck);
+        player.removeCardIfDead();
+        assertEquals(5, player.getCardsOnTable().size() );
+        deck.get(3).decreaseHp(4);
+        deck.forEach(d -> System.out.println(d.getHp()));
+        player.removeCardIfDead();
+        assertEquals(4, player.getCardsOnTable().size());
+
+
+
+    }
 
     @Test
     void killCard() {
@@ -104,13 +119,13 @@ class PlayerTest {
         Player player = new Player(deck,"test");
         player.setCardsOnTable(cardsOnTable);
 
-        player.getIsCardDead("card 2");
+        player.removeCardIfDead();
         assertEquals(2, player.getCardsOnTable().size() );
         assertTrue(cardsOnTable.contains(card2));
         assertEquals(5, card2.getHp());
 
         card2.setHp(0);
-        player.getIsCardDead("card 2");
+        player.removeCardIfDead();
         assertEquals(1, player.getCardsOnTable().size() );
         assertFalse(cardsOnTable.contains(card2));
         assertEquals(0, card2.getHp());

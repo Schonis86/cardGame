@@ -23,7 +23,7 @@ public class Player {
 
     public Player(List<GameCard> deck, String name) {
         this.name = name;
-        this.hp = 10;
+        this.hp = 20;
         this.cardsInDeck = deck;
         this.cardsOnHand = new ArrayList();
         this.cardsOnTable = new ArrayList();

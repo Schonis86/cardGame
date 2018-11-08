@@ -1,11 +1,9 @@
-import app.entities.GameCard;
+import app.entities.CreatureCard;
 import app.entities.Player;
-import app.gui.Print;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import app.controllers.Game;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,10 +30,10 @@ class GameTest {
         game = new Game(getDeck(20));
     }
 
-    List<GameCard> getDeck(int deckSize) {
-        List<GameCard> deck = new ArrayList();
+    List<CreatureCard> getDeck(int deckSize) {
+        List<CreatureCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            GameCard card = new GameCard("kort" + (i + 1));
+            CreatureCard card = new CreatureCard("kort" + (i + 1));
             deck.add(card);
         }
         return deck;
@@ -43,7 +41,7 @@ class GameTest {
 
     @Test
     void divideCards() {
-        List<GameCard> deck = getDeck(DECK_SIZE);
+        List<CreatureCard> deck = getDeck(DECK_SIZE);
         game = new Game(deck);
 
         game.divideCards();
@@ -56,10 +54,10 @@ class GameTest {
 
     @Test
     void attack() {
-        List<GameCard> attackingCards= getDeck(3);
-        List<GameCard> defendingCards = getDeck(3);
-        GameCard attackingCard = attackingCards.get(0);
-        GameCard defendingCard = defendingCards.get(1);
+        List<CreatureCard> attackingCards= getDeck(3);
+        List<CreatureCard> defendingCards = getDeck(3);
+        CreatureCard attackingCard = attackingCards.get(0);
+        CreatureCard defendingCard = defendingCards.get(1);
         int hpAttackingCard = attackingCard.getHp();
         int hpDefendingCard = defendingCard.getHp();
         game.attack(attackingCard, defendingCard);

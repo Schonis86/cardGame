@@ -112,10 +112,12 @@ class PlayerTest {
 
     @Test
     void regenerateEnergy() {
-       player.setEnergyPoints(10);
-       player.regenerateEnergy(2);
-        assertEquals(12,player.getEnergyPoints());
-
-
+        player.regenerateEnergy(2);
+        assertEquals(12, player.getEnergyPoints());
+        player.regenerateEnergy(10);
+        assertEquals(22, player.getEnergyPoints());
+        player.regenerateEnergy(-10);
+        assertEquals(12, player.getEnergyPoints());
     }
+
 }

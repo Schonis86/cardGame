@@ -7,19 +7,13 @@ import java.util.List;
 
 public class Player {
     private String name;
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    private int energyPoints;
     private int hp;
     private List<CreatureCard> cardsOnHand;
     private List<CreatureCard> cardsInDeck;
     private List<CreatureCard> cardsOnTable;
     private List<CreatureCard> graveYard;
+
     private boolean hasPlayedCard;
 
     public Player(List<CreatureCard> deck, String name) {
@@ -30,15 +24,8 @@ public class Player {
         this.cardsOnTable = new ArrayList();
         this.graveYard = new ArrayList();
         this.hasPlayedCard = false;
+        this.energyPoints = 10;
         getStartCards();
-    }
-
-    public void getStartCards() {
-        final int N_CARDS_ON_HAND_AT_START = 5;
-
-        for (int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
-            drawCard();
-        }
     }
 
     public int getHp() {
@@ -87,6 +74,34 @@ public class Player {
 
     public void setHasPlayedCard(boolean hasPlayedCard) {
         this.hasPlayedCard = hasPlayedCard;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getEnergyPoints() {
+        return energyPoints;
+    }
+
+    public void setEnergyPoints(int energyPoints) {
+        this.energyPoints = energyPoints;
+    }
+
+    public void regenerateEnergy(int points) {
+        this.energyPoints += points;
+    }
+
+    public void getStartCards() {
+        final int N_CARDS_ON_HAND_AT_START = 5;
+
+        for (int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
+            drawCard();
+        }
     }
 
     public void drawCard() {

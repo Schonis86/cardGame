@@ -66,12 +66,12 @@ public class CreatureCard {
         return name;
     }
 
-    public int getEnergiCost() {
-        return energiCost;
+    public int getEnergyCost() {
+        return energyCost;
     }
 
-    public void setEnergiCost(int energiCost) {
-        this.energiCost = energiCost;
+    public void setEnergyCost(int energyCost) {
+        this.energyCost = energyCost;
     }
 
     public int getAttackPoints() {

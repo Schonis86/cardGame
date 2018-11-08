@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 
 class PlayerTest {
@@ -106,5 +108,14 @@ class PlayerTest {
         player.removeCardIfDead();
         assertEquals(4, player.getCardsOnTable().size());
         assertEquals(1, player.getGraveYard().size());
+    }
+
+    @Test
+    void regenerateEnergy() {
+       player.setEnergyPoints(10);
+       player.regenerateEnergy(2);
+        assertEquals(12,player.getEnergyPoints());
+
+
     }
 }

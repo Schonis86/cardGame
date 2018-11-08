@@ -24,6 +24,7 @@ public class Player {
         this.cardsOnTable = new ArrayList();
         this.graveYard = new ArrayList();
         this.hasPlayedCard = false;
+        this.energyPoints = 10;
         getStartCards();
     }
 
@@ -89,6 +90,10 @@ public class Player {
 
     public void setEnergyPoints(int energyPoints) {
         this.energyPoints = energyPoints;
+    }
+
+    public void regenerateEnergy(int points) {
+
     }
 
     public void getStartCards() {

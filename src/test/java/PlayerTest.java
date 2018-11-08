@@ -1,4 +1,4 @@
-import app.entities.GameCard;
+import app.entities.CreatureCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    List<GameCard> deck;
+    List<CreatureCard> deck;
     Player player;
 
-
-    GameCard card;
+    @Mock
+    CreatureCard card;
 
     @BeforeEach
     void setUp() {
@@ -26,10 +26,10 @@ class PlayerTest {
         player = new Player(deck, "test");
     }
 
-    List<GameCard> getDeck(int deckSize) {
-        List<GameCard> deck = new ArrayList();
+    List<CreatureCard> getDeck(int deckSize) {
+        List<CreatureCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            card = new GameCard("Card " + 1);
+            card = new CreatureCard("Card " + 1);
             deck.add(card);
         }
         return deck;
@@ -89,8 +89,8 @@ class PlayerTest {
 
         assertEquals(4, player.getCardsOnHand().size());
         assertEquals(1, player.getCardsOnTable().size());
-
     }
+
 
     @Test
     void removeCardIfDead() {
@@ -106,32 +106,5 @@ class PlayerTest {
         player.removeCardIfDead();
         assertEquals(4, player.getCardsOnTable().size());
         assertEquals(1, player.getGraveYard().size());
-
-
     }
-
- /*   @Test
-    void killCard() {
-        List<GameCard> cardsOnTable = new ArrayList();
-        GameCard card1 = new GameCard("card 1");
-        GameCard card2 = new GameCard("card 2");
-        cardsOnTable.add(card1);
-        cardsOnTable.add(card2);
-        card2.setHp(5);
-
-        Player player = new Player(deck,"test");
-        player.setCardsOnTable(cardsOnTable);
-
-        player.removeCardIfDead();
-        assertEquals(2, player.getCardsOnTable().size() );
-        assertTrue(cardsOnTable.contains(card2));
-        assertEquals(5, card2.getHp());
-
-        card2.setHp(0);
-        player.removeCardIfDead();
-        assertEquals(1, player.getCardsOnTable().size() );
-        assertFalse(cardsOnTable.contains(card2));
-        assertEquals(0, card2.getHp());
-
-    }*/
 }

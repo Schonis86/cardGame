@@ -1,13 +1,9 @@
 package app.controllers;
 
-import app.entities.GameCard;
-
-import javax.smartcardio.Card;
-import javax.swing.text.StyledEditorKit;
+import app.entities.CreatureCard;
 
 import app.entities.Player;
 import app.gui.Print;
-import net.bytebuddy.implementation.bytecode.Throw;
 
 import java.util.*;
 
@@ -16,13 +12,13 @@ public class Game {
     private boolean player1Turn;
     private int roundCounter = 0;
     private int turnCounter = 0;
-    private List<GameCard> allCards;
-    private List<GameCard> player1Cards;
-    private List<GameCard> player2Cards;
+    private List<CreatureCard> allCards;
+    private List<CreatureCard> player1Cards;
+    private List<CreatureCard> player2Cards;
     private Player player1;
     private Player player2;
 
-    public Game(List<GameCard> deck) {
+    public Game(List<CreatureCard> deck) {
         this.allCards = deck;
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
@@ -38,8 +34,8 @@ public class Game {
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);
-            ArrayList<GameCard> p1List = new ArrayList<GameCard>(allCards.subList(0, allCards.size() / 2));
-            ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size() / 2, allCards.size()));
+            ArrayList<CreatureCard> p1List = new ArrayList<CreatureCard>(allCards.subList(0, allCards.size() / 2));
+            ArrayList<CreatureCard> p2List = new ArrayList<CreatureCard>(allCards.subList(allCards.size() / 2, allCards.size()));
             setPlayer1Cards(p1List);
             setPlayer2Cards(p2List);
         }
@@ -137,8 +133,8 @@ public class Game {
                             Print.optionList(defendingPlayer.getCardsOnTable());
                             defendingCardNumber = scanner.nextInt();
                         }
-                        GameCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
-                        GameCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
+                        CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
+                        CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
                         boolean DidPlayer1LoseAttack = attack(attackingCard, defendingCard);
                         if(DidPlayer1LoseAttack){
                             player1.removeCardIfDead();
@@ -171,7 +167,7 @@ public class Game {
                                     }
                                 }
                             }
-                            //  GameCard attackingPlayerCard = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1);
+                            //  CreatureCard attackingPlayerCard = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1);
                             //Korten har ingen damage än så vi kör randomNumber
                             int number = randomNumber(5);
                             attackPlayer(defendingPlayer, number);
@@ -196,9 +192,9 @@ public class Game {
     }
 
 
-    public boolean attack(GameCard attackingCard, GameCard defendingCard) {
-        GameCard player1Card;
-        GameCard player2Card;
+    public boolean attack(CreatureCard attackingCard, CreatureCard defendingCard) {
+        CreatureCard player1Card;
+        CreatureCard player2Card;
         int player1FightingPoints;
         int player2FightingPoints;
         boolean didPlayer1LoseAttack;
@@ -270,11 +266,11 @@ public class Game {
         return player2;
     }
 
-    public void setPlayer1Cards(List<GameCard> player1Cards) {
+    public void setPlayer1Cards(List<CreatureCard> player1Cards) {
         this.player1Cards = player1Cards;
     }
 
-    public void setPlayer2Cards(List<GameCard> player2Cards) {
+    public void setPlayer2Cards(List<CreatureCard> player2Cards) {
         this.player2Cards = player2Cards;
     }
 
@@ -302,15 +298,15 @@ public class Game {
         this.player1Turn = player1Turn;
     }
 
-    public List<GameCard> getAllCards() {
+    public List<CreatureCard> getAllCards() {
         return allCards;
     }
 
-    public List<GameCard> getPlayer1Cards() {
+    public List<CreatureCard> getPlayer1Cards() {
         return player1Cards;
     }
 
-    public List<GameCard> getPlayer2Cards() {
+    public List<CreatureCard> getPlayer2Cards() {
         return player2Cards;
     }
 }

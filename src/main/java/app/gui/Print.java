@@ -1,6 +1,6 @@
 package app.gui;
 
-import app.entities.GameCard;
+import app.entities.CreatureCard;
 import app.entities.Player;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class Print {
         System.out.println("********************** " + message.toUpperCase() + " **********************"); //Calle
     }
 
-    public static void optionList(List<GameCard> list) {
+    public static void optionList(List<CreatureCard> list) {
         for (int i = 0; i < list.size(); i++) {
             System.out.print((i + 1) + ": " + list.get(i).getName() + " hp:" + list.get(i).getHp() + "  ");
         }

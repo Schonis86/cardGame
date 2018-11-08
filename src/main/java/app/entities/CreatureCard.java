@@ -66,6 +66,7 @@ public class CreatureCard {
         return name;
     }
 
+
     public int getEnergyCost() {
         return energyCost;
     }

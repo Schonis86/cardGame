@@ -93,7 +93,7 @@ public class Player {
     }
 
     public void regenerateEnergy(int points) {
-
+        this.energyPoints += points;
     }
 
     public void getStartCards() {

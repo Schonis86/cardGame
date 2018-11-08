@@ -4,6 +4,12 @@ public class MagicCard {
 
     private String name;
 
+    Player player;
+
+    public MagicCard(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -13,12 +19,12 @@ public class MagicCard {
     }
 
     //omedelbar effekt - öka Player1/2 HP med 3
-    public void selfHeal() {
+    public void selfHealPlayer( Player player ) {
 
     }
 
     // riktad effek - ge direkt skada till motståndarens kort med 2
-    public void damageEnemyCards() {
+    public void damageEnemyCards( int damage ) {
 
     }
 

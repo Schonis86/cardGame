@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player {
     private String name;
-
+    private int energyPoints;
     private int hp;
     private List<CreatureCard> cardsOnHand;
     private List<CreatureCard> cardsInDeck;
@@ -25,14 +25,6 @@ public class Player {
         this.graveYard = new ArrayList();
         this.hasPlayedCard = false;
         getStartCards();
-    }
-
-    public void getStartCards() {
-        final int N_CARDS_ON_HAND_AT_START = 5;
-
-        for (int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
-            drawCard();
-        }
     }
 
     public int getHp() {
@@ -81,6 +73,30 @@ public class Player {
 
     public void setHasPlayedCard(boolean hasPlayedCard) {
         this.hasPlayedCard = hasPlayedCard;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getEnergyPoints() {
+        return energyPoints;
+    }
+
+    public void setEnergyPoints(int energyPoints) {
+        this.energyPoints = energyPoints;
+    }
+
+    public void getStartCards() {
+        final int N_CARDS_ON_HAND_AT_START = 5;
+
+        for (int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
+            drawCard();
+        }
     }
 
     public void drawCard() {

@@ -20,7 +20,7 @@ public class MagicCard {
 
     //omedelbar effekt - öka Player1/2 HP med 3
     public void selfHealPlayer( Player player ) {
-
+        player.setHp( player.getHp() + 2 );
     }
 
     // riktad effek - ge direkt skada till motståndarens kort med 2

@@ -132,7 +132,7 @@ public class Player {
 
     public void removeCardIfDead() {
         cardsOnTable.stream()
-                .filter(c -> c.getHp() == 0)
+                .filter(c -> c.getHp() <= 0)
                 .forEach(card -> graveYard.add(card));
         cardsOnTable.removeIf(card -> card.getHp() == 0);
     }

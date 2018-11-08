@@ -1,8 +1,13 @@
 package app.entities;
 
-public class GameCard {
+public class CreatureCard {
     private int hp;
     private String name;
+    private int energyCost;
+    private int attackPoints;
+    private int defencePoint;
+    private int coolDown;
+    private Enum attackType;
     private boolean isUsed;
 
     public void setName(String name) {
@@ -21,7 +26,7 @@ public class GameCard {
         return this.hp < 1;
     }
 
-    public GameCard(String name){
+    public CreatureCard(String name){
         hp = 4; //Random 1-7
         this.name = name;
         isUsed = false;
@@ -59,5 +64,45 @@ public class GameCard {
 
     public String getName() {
         return name;
+    }
+
+    public int getEnergiCost() {
+        return energiCost;
+    }
+
+    public void setEnergiCost(int energiCost) {
+        this.energiCost = energiCost;
+    }
+
+    public int getAttackPoints() {
+        return attackPoints;
+    }
+
+    public void setAttackPoints(int attackPoints) {
+        this.attackPoints = attackPoints;
+    }
+
+    public int getDefencePoint() {
+        return defencePoint;
+    }
+
+    public void setDefencePoint(int defencePoint) {
+        this.defencePoint = defencePoint;
+    }
+
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
+    }
+
+    public Enum getAttackType() {
+        return attackType;
+    }
+
+    public void setAttackType(Enum attackType) {
+        this.attackType = attackType;
     }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Player {
     private String name;
-
     public String getName() {
         return name;
     }
@@ -17,13 +16,13 @@ public class Player {
     }
 
     private int hp;
-    private List<GameCard> cardsOnHand;
-    private List<GameCard> cardsInDeck;
-    private List<GameCard> cardsOnTable;
-    private List<GameCard> graveYard;
+    private List<CreatureCard> cardsOnHand;
+    private List<CreatureCard> cardsInDeck;
+    private List<CreatureCard> cardsOnTable;
+    private List<CreatureCard> graveYard;
     private boolean hasPlayedCard;
 
-    public Player(List<GameCard> deck, String name) {
+    public Player(List<CreatureCard> deck, String name) {
         this.name = name;
         this.hp = 10;
         this.cardsInDeck = deck;
@@ -50,35 +49,35 @@ public class Player {
         this.hp = hp;
     }
 
-    public List<GameCard> getCardsOnHand() {
+    public List<CreatureCard> getCardsOnHand() {
         return cardsOnHand;
     }
 
-    public void setCardsOnHand(List<GameCard> cardsOnHand) {
+    public void setCardsOnHand(List<CreatureCard> cardsOnHand) {
         this.cardsOnHand = cardsOnHand;
     }
 
-    public List<GameCard> getCardsInDeck() {
+    public List<CreatureCard> getCardsInDeck() {
         return cardsInDeck;
     }
 
-    public void setCardsInDeck(List<GameCard> cardsInDeck) {
+    public void setCardsInDeck(List<CreatureCard> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
 
-    public List<GameCard> getCardsOnTable() {
+    public List<CreatureCard> getCardsOnTable() {
         return cardsOnTable;
     }
 
-    public void setCardsOnTable(List<GameCard> cardsOnTable) {
+    public void setCardsOnTable(List<CreatureCard> cardsOnTable) {
         this.cardsOnTable = cardsOnTable;
     }
 
-    public List<GameCard> getGraveYard() {
+    public List<CreatureCard> getGraveYard() {
         return graveYard;
     }
 
-    public void setGraveYard(List<GameCard> graveYard) {
+    public void setGraveYard(List<CreatureCard> graveYard) {
         this.graveYard = graveYard;
     }
 

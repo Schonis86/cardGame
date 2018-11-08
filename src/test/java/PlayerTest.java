@@ -99,7 +99,7 @@ class PlayerTest {
 
         player.removeCardIfDead();
         assertEquals(5, player.getCardsOnTable().size());
-        assertEquals(0, player.getGraveYard().size());
+        assertTrue(player.getGraveYard().size() <= 0);
 
         deck.get(3).decreaseHp(4);
 

@@ -8,15 +8,9 @@ import java.util.List;
 public class Player {
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     private int hp;
+    private int energyPoint;
     private List<GameCard> cardsOnHand;
     private List<GameCard> cardsInDeck;
     private List<GameCard> cardsOnTable;
@@ -40,6 +34,14 @@ public class Player {
         for (int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
             drawCard();
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getHp() {

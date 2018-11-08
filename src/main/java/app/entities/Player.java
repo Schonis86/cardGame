@@ -16,17 +16,19 @@ public class Player {
     }
 
     private int hp;
-    private List<GameCard> cardsOnHand;
-    private List<GameCard> cardsInDeck;
-    private List<GameCard> cardsOnTable;
+    private List<CreatureCard> cardsOnHand;
+    private List<CreatureCard> cardsInDeck;
+    private List<CreatureCard> cardsOnTable;
+    private List<CreatureCard> graveYard;
     private boolean hasPlayedCard;
 
-    public Player(List<GameCard> deck, String name) {
+    public Player(List<CreatureCard> deck, String name) {
         this.name = name;
         this.hp = 10;
         this.cardsInDeck = deck;
         this.cardsOnHand = new ArrayList();
         this.cardsOnTable = new ArrayList();
+        this.graveYard = new ArrayList();
         this.hasPlayedCard = false;
         getStartCards();
     }
@@ -34,7 +36,7 @@ public class Player {
     public void getStartCards() {
         final int N_CARDS_ON_HAND_AT_START = 5;
 
-        for(int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
+        for (int i = 0; i < N_CARDS_ON_HAND_AT_START; i++) {
             drawCard();
         }
     }
@@ -47,28 +49,36 @@ public class Player {
         this.hp = hp;
     }
 
-    public List<GameCard> getCardsOnHand() {
+    public List<CreatureCard> getCardsOnHand() {
         return cardsOnHand;
     }
 
-    public void setCardsOnHand(List<GameCard> cardsOnHand) {
+    public void setCardsOnHand(List<CreatureCard> cardsOnHand) {
         this.cardsOnHand = cardsOnHand;
     }
 
-    public List<GameCard> getCardsInDeck() {
+    public List<CreatureCard> getCardsInDeck() {
         return cardsInDeck;
     }
 
-    public void setCardsInDeck(List<GameCard> cardsInDeck) {
+    public void setCardsInDeck(List<CreatureCard> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
 
-    public List<GameCard> getCardsOnTable() {
+    public List<CreatureCard> getCardsOnTable() {
         return cardsOnTable;
     }
 
-    public void setCardsOnTable(List<GameCard> cardsOnTable) {
+    public void setCardsOnTable(List<CreatureCard> cardsOnTable) {
         this.cardsOnTable = cardsOnTable;
+    }
+
+    public List<CreatureCard> getGraveYard() {
+        return graveYard;
+    }
+
+    public void setGraveYard(List<CreatureCard> graveYard) {
+        this.graveYard = graveYard;
     }
 
     public boolean isHasPlayedCard() {
@@ -100,24 +110,16 @@ public class Player {
             hasPlayedCard = true;
             Print.actionMessage("    Played card: " + (index + 1) + "    ");
             System.out.println(" ");
-        }
-        else{
+        } else {
             Print.actionMessage("You can only play one card!");
         }
     }
 
-    //TODO: Kanske döpa om metoden till removeCardIfDead eller liknande?
-    public void getIsCardDead(String cardName) {
-        //TODO: Kanske ändra så att vi streamar och plockar bort alla döda kort bara rakt av?
-        GameCard card = cardsOnTable
-                .stream()
-                .filter(c -> c.getName().equals(cardName))
-                .findFirst()
-                .get();
-
-        if (card.isCardDead()) {
-            cardsOnTable.removeIf(c -> c.getName().equals(cardName));
-        }
+    public void removeCardIfDead() {
+        cardsOnTable.stream()
+                .filter(c -> c.getHp() == 0)
+                .forEach(card -> graveYard.add(card));
+        cardsOnTable.removeIf(card -> card.getHp() == 0);
     }
 
     public void reduceHp(int damage) {
@@ -134,7 +136,7 @@ public class Player {
         setHp(newHp);
     }
 
-    public void setCardsToUnUsed(){
+    public void setCardsToUnUsed() {
         cardsOnTable.forEach(card -> card.setIsUsed(false));
     }
 

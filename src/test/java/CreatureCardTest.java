@@ -1,20 +1,16 @@
-import app.entities.GameCard;
-import app.entities.Player;
+import app.entities.CreatureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameCardTest {
+class CreatureCardTest {
 
-    GameCard card;
+    CreatureCard card;
 
     @BeforeEach
     void setUp() {
-        card = new GameCard("card1");
+        card = new CreatureCard("card1");
     }
 
     @Test

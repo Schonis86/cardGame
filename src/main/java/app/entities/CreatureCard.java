@@ -3,7 +3,7 @@ package app.entities;
 public class CreatureCard {
     private int hp;
     private String name;
-    private int energiCost;
+    private int energyCost;
     private int attackPoints;
     private int defencePoint;
     private int coolDown;

@@ -1,16 +1,26 @@
 package app;
 
-import com.sun.deploy.security.WinDeployNTLMAuthCallback;
-
 public enum AttackType {
-    FIRE (1, 2, 3),
-    WIND (2, 3, 1),
-    WATER(3, 1, 2);
+    FIRE (0.5, 1, 2),
+    WIND (2, 0.5, 1),
+    WATER(1, 2, 0.5);
 
-    private final double mass;   // in kilograms
-    private final double radius; // in meters
-    Planet(double mass, double radius) {
-        this.mass = mass;
-        this.radius = radius;
+    private final double attackWater;
+    private final double attackFire;
+    private final double attackWind;
+
+    AttackType(double attackWater, double attackFire, double attackWind) {
+        this.attackWater = attackWater;
+        this.attackFire = attackFire;
+        this.attackWind = attackWind;
+    }
+    public double getAttackWaterParam(){
+        return attackWater;
+    }
+    public double getAttackFireParam(){
+        return attackFire;
+    }
+    public double getAttackWindParam(){
+        return attackWind;
     }
 }

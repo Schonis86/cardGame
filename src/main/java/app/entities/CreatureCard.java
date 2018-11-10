@@ -10,6 +10,7 @@ public class CreatureCard {
     private Enum attackType;
     private boolean isUsed;
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -28,6 +29,7 @@ public class CreatureCard {
 
     public CreatureCard(String name){
         hp = 4; //Random 1-7
+        attackPoints = 4;
         this.name = name;
         isUsed = false;
     }

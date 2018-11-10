@@ -4,10 +4,22 @@ import app.entities.CreatureCard;
 
 import app.entities.Player;
 import app.gui.Print;
+import app.network.ServerNetwork;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class Game {
+
+    private ServerNetwork serverNetwork;
+    private PrintWriter outP1, outP2;
+    private BufferedReader inP1, inP2;
+
+    private String[] msgFromClientArray;
+    private String OPTION;
+    private int CARD1, CARD2;
 
     private boolean player1Turn;
     private int roundCounter = 0;
@@ -18,7 +30,12 @@ public class Game {
     private Player player1;
     private Player player2;
 
-    public Game(List<CreatureCard> deck) {
+    private Player defendingPlayer, attackingPlayer;
+    private PrintWriter outDefendingPlayer, outAttackingPlayer;
+    private BufferedReader inDefendingPlayer, inAttackingPlayer;
+
+
+    public Game(List<CreatureCard> deck) throws IOException {
         this.allCards = deck;
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
@@ -26,10 +43,15 @@ public class Game {
         this.player1Turn = false;
     }
 
-    public void start() {
+    public void start() throws IOException {
+        this.serverNetwork = new ServerNetwork(6666);
+        serverNetwork.run();
+        this.outP1 = serverNetwork.getOutP1();
+        this.outP2 = serverNetwork.getOutP2();
+        this.inP1 = serverNetwork.getInP1();
+        this.inP2 = serverNetwork.getInP2();
         toggleTurn();
     }
-
 
     public void divideCards() {
         if (allCards != null) {
@@ -39,7 +61,6 @@ public class Game {
             setPlayer1Cards(p1List);
             setPlayer2Cards(p2List);
         }
-
     }
 
     public void toggleTurn() {
@@ -47,10 +68,6 @@ public class Game {
 
         setTurnCounter(getTurnCounter() + 1);
         roundCheck();
-//        String message = isPlayer1Turn() ? "Player 1 turn" : "Player 2 turn";
-//        Print.actionMessage(message);
-
-        // drawCard
         if (isPlayer1Turn()) {
             if (player1.getCardsOnHand().size() < 5) {
                 player1.drawCard();
@@ -60,139 +77,88 @@ public class Game {
                 player2.drawCard();
             }
         }
-
-
         getUserInput();
     }
 
-
     public void getUserInput() {
-        Player defendingPlayer;
-        Player attackingPlayer;
-
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
+            outAttackingPlayer = outP1;
+            inAttackingPlayer = inP1;
             defendingPlayer = player2;
         } else {
             attackingPlayer = player2;
+            outAttackingPlayer = outP2;
+            inAttackingPlayer = inP2;
             defendingPlayer = player1;
         }
         attackingPlayer.setCardsToUnUsed();
+
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                Print.actionMessage("    CHOOSE OPTION     ");
-                System.out.print("| 1. PLAY CARD |");
-                System.out.print("| 2. ATTACK CARD |");
-                System.out.print("| 3. ATTACK PLAYER |");
-                System.out.print("| 4. END TURN |");
-                System.out.println("\n\n");
+                outAttackingPlayer.println("CHOOSE OPTION!");
+                String msgFromClient = inAttackingPlayer.readLine();
 
-                Scanner scanner = new Scanner(System.in);
-                int option = Integer.parseInt(scanner.nextLine());
+                splitMsgFromClient(msgFromClient);
+                //EXAMPLE:   msgFromClient = "ATTACK_CARD:1:2"   OPTION=ATTACK_CARD, CARD1=1, CARD2=2
+                //EXAMPLE:   msgFromClient = "PLAY_CARD:3"       OPTION=PLAY_CARD, CARD=3
 
-                int chosenCard;
-
-                switch (option) {
-                    case 1:
-                        chosenCard = 0;
-                        while (chosenCard < 1 || chosenCard > attackingPlayer.getCardsOnHand().size()) {
-                            Print.actionMessage("Choose card to play!");
-                            Print.optionList(attackingPlayer.getCardsOnHand());
-                            System.out.println(" ");
-                            chosenCard = Integer.parseInt(scanner.nextLine());
-                        }
-                        attackingPlayer.playCard(chosenCard - 1);
+                switch (OPTION) {
+                    case "PLAY_CARD":
+                        attackingPlayer.playCard(CARD1);
                         break;
-                    case 2:
-                        if (roundCounter <= 1) {
-                            throw new Exception("cant make attack move first round!");
-                        }
-                        if (attackingPlayer.getCardsOnTable().size() == 0 || defendingPlayer.getCardsOnTable().size() == 0) {
-                            Print.actionMessage("Attack not possible!");
-                            break;
-                        }
-                        int attackCardNumber = 0;
-                        int defendingCardNumber = 0;
-                        boolean cardIsPlayed = true;
-                        while (attackCardNumber < 1 || attackCardNumber > attackingPlayer.getCardsOnTable().size() || cardIsPlayed) {
-                            Print.actionMessage("Choose a card to attack with");
-                            Print.optionList(attackingPlayer.getCardsOnTable());
-                            attackCardNumber = scanner.nextInt();
-                            if (attackCardNumber > 0 && attackCardNumber <= attackingPlayer.getCardsOnTable().size()) {
-                                cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1).isUsed();
-                                if (cardIsPlayed) {
-                                    throw new Exception("card has already attacked playing this round!");
-                                }
-                            }
-                        }
-
-                        while (defendingCardNumber < 1 || defendingCardNumber > defendingPlayer.getCardsOnTable().size()) {
-                            Print.actionMessage("Choose a card to attack");
-                            Print.optionList(defendingPlayer.getCardsOnTable());
-                            defendingCardNumber = scanner.nextInt();
-                        }
-                        CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(attackCardNumber - 1);
-                        CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(defendingCardNumber - 1);
-                        boolean DidPlayer1LoseAttack = attack(attackingCard, defendingCard);
-                        if(DidPlayer1LoseAttack){
-                            player1.removeCardIfDead();
-                            break;
-                        }
-                        else{
-                            player2.removeCardIfDead();
-                            break;}
-
-
-                    case 3:
-                        if (roundCounter <= 1) {
-                            throw new Exception("cant make attack move first round!");
-                        }
-                        if (defendingPlayer.getCardsOnTable().size() != 0 || attackingPlayer.getCardsOnTable().size() == 0) {
-                            Print.actionMessage("Can not attack player");
-                            break;
+                    case "ATTACK_CARD":
+                        CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
+                        CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
+                        attackCard(attackingCard, defendingCard);
+                        break;
+                    case "ATTACK_PLAYER":
+                        CreatureCard creatureCard = attackingPlayer.getCardsOnTable().get(CARD1);
+                        if (!creatureCard.getIsUsed()) {
+                            attackPlayer(defendingPlayer, creatureCard.getAttackPoints());
+                            attackingPlayer.getCardsOnTable().get(CARD1).setIsUsed(true);
                         } else {
-                            Print.actionMessage("Choose a card to attack player with");
-                            int attackPlayerCardNumber = 0;
-                            cardIsPlayed = true;
-                            while (attackPlayerCardNumber < 1 || attackPlayerCardNumber > attackingPlayer.getCardsOnTable().size() || cardIsPlayed) {
-                                Print.actionMessage("Choose card to play!");
-                                Print.optionList(attackingPlayer.getCardsOnTable());
-                                attackPlayerCardNumber = Integer.parseInt(scanner.nextLine());
-                                if (attackPlayerCardNumber > 0 && attackPlayerCardNumber <= attackingPlayer.getCardsOnTable().size()) {
-                                    cardIsPlayed = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1).isUsed();
-                                    if (cardIsPlayed) {
-                                        throw new Exception("card has already attacked playing this round!");
-                                    }
-                                }
-                            }
-                            //  CreatureCard attackingPlayerCard = attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1);
-                            //Korten har ingen damage än så vi kör randomNumber
-                            int number = randomNumber(5);
-                            attackPlayer(defendingPlayer, number);
-                            Print.actionMessage(attackingPlayer.getName() + " attacked " + defendingPlayer.getName() + " with " + number + " damage!");
-                            attackingPlayer.getCardsOnTable().get(attackPlayerCardNumber - 1).setIsUsed(true);
+                            throw new Exception("Card has already attacked this round !");
                         }
-
                         break;
-                    case 4:
+                    case "END_TURN":
                         endTurn = true;
                         break;
-                    default:
-                        System.out.println("Invalid option");
                 }
-
             } catch (Exception e) {
                 Print.actionMessage(e.getMessage());
+                //outAttackingPlayer.println(e.getMessage());
             }
         }
         attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
     }
 
+    public void splitMsgFromClient(String msgFromClient) {
+        msgFromClientArray = msgFromClient.split(":");
+        OPTION = msgFromClientArray[0];
+        CARD1 = msgFromClientArray.length > 1 ? Integer.parseInt(msgFromClientArray[1]) - 1 : -1;
+        CARD2 = msgFromClientArray.length > 2 ? Integer.parseInt(msgFromClientArray[2]) - 1 : -1;
+    }
 
-    public boolean attack(CreatureCard attackingCard, CreatureCard defendingCard) {
+    public boolean canCardAttack(int index, List<CreatureCard> list) {
+        return index >= 0 && index < list.size() && !list.get(index).getIsUsed();
+    }
+
+    public boolean doesCardExist(int index, List<CreatureCard> list) {
+        System.out.println(index);
+        return index >= 0 && index < list.size();
+    }
+
+    public boolean attackCard(CreatureCard attackingCard, CreatureCard defendingCard) throws Exception {
+        if (roundCounter <= 1) {
+            throw new Exception("Cant make attack move first round!");
+        }
+        if (attackingCard.getIsUsed()) {
+            throw new Exception("Card has already attacked this round !");
+        }
         CreatureCard player1Card;
         CreatureCard player2Card;
         int player1FightingPoints;
@@ -222,12 +188,20 @@ public class Game {
             player2Card.decreaseHp(fightResult);
             didPlayer1LoseAttack = false;
         }
+        player1.removeCardIfDead();
+        player2.removeCardIfDead();
         return didPlayer1LoseAttack;
     }
 
-
-    public void attackPlayer(Player player, int attackNumber) {
+    public void attackPlayer(Player player, int attackNumber) throws Exception {
+        if (roundCounter <= 1) {
+            throw new Exception("Cant make attack move first round!");
+        }
+        if (player.getCardsOnTable().size() != 0) {
+            throw new Exception("Can't attack player with cards on table!");
+        }
         player.reduceHp(attackNumber);
+        Print.actionMessage((player.getName() + " " + "took " + attackNumber + " damage!"));
         if (isPlayerDead(player)) {
             Print.actionMessage(player.getName() + " died!");
             if (player1Turn) {
@@ -247,10 +221,6 @@ public class Game {
         if (turnCounter % 2 != 0) {
             roundCounter++;
         }
-    }
-
-    public void killPlayer(Player player) {
-        System.out.println("player killed");
     }
 
     public int randomNumber(int maxValue) {

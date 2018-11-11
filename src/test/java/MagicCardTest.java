@@ -43,4 +43,12 @@ class MagicCardTest {
         int hpIncreased = player.getHp();
         assertEquals(currentPlayerHp + 2, hpIncreased);
     }
+
+    @Test
+    void damageEnemyPlayer() {
+        int currentPlayerHp = player.getHp();
+        magicCard.damageEnemyPlayer( player );
+        int hpDecreased = player.getHp();
+        assertEquals(currentPlayerHp - 2, hpDecreased);
+    }
 }

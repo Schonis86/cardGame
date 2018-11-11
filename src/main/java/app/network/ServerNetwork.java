@@ -19,10 +19,12 @@ public class ServerNetwork {
 
     public void run() {
         try {
+            out.println("Waiting for players to connect");
             p1 = serverSocket.accept();
             out.println("Player 1 connected");
             p2 = serverSocket.accept();
             out.println("Player 2 connected");
+            out.println("Game has started");
         } catch (IOException e) {
             e.printStackTrace();
         }

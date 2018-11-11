@@ -17,17 +17,6 @@ public class GameDto implements Serializable {
     List<CreatureCard> player2CardsOnTable;
     List<CreatureCard> cardsOnHand;
 
-/*    public GameDto(int turn, int round, Boolean playerOneTurn, int player1Hp, int player2Hp, List<CreatureCard> player1CardsOnTable, List<CreatureCard> player2CardsOnTable, List<CreatureCard> cardsOnHand) {
-        this.turn = turn;
-        this.round = round;
-        this.playerOneTurn = playerOneTurn;
-        this.player1Hp = player1Hp;
-        this.player2Hp = player2Hp;
-        this.player1CardsOnTable = player1CardsOnTable;
-        this.player2CardsOnTable = player2CardsOnTable;
-        this.cardsOnHand = cardsOnHand;
-    }*/
-
     @JsonCreator
     public GameDto(@JsonProperty("turn") int turn,
                    @JsonProperty("round") int round,
@@ -37,7 +26,6 @@ public class GameDto implements Serializable {
                    @JsonProperty("player1CardsOnTable") List<CreatureCard> player1CardsOnTable,
                    @JsonProperty("player2CardsOnTable") List<CreatureCard> player2CardsOnTable,
                    @JsonProperty("cardsOnHand") List<CreatureCard> cardsOnHand) {
-
         this.turn = turn;
         this.round = round;
         this.playerOneTurn = playerOneTurn;

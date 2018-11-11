@@ -29,7 +29,7 @@ public class MagicCard {
     }
 
     // omedelbar effek - ge direkt skada till motståndarens kort med 2
-    public void damageEnemyCards( int damage ) {
+    public void damageEnemyCards(  ) {
 
     }
 

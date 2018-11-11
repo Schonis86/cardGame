@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +34,7 @@ class MagicCardTest {
 
     @Test
     void damageEnemyCards() {
-        magicCard.damageEnemyCards(2);
+//        magicCard.damageEnemyCards(2);
     }
 
     @Test
@@ -50,5 +51,18 @@ class MagicCardTest {
         magicCard.damageEnemyPlayer( player );
         int hpDecreased = player.getHp();
         assertEquals(currentPlayerHp - 2, hpDecreased);
+    }
+
+    @Test
+    void healFriendlyCards() {
+        int currentCardsHp = monsterCard.getHp();
+        magicCard.healFriendlyCards();
+        int cardsHpIncreased = monsterCard.getHp();
+
+//        player.getCardsOnTable().stream()
+//            .map( card -> card.setHp( monsterCard.getHp() + 2) );
+//            .collect(Collectors.toList());
+
+        assertEquals( currentCardsHp + 2, cardsHpIncreased);
     }
 }

@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.dto.GameDto;
 import app.entities.CreatureCard;
 import app.entities.Player;
 import app.gui.Print;
@@ -103,13 +104,12 @@ public class Game {
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                outAttackingPlayer.println("Choose option!");
+                outAttackingPlayer.println("your turn, what do you want to do ?");
                 String msgFromClient = inAttackingPlayer.readLine();
 
                 splitMsgFromClient(msgFromClient);
                 //EXAMPLE:   msgFromClient = "ATTACK_CARD:1:2"   OPTION=ATTACK_CARD, CARD1=1, CARD2=2
                 //EXAMPLE:   msgFromClient = "PLAY_CARD:3"       OPTION=PLAY_CARD, CARD=3
-
                 switch (OPTION) {
                     case "PLAY_CARD":
                         attackingPlayer.playCard(CARD1);
@@ -134,7 +134,7 @@ public class Game {
                 }
             } catch (Exception e) {
                 Print.actionMessage(e.getMessage());
-                //outAttackingPlayer.println(e.getMessage());
+                outAttackingPlayer.println(e.getMessage());
             }
         }
         attackingPlayer.setHasPlayedCard(false);
@@ -142,20 +142,17 @@ public class Game {
     }
 
     public void sendInfoAllPlayers() throws JsonProcessingException {
-        String turn = ";" + turnCounter;
-        String round = ";" + roundCounter;
-        String playerOneTurn = isPlayer1Turn() ? ";player1" : ";player2";
-        String player1Hp = ";" + player1.getHp();
-        String player2Hp = ";" + player2.getHp();
-        String player1CardsOnTable = ";" + objectMapper.writeValueAsString(player1.getCardsOnTable());
-        String player2CardsOnTable = ";" + objectMapper.writeValueAsString(player2.getCardsOnTable());
-        String player1CardsOnHand = ";" + objectMapper.writeValueAsString(player1.getCardsOnHand());
-        String player2CardsOnHand = ";" + objectMapper.writeValueAsString(player2.getCardsOnHand());
+        GameDto gameDtoP1 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand());
 
-        String guiInfoToClient1 = "GUI=;" + turn + round + playerOneTurn + player1Hp + player2Hp + player1CardsOnTable + player2CardsOnTable + player1CardsOnHand;
-        String guiInfoToClient2 = "GUI=;" + turn + round + playerOneTurn + player1Hp + player2Hp + player1CardsOnTable + player2CardsOnTable + player2CardsOnHand;
-        outP1.println(guiInfoToClient1);
-        outP2.println(guiInfoToClient2);
+        GameDto gameDtoP2 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand());
+
+        String gameDtoP1String = objectMapper.writeValueAsString(gameDtoP1);
+        String gameDtoP2String = objectMapper.writeValueAsString(gameDtoP2);
+
+        outP1.println("GUI" + gameDtoP1String);
+        outP2.println("GUI" + gameDtoP2String);
     }
 
     public void splitMsgFromClient(String msgFromClient) {
@@ -163,15 +160,6 @@ public class Game {
         OPTION = msgFromClientArray[0];
         CARD1 = msgFromClientArray.length > 1 ? Integer.parseInt(msgFromClientArray[1]) - 1 : -1;
         CARD2 = msgFromClientArray.length > 2 ? Integer.parseInt(msgFromClientArray[2]) - 1 : -1;
-    }
-
-    public boolean canCardAttack(int index, List<CreatureCard> list) {
-        return index >= 0 && index < list.size() && !list.get(index).getIsUsed();
-    }
-
-    public boolean doesCardExist(int index, List<CreatureCard> list) {
-        System.out.println(index);
-        return index >= 0 && index < list.size();
     }
 
     public boolean attackCard(CreatureCard attackingCard, CreatureCard defendingCard) throws Exception {

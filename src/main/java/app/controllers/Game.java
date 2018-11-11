@@ -1,10 +1,11 @@
 package app.controllers;
 
 import app.entities.CreatureCard;
-
 import app.entities.Player;
 import app.gui.Print;
 import app.network.ServerNetwork;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class Game {
     private PrintWriter outDefendingPlayer, outAttackingPlayer;
     private BufferedReader inDefendingPlayer, inAttackingPlayer;
 
+    ObjectMapper objectMapper;
 
     public Game(List<CreatureCard> deck) throws IOException {
         this.allCards = deck;
@@ -41,6 +43,7 @@ public class Game {
         player1 = new Player(player1Cards, "Jonas");
         player2 = new Player(player2Cards, "Robin");
         this.player1Turn = false;
+        objectMapper = new ObjectMapper();
     }
 
     public void start() throws IOException {
@@ -63,7 +66,7 @@ public class Game {
         }
     }
 
-    public void toggleTurn() {
+    public void toggleTurn() throws JsonProcessingException {
         setPlayer1Turn(!player1Turn);
 
         setTurnCounter(getTurnCounter() + 1);
@@ -77,10 +80,12 @@ public class Game {
                 player2.drawCard();
             }
         }
+        sendInfoAllPlayers();
         getUserInput();
     }
 
-    public void getUserInput() {
+    public void getUserInput() throws JsonProcessingException {
+
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -98,7 +103,7 @@ public class Game {
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                outAttackingPlayer.println("CHOOSE OPTION!");
+                outAttackingPlayer.println("Choose option!");
                 String msgFromClient = inAttackingPlayer.readLine();
 
                 splitMsgFromClient(msgFromClient);
@@ -134,6 +139,23 @@ public class Game {
         }
         attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
+    }
+
+    public void sendInfoAllPlayers() throws JsonProcessingException {
+        String turn = ";" + turnCounter;
+        String round = ";" + roundCounter;
+        String playerOneTurn = isPlayer1Turn() ? ";player1" : ";player2";
+        String player1Hp = ";" + player1.getHp();
+        String player2Hp = ";" + player2.getHp();
+        String player1CardsOnTable = ";" + objectMapper.writeValueAsString(player1.getCardsOnTable());
+        String player2CardsOnTable = ";" + objectMapper.writeValueAsString(player2.getCardsOnTable());
+        String player1CardsOnHand = ";" + objectMapper.writeValueAsString(player1.getCardsOnHand());
+        String player2CardsOnHand = ";" + objectMapper.writeValueAsString(player2.getCardsOnHand());
+
+        String guiInfoToClient1 = "GUI=;" + turn + round + playerOneTurn + player1Hp + player2Hp + player1CardsOnTable + player2CardsOnTable + player1CardsOnHand;
+        String guiInfoToClient2 = "GUI=;" + turn + round + playerOneTurn + player1Hp + player2Hp + player1CardsOnTable + player2CardsOnTable + player2CardsOnHand;
+        outP1.println(guiInfoToClient1);
+        outP2.println(guiInfoToClient2);
     }
 
     public void splitMsgFromClient(String msgFromClient) {

@@ -28,13 +28,23 @@ public class MagicCard {
         player.setHp( player.getHp() - 2 );
     }
 
-    // riktad effek - ge direkt skada till motståndarens kort med 2
+    // omedelbar effek - ge direkt skada till motståndarens kort med 2
     public void damageEnemyCards( int damage ) {
 
     }
 
-    // riktad effek - öka ett korts Hp med 2
-    public void increaseCradHp() {
+    // omedelbar effek - öka sina egna korts HP med 2
+    public void healFriendlyCards() {
+
+    }
+
+    // riktad effekt - öka ett korts HP med 2
+    public void healOneCard() {
+
+    }
+
+    // riktad effekt - minska ett korts HP med 2
+    public void damageOneCard() {
 
     }
 }

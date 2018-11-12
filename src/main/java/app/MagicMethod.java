@@ -18,26 +18,33 @@ public enum MagicMethod {
         return methodNumber;
     }
 
-    public void doMagicMethod(){
-        switch (getMethodNumber()){
-            case 1:
+    //Ska finnas i game
+    public void doMagicMethod(magicCard m){
+        switch (m.getMagicMethod.name()){
+            case HEALPLAYER:
 
                 break;
-            case 2:
+            case HEALCARD:
 
                 break;
-            case 3:
+            case HEALALLCARDS:
 
                 break;
-            case 4:
+            case DAMAGEPLAYER:
 
                 break;
-            case 5:
+            case DAMAGECARD:
 
                 break;
-            case 6:
-
+            case DAMAGEALLCARDS:
                 break;
         }
     }
+}
+//class Main3{
+//    public static void main(String[] args) {
+//        MagicMethod m = MagicMethod.DAMAGEALLCARDS;
+//        m.doMagicMethod(); //skicka in typen och kort och andra saker
+//
+//    }
 }

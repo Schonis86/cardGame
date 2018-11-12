@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ class GameTest {
 
 
     @BeforeEach
-    void setUpDeck() {
+    void setUpDeck() throws IOException {
         game = new Game(getDeck(20));
     }
 
@@ -40,7 +41,7 @@ class GameTest {
     }
 
     @Test
-    void divideCards() {
+    void divideCards() throws IOException {
         List<CreatureCard> deck = getDeck(DECK_SIZE);
         game = new Game(deck);
 
@@ -53,16 +54,17 @@ class GameTest {
 
 
     @Test
-    void attack() {
-        List<CreatureCard> attackingCards= getDeck(3);
+    void attackCard() throws Exception {
+        List<CreatureCard> attackingCards = getDeck(3);
         List<CreatureCard> defendingCards = getDeck(3);
         CreatureCard attackingCard = attackingCards.get(0);
         CreatureCard defendingCard = defendingCards.get(1);
         int hpAttackingCard = attackingCard.getHp();
         int hpDefendingCard = defendingCard.getHp();
-        game.attack(attackingCard, defendingCard);
-        assertTrue(attackingCard.getIsUsed()==true);
-        assertTrue(attackingCard.getHp()<hpAttackingCard||defendingCard.getHp()<hpDefendingCard);
+        game.setRoundCounter(2);
+        game.attackCard(attackingCard, defendingCard);
+        assertTrue(attackingCard.getIsUsed() == true);
+        assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
 
     }
 
@@ -79,8 +81,8 @@ class GameTest {
     }
 
     @Test
-    void attackPlayer() {
-
+    void attackPlayer() throws Exception {
+        game.setRoundCounter(2);
         int attackNumber = game.randomNumber(5);
         int hpAfterAttack = game.getPlayer1().getHp() - attackNumber;
         game.attackPlayer(game.getPlayer1(), attackNumber);
@@ -88,8 +90,8 @@ class GameTest {
     }
 
     @Test
-    void attackPlayerWhenHpIsBellow0() {
-
+    void attackPlayerWhenHpIsBellow0() throws Exception {
+        game.setRoundCounter(2);
         int attackNumber = 10;
         int hpAfterAttack = game.getPlayer1().getHp() - attackNumber;
         game.attackPlayer(game.getPlayer1(), attackNumber);

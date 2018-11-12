@@ -1,6 +1,12 @@
 package app.entities;
 
-public class CreatureCard {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+
+public class CreatureCard implements Serializable {
     private int hp;
     private String name;
     private int energyCost;
@@ -10,24 +16,29 @@ public class CreatureCard {
     private Enum attackType;
     private boolean isUsed;
 
-    public void setName(String name) {
+
+    @JsonCreator
+    public CreatureCard(@JsonProperty("hp") int hp,
+                        @JsonProperty("name") String name,
+                        @JsonProperty("energyCost") int energyCost,
+                        @JsonProperty("attackPoints") int attackPoints,
+                        @JsonProperty("defencePoints") int defencePoint,
+                        @JsonProperty("coolDown") int coolDown,
+                        @JsonProperty("attackType") Enum attackType,
+                        @JsonProperty("isUsed") boolean isUsed) {
+        this.hp = hp;
         this.name = name;
+        this.energyCost = energyCost;
+        this.attackPoints = attackPoints;
+        this.defencePoint = defencePoint;
+        this.coolDown = coolDown;
+        this.attackType = attackType;
+        this.isUsed = isUsed;
     }
 
-    public boolean isUsed() {
-        return isUsed;
-    }
-
-    public void setUsed(boolean used) {
-        isUsed = used;
-    }
-
-    public Boolean isCardDead() {
-        return this.hp < 1;
-    }
-
-    public CreatureCard(String name){
+    public CreatureCard(String name) {
         hp = 4; //Random 1-7
+        attackPoints = 4;
         this.name = name;
         isUsed = false;
     }
@@ -50,15 +61,16 @@ public class CreatureCard {
         this.hp = hp;
     }
 
-    public int getHp(){
+    public int getHp() {
         return hp;
     }
 
-    public void setIsUsed(boolean isUsed){
+    public void setIsUsed(boolean isUsed) {
         this.isUsed = isUsed;
     }
 
-    public boolean getIsUsed(){
+
+    public boolean getIsUsed() {
         return isUsed;
     }
 
@@ -66,6 +78,22 @@ public class CreatureCard {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @JsonIgnore()
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
+    @JsonIgnore()
+    public Boolean isCardDead() {
+        return this.hp < 1;
+    }
 
     public int getEnergyCost() {
         return energyCost;

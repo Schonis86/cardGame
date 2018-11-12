@@ -162,6 +162,7 @@ public class Game {
         CARD2 = msgFromClientArray.length > 2 ? Integer.parseInt(msgFromClientArray[2]) - 1 : -1;
     }
 
+
     public boolean attackCard(CreatureCard attackingCard, CreatureCard defendingCard) throws Exception {
         if (roundCounter <= 1) {
             throw new Exception("Cant make attack move first round!");
@@ -221,6 +222,10 @@ public class Game {
             }
             System.exit(0);
         }
+    }
+
+    public boolean isPlayerOutOfCards(Player player){
+        return false;
     }
 
     public Boolean isPlayerDead(Player player) {

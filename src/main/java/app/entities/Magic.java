@@ -9,12 +9,12 @@ public class Magic {
 
     //omedelbar effekt - öka Player1/2 HP med 2
     public void selfHealPlayer( Player player ) {
-
+        player.setHp( player.getHp() + 2 );
     }
 
     //omedelbar effekt - ge skada till Player1/2 HP med 2
     public void damageEnemyPlayer( Player player ) {
-
+        player.setHp( player.getHp() - 2 );
     }
 
     // omedelbar effek - ge direkt skada till motståndarens kort med 2

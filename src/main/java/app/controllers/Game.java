@@ -2,6 +2,8 @@ package app.controllers;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
+import app.entities.Magic;
+import app.entities.MagicCard;
 import app.entities.Player;
 import app.gui.Print;
 import app.network.ServerNetwork;
@@ -12,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
+
+import static app.MagicMethod.*;
 
 public class Game {
 
@@ -31,6 +35,8 @@ public class Game {
     private List<CreatureCard> player2Cards;
     private Player player1;
     private Player player2;
+
+    Magic magic;
 
     private Player defendingPlayer, attackingPlayer;
     private PrintWriter outDefendingPlayer, outAttackingPlayer;
@@ -223,7 +229,29 @@ public class Game {
         }
     }
 
-    public void castMagicMethod() {
+    public void castMagicMethod( MagicCard magicCard ) {
+
+//        switch (magicCard.getMagicMethod.name()){
+//            case HEALPLAYER:
+//
+//                magic.selfHealPlayer( attackingPlayer );
+//                break;
+//
+//            case HEALCARD:
+//
+//                break;
+//            case HEALALLCARDS:
+//
+//                break;
+//            case DAMAGEPLAYER:
+//
+//                break;
+//            case DAMAGECARD:
+//
+//                break;
+//            case DAMAGEALLCARDS:
+//                break;
+//        }
 
     }
 

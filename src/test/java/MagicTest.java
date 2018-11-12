@@ -57,4 +57,20 @@ class MagicTest {
         int cardsHpIncreased = monsterCard.getHp();
         assertEquals( currentCardsHp + 2, cardsHpIncreased);
     }
+
+    @Test
+    void damageEnemyCards() {
+    }
+
+    @Test
+    void healOneCard() {
+        int currentCreatureCardHp = monsterCard.getHp();
+        magic.healOneCard( monsterCard );
+        int creatureCardHpIncreased = monsterCard.getHp();
+        assertEquals(currentCreatureCardHp + 2, creatureCardHpIncreased);
+    }
+
+    @Test
+    void damageOneCard() {
+    }
 }

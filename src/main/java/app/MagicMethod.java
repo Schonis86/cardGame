@@ -19,28 +19,28 @@ public enum MagicMethod {
     }
 
     //Ska finnas i game
-    public void doMagicMethod(magicCard m){
-        switch (m.getMagicMethod.name()){
-            case HEALPLAYER:
-
-                break;
-            case HEALCARD:
-
-                break;
-            case HEALALLCARDS:
-
-                break;
-            case DAMAGEPLAYER:
-
-                break;
-            case DAMAGECARD:
-
-                break;
-            case DAMAGEALLCARDS:
-                break;
-        }
-    }
-}
+//    public void doMagicMethod(magicCard m){
+//        switch (m.getMagicMethod.name()){
+//            case HEALPLAYER:
+//
+//                break;
+//            case HEALCARD:
+//
+//                break;
+//            case HEALALLCARDS:
+//
+//                break;
+//            case DAMAGEPLAYER:
+//
+//                break;
+//            case DAMAGECARD:
+//
+//                break;
+//            case DAMAGEALLCARDS:
+//                break;
+//        }
+//    }
+//}
 //class Main3{
 //    public static void main(String[] args) {
 //        MagicMethod m = MagicMethod.DAMAGEALLCARDS;

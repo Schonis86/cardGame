@@ -223,6 +223,10 @@ public class Game {
         }
     }
 
+    public void castMagicCard() {
+
+    }
+
     public Boolean isPlayerDead(Player player) {
         return player == null || player.getHp() <= 0;
     }

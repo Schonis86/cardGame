@@ -24,7 +24,8 @@ public class Magic {
 
     // omedelbar effek - öka sina egna korts HP med 2
     public void healFriendlyCards( List<CreatureCard> cardsOnTable ) {
-
+        cardsOnTable.stream()
+                .forEach( card -> card.setHp( creatureCard.getHp() + 2 ) );
     }
 
     // riktad effekt - öka ett korts HP med 2

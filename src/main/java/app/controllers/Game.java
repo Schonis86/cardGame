@@ -113,6 +113,8 @@ public class Game {
                 switch (OPTION) {
                     case "PLAY_CARD":
                         attackingPlayer.playCard(CARD1);
+                        checkDeath(player1);
+                        checkDeath(player2);
                         break;
                     case "ATTACK_CARD":
                         CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
@@ -201,6 +203,8 @@ public class Game {
         }
         player1.removeCardIfDead();
         player2.removeCardIfDead();
+        checkDeath(player1);
+        checkDeath(player2);
         return didPlayer1LoseAttack;
     }
 
@@ -213,6 +217,10 @@ public class Game {
         }
         player.reduceHp(attackNumber);
         Print.actionMessage((player.getName() + " " + "took " + attackNumber + " damage!"));
+        checkDeath(player);
+    }
+
+    public void checkDeath(Player player){
         if (isPlayerDead(player)) {
             Print.actionMessage(player.getName() + " died!");
             if (player1Turn) {
@@ -229,7 +237,7 @@ public class Game {
     }
 
     public Boolean isPlayerDead(Player player) {
-        return player == null || player.getHp() <= 0;
+        return player == null || player.getHp() <= 0 || isPlayerOutOfCards(player);
     }
 
     public void roundCheck() {

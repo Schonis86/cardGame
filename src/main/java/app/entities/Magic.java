@@ -30,7 +30,7 @@ public class Magic {
 
     // riktad effekt - öka ett korts HP med 2
     public void healOneCard( CreatureCard creatureCard ) {
-        
+        creatureCard.setHp( creatureCard.getHp() + 2 );
     }
 
     // riktad effekt - minska ett korts HP med 2

@@ -1,6 +1,6 @@
 package app.entities;
 
-public class CreatureCard {
+public class CreatureCard implements GameCard{
     private int hp;
     private String name;
     private int energyCost;

@@ -1,6 +1,6 @@
 package app.entities;
 
-public class MagicCard {
+public class MagicCard implements GameCard{
 
     private String name;
 

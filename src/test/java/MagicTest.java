@@ -53,13 +53,21 @@ class MagicTest {
     @Test
     void healFriendlyCards() {
         int currentCardsHp = monsterCard.getHp();
-        magic.healFriendlyCards( cardsOnTable );
+        List<CreatureCard> tempList = new ArrayList<>();
+        tempList.add(monsterCard);
+        magic.healFriendlyCards( tempList );
         int cardsHpIncreased = monsterCard.getHp();
         assertEquals( currentCardsHp + 2, cardsHpIncreased);
     }
 
     @Test
     void damageEnemyCards() {
+        int currentCardsHp = monsterCard.getHp();
+        List<CreatureCard> tempList = new ArrayList<>();
+        tempList.add(monsterCard);
+        magic.damageEnemyCards( tempList );
+        int cardsHpDecreased = monsterCard.getHp();
+        assertEquals( currentCardsHp - 2, cardsHpDecreased);
     }
 
     @Test

@@ -19,13 +19,13 @@ public class Magic {
 
     // omedelbar effek - ge direkt skada till motståndarens kort med 2
     public void damageEnemyCards( List<CreatureCard> cardsOnTable ) {
-
+        
     }
 
     // omedelbar effek - öka sina egna korts HP med 2
     public void healFriendlyCards( List<CreatureCard> cardsOnTable ) {
         cardsOnTable.stream()
-            .forEach( card -> card.setHp( creatureCard.getHp() + 2 ) );
+            .forEach( card -> card.setHp( card.getHp() + 2 ) );
     }
 
     // riktad effekt - öka ett korts HP med 2

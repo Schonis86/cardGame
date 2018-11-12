@@ -1,13 +1,17 @@
 package app.entities;
 
-public class CreatureCard implements GameCard{
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class CreatureCard implements Serializable {
+
+public class CreatureCard implements Serializable, GameCard {
     private int hp;
     private String name;
     private int energyCost;

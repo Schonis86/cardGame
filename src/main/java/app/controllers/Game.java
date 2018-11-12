@@ -223,7 +223,7 @@ public class Game {
         }
     }
 
-    public void castMagicCard() {
+    public void castMagicMethod() {
 
     }
 

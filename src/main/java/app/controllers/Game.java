@@ -225,7 +225,7 @@ public class Game {
     }
 
     public boolean isPlayerOutOfCards(Player player){
-        return false;
+        return(player.getCardsInDeck().size()==0 && player.getCardsOnHand().size()==0 && player.getCardsOnTable().size()==0);
     }
 
     public Boolean isPlayerDead(Player player) {

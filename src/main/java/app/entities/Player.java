@@ -117,16 +117,19 @@ public class Player {
 
     }
 
-    public void playCard(int index) {
-
-        if (!hasPlayedCard) {
-            cardsOnTable.add(cardsOnHand.get(index));
-            cardsOnHand.remove(index);
-            hasPlayedCard = true;
-            Print.actionMessage("    Played card: " + (index + 1) + "    ");
-            System.out.println(" ");
+    public void playCard(int index) throws Exception {
+        if(index >= 0 && index < cardsOnHand.size()) {
+            if (!hasPlayedCard) {
+                cardsOnTable.add(cardsOnHand.get(index));
+                cardsOnHand.remove(index);
+                hasPlayedCard = true;
+                Print.actionMessage("    Played card: " + (index + 1) + "    ");
+                System.out.println(" ");
+            } else {
+                throw new Exception("You can only play 1 card each round !");
+            }
         } else {
-            Print.actionMessage("You can only play one card!");
+            throw new Exception("Card doesn't exist!");
         }
     }
 
@@ -134,7 +137,7 @@ public class Player {
         cardsOnTable.stream()
                 .filter(c -> c.getHp() <= 0)
                 .forEach(card -> graveYard.add(card));
-        cardsOnTable.removeIf(card -> card.getHp() == 0);
+        cardsOnTable.removeIf(card -> card.getHp() < 0);
     }
 
     public void reduceHp(int damage) {

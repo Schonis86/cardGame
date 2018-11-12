@@ -80,7 +80,7 @@ class PlayerTest {
     }
 
     @Test
-    void playCard() {
+    void playCard() throws Exception {
 
         deck = getDeck(5);
         player.setCardsOnHand(deck);
@@ -106,6 +106,7 @@ class PlayerTest {
         deck.get(3).decreaseHp(4);
 
         player.removeCardIfDead();
+        //FEL HÄR FÖR JAG HAR ÄNDRAT REMOVECARIFDEAD TILL <=0 ISTÄLLET FÖR == 0
         assertEquals(4, player.getCardsOnTable().size());
         assertEquals(1, player.getGraveYard().size());
     }

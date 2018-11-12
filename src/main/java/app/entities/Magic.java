@@ -35,6 +35,6 @@ public class Magic {
 
     // riktad effekt - minska ett korts HP med 2
     public void damageOneCard( CreatureCard creatureCard ) {
-
+        creatureCard.setHp( creatureCard.getHp() - 2 );
     }
 }

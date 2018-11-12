@@ -72,5 +72,9 @@ class MagicTest {
 
     @Test
     void damageOneCard() {
+        int currentCreatureCardHp = monsterCard.getHp();
+        magic.damageOneCard( monsterCard );
+        int creatureCardHpDecreased = monsterCard.getHp();
+        assertEquals(currentCreatureCardHp - 2, creatureCardHpDecreased);
     }
 }

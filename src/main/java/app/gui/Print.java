@@ -40,9 +40,10 @@ public class Print {
         actionMessage("  Your Cards On Hand  ");
         if (attackingPlayer.getCardsOnHand().size() == 0) {
             System.out.println("*                                                                *");
-        } else {
-            attackingPlayer.getCardsOnHand().forEach(c -> System.out.print("|" + c.getName() + " hp:" + c.getHp() + "| "));
         }
+//        } else {
+//            attackingPlayer.getCardsOnHand().forEach(c -> System.out.print("|" + c.getName() + " hp:" + /*c.getHp()*/ + "| "));
+//        }
         System.out.println("\n********************************************************************");
 
     }

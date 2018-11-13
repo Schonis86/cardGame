@@ -55,6 +55,8 @@ public class Game {
         this.outP2 = serverNetwork.getOutP2();
         this.inP1 = serverNetwork.getInP1();
         this.inP2 = serverNetwork.getInP2();
+        outP1.println("PLAYER: player1");
+        outP2.println("PLAYER: player2");
         toggleTurn();
     }
 
@@ -86,7 +88,7 @@ public class Game {
     }
 
     public void getUserInput() throws JsonProcessingException {
-
+        sendInfoAllPlayers();
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -103,7 +105,6 @@ public class Game {
 
         while (!endTurn) {
             try {
-                sendInfoAllPlayers();
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
                 outAttackingPlayer.println("your turn, what do you want to do ?");
                 String msgFromClient = inAttackingPlayer.readLine();
@@ -116,11 +117,13 @@ public class Game {
                         attackingPlayer.playCard(CARD1);
                         checkDeath(player1);
                         checkDeath(player2);
+                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_CARD":
                         CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
                         CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         attackCard(attackingCard, defendingCard);
+                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_PLAYER":
                         CreatureCard creatureCard = attackingPlayer.getCardsOnTable().get(CARD1);
@@ -130,6 +133,7 @@ public class Game {
                         } else {
                             throw new Exception("Card has already attacked this round !");
                         }
+                        sendInfoAllPlayers();
                         break;
                     case "END_TURN":
                         endTurn = true;

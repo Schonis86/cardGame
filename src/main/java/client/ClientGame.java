@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class ClientGame extends Thread {
     public ClientNetwork clientNetwork;
 
+    String player;
     int turn;
     int round;
     String playerTurn;
@@ -43,7 +44,12 @@ public class ClientGame extends Thread {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (!msgFromServer.startsWith("GUI")) {
+                if(msgFromServer.startsWith("PLAYER")){
+                    String[] playerString = msgFromServer.split(":");
+                    player = playerString[1];
+                    System.out.println("YOU ARE PLAYER: " + player);
+                }
+                else if (!msgFromServer.startsWith("GUI")) {
                     Print.actionMessage(msgFromServer);
                 } else {
                     try {
@@ -67,9 +73,6 @@ public class ClientGame extends Thread {
         System.out.println(msg);
         String parsedString = msg.replace("GUI", "");
         GameDto gameDto = objectMapper.readValue(parsedString, GameDto.class);
-
-        //gameDto contains all information about the game example getCardsOnhand:
-       // gameDto.getCardsOnHand().forEach(c -> System.out.println(c.getName()));
     }
 
 }

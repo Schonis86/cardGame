@@ -3,7 +3,7 @@ package app.entities;
 public class MagicCard implements GameCard{
 
     private String name;
-
+    private int attackPoints;
     public String getName() {
         return name;
     }
@@ -23,7 +23,8 @@ public class MagicCard implements GameCard{
     }
 
     // riktad effek - öka ett korts Hp med 2
-    public void increaseCradHp() {
 
+    public int getAttackPoints(){
+        return attackPoints;
     }
 }

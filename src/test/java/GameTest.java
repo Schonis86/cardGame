@@ -111,9 +111,12 @@ class GameTest {
     void attackPlayerWhenHpIsBellow0() throws Exception {
         game.setRoundCounter(2);
         int attackNumber = 10;
+        System.out.println(game.getPlayer1().getHp());
         int hpAfterAttack = game.getPlayer1().getHp() - attackNumber;
+        System.out.println(hpAfterAttack);
         game.attackPlayer(game.getPlayer1(), attackNumber);
-        assertEquals(20, hpAfterAttack);
+
+        assertEquals(hpAfterAttack, game.getPlayer1().getHp() );
 
 
     }

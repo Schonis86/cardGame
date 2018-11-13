@@ -16,7 +16,7 @@ public class Player {
 
     private boolean hasPlayedCard;
 
-    public Player(List<CreatureCard> deck, String name) {
+    public Player(List<GameCard> deck, String name) {
         this.name = name;
         this.hp = 10;
         this.cardsInDeck = deck;

@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
+import app.entities.GameCard;
 import app.entities.Player;
 import app.gui.Print;
 import app.network.ServerNetwork;
@@ -26,9 +27,9 @@ public class Game {
     private boolean player1Turn;
     private int roundCounter = 0;
     private int turnCounter = 0;
-    private List<CreatureCard> allCards;
-    private List<CreatureCard> player1Cards;
-    private List<CreatureCard> player2Cards;
+    private List<GameCard> allCards;
+    private List<GameCard> player1Cards;
+    private List<GameCard> player2Cards;
     private Player player1;
     private Player player2;
 
@@ -38,7 +39,7 @@ public class Game {
 
     ObjectMapper objectMapper;
 
-    public Game(List<CreatureCard> deck) throws IOException {
+    public Game(List<GameCard> deck) throws IOException {
         this.allCards = deck;
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
@@ -60,8 +61,8 @@ public class Game {
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);
-            ArrayList<CreatureCard> p1List = new ArrayList<CreatureCard>(allCards.subList(0, allCards.size() / 2));
-            ArrayList<CreatureCard> p2List = new ArrayList<CreatureCard>(allCards.subList(allCards.size() / 2, allCards.size()));
+            ArrayList<GameCard> p1List = new ArrayList<GameCard>(allCards.subList(0, allCards.size() / 2));
+            ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size() / 2, allCards.size()));
             setPlayer1Cards(p1List);
             setPlayer2Cards(p2List);
         }
@@ -259,11 +260,11 @@ public class Game {
         return player2;
     }
 
-    public void setPlayer1Cards(List<CreatureCard> player1Cards) {
+    public void setPlayer1Cards(List<GameCard> player1Cards) {
         this.player1Cards = player1Cards;
     }
 
-    public void setPlayer2Cards(List<CreatureCard> player2Cards) {
+    public void setPlayer2Cards(List<GameCard> player2Cards) {
         this.player2Cards = player2Cards;
     }
 
@@ -291,15 +292,15 @@ public class Game {
         this.player1Turn = player1Turn;
     }
 
-    public List<CreatureCard> getAllCards() {
+    public List<GameCard> getAllCards() {
         return allCards;
     }
 
-    public List<CreatureCard> getPlayer1Cards() {
+    public List<GameCard> getPlayer1Cards() {
         return player1Cards;
     }
 
-    public List<CreatureCard> getPlayer2Cards() {
+    public List<GameCard> getPlayer2Cards() {
         return player2Cards;
     }
 }

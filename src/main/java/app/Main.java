@@ -3,6 +3,7 @@ package app;
 import app.entities.CreatureCard;
 
 import app.controllers.Game;
+import app.entities.GameCard;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Main{
     public static void main(String[] args) throws IOException {
 //        launch(args);
 
-            List<CreatureCard> deck = new ArrayList();
+            List<GameCard> deck = new ArrayList();
             for(int i = 0; i < 20; i++) {
                 CreatureCard card = new CreatureCard("kort" + (i+1));
                 deck.add(card);

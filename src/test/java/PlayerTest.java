@@ -1,4 +1,6 @@
+import app.controllers.Game;
 import app.entities.CreatureCard;
+import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 class PlayerTest {
 
-    List<CreatureCard> deck;
+    List<GameCard> deck;
     Player player;
 
     @Mock
@@ -28,8 +30,8 @@ class PlayerTest {
         player = new Player(deck, "test");
     }
 
-    List<CreatureCard> getDeck(int deckSize) {
-        List<CreatureCard> deck = new ArrayList();
+    List<GameCard> getDeck(int deckSize) {
+        List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
             card = new CreatureCard("Card " + 1);
             deck.add(card);
@@ -97,13 +99,14 @@ class PlayerTest {
     @Test
     void removeCardIfDead() {
         deck = getDeck(5);
-        player.setCardsOnTable(deck);
+        List<CreatureCard> deck2 = (List<CreatureCard>)(List<?>) deck;
+        player.setCardsOnTable(deck2);
 
         player.removeCardIfDead();
         assertEquals(5, player.getCardsOnTable().size());
         assertTrue(player.getGraveYard().size() <= 0);
 
-        deck.get(3).decreaseHp(4);
+        deck2.get(3).decreaseHp(4);
 
         player.removeCardIfDead();
         assertEquals(4, player.getCardsOnTable().size());

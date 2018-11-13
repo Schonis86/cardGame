@@ -4,6 +4,9 @@ import app.dto.GameDto;
 import app.entities.CreatureCard;
 import app.entities.Magic;
 import app.entities.MagicCard;
+import app.entities.GameCard;
+import app.entities.MagicCard;
+
 import app.entities.Player;
 import app.gui.Print;
 import app.network.ServerNetwork;
@@ -30,9 +33,9 @@ public class Game {
     private boolean player1Turn;
     private int roundCounter = 0;
     private int turnCounter = 0;
-    private List<CreatureCard> allCards;
-    private List<CreatureCard> player1Cards;
-    private List<CreatureCard> player2Cards;
+    private List<GameCard> allCards;
+    private List<GameCard> player1Cards;
+    private List<GameCard> player2Cards;
     private Player player1;
     private Player player2;
 
@@ -44,7 +47,7 @@ public class Game {
 
     ObjectMapper objectMapper;
 
-    public Game(List<CreatureCard> deck) throws IOException {
+    public Game(List<GameCard> deck) throws IOException {
         this.allCards = deck;
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
@@ -60,14 +63,16 @@ public class Game {
         this.outP2 = serverNetwork.getOutP2();
         this.inP1 = serverNetwork.getInP1();
         this.inP2 = serverNetwork.getInP2();
+        outP1.println("PLAYER: player1");
+        outP2.println("PLAYER: player2");
         toggleTurn();
     }
 
     public void divideCards() {
         if (allCards != null) {
             Collections.shuffle(allCards);
-            ArrayList<CreatureCard> p1List = new ArrayList<CreatureCard>(allCards.subList(0, allCards.size() / 2));
-            ArrayList<CreatureCard> p2List = new ArrayList<CreatureCard>(allCards.subList(allCards.size() / 2, allCards.size()));
+            ArrayList<GameCard> p1List = new ArrayList<GameCard>(allCards.subList(0, allCards.size() / 2));
+            ArrayList<GameCard> p2List = new ArrayList<GameCard>(allCards.subList(allCards.size() / 2, allCards.size()));
             setPlayer1Cards(p1List);
             setPlayer2Cards(p2List);
         }
@@ -87,12 +92,11 @@ public class Game {
                 player2.drawCard();
             }
         }
-        sendInfoAllPlayers();
         getUserInput();
     }
 
     public void getUserInput() throws JsonProcessingException {
-
+        sendInfoAllPlayers();
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -119,11 +123,15 @@ public class Game {
                 switch (OPTION) {
                     case "PLAY_CARD":
                         attackingPlayer.playCard(CARD1);
+                        checkDeath(player1);
+                        checkDeath(player2);
+                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_CARD":
                         CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
                         CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         attackCard(attackingCard, defendingCard);
+                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_PLAYER":
                         CreatureCard creatureCard = attackingPlayer.getCardsOnTable().get(CARD1);
@@ -133,6 +141,7 @@ public class Game {
                         } else {
                             throw new Exception("Card has already attacked this round !");
                         }
+                        sendInfoAllPlayers();
                         break;
                     case "END_TURN":
                         endTurn = true;
@@ -167,6 +176,7 @@ public class Game {
         CARD1 = msgFromClientArray.length > 1 ? Integer.parseInt(msgFromClientArray[1]) - 1 : -1;
         CARD2 = msgFromClientArray.length > 2 ? Integer.parseInt(msgFromClientArray[2]) - 1 : -1;
     }
+
 
     public boolean attackCard(CreatureCard attackingCard, CreatureCard defendingCard) throws Exception {
         if (roundCounter <= 1) {
@@ -206,6 +216,8 @@ public class Game {
         }
         player1.removeCardIfDead();
         player2.removeCardIfDead();
+        checkDeath(player1);
+        checkDeath(player2);
         return didPlayer1LoseAttack;
     }
 
@@ -218,6 +230,10 @@ public class Game {
         }
         player.reduceHp(attackNumber);
         Print.actionMessage((player.getName() + " " + "took " + attackNumber + " damage!"));
+        checkDeath(player);
+    }
+
+    public void checkDeath(Player player){
         if (isPlayerDead(player)) {
             Print.actionMessage(player.getName() + " died!");
             if (player1Turn) {
@@ -227,6 +243,10 @@ public class Game {
             }
             System.exit(0);
         }
+    }
+
+    public boolean isPlayerOutOfCards(Player player){
+        return(player.getCardsInDeck().size()==0 && player.getCardsOnHand().size()==0 && player.getCardsOnTable().size()==0);
     }
 
     //Omedelbara effekter
@@ -266,7 +286,7 @@ public class Game {
     }
 
     public Boolean isPlayerDead(Player player) {
-        return player == null || player.getHp() <= 0;
+        return player == null || player.getHp() <= 0 || isPlayerOutOfCards(player);
     }
 
     public void roundCheck() {
@@ -288,11 +308,11 @@ public class Game {
         return player2;
     }
 
-    public void setPlayer1Cards(List<CreatureCard> player1Cards) {
+    public void setPlayer1Cards(List<GameCard> player1Cards) {
         this.player1Cards = player1Cards;
     }
 
-    public void setPlayer2Cards(List<CreatureCard> player2Cards) {
+    public void setPlayer2Cards(List<GameCard> player2Cards) {
         this.player2Cards = player2Cards;
     }
 
@@ -320,15 +340,15 @@ public class Game {
         this.player1Turn = player1Turn;
     }
 
-    public List<CreatureCard> getAllCards() {
+    public List<GameCard> getAllCards() {
         return allCards;
     }
 
-    public List<CreatureCard> getPlayer1Cards() {
+    public List<GameCard> getPlayer1Cards() {
         return player1Cards;
     }
 
-    public List<CreatureCard> getPlayer2Cards() {
+    public List<GameCard> getPlayer2Cards() {
         return player2Cards;
     }
 }

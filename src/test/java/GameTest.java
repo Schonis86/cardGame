@@ -1,10 +1,13 @@
+import app.AttackType;
 import app.entities.CreatureCard;
+import app.entities.GameCard;
 import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static app.AttackType.FIRE;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 import app.controllers.Game;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 class GameTest {
@@ -32,8 +37,8 @@ class GameTest {
         game = new Game(getDeck(20));
     }
 
-    List<CreatureCard> getDeck(int deckSize) {
-        List<CreatureCard> deck = new ArrayList();
+    List<GameCard> getDeck(int deckSize) {
+        List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
             CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
             deck.add(card);
@@ -43,7 +48,7 @@ class GameTest {
 
     @Test
     void divideCards() throws IOException {
-        List<CreatureCard> deck = getDeck(DECK_SIZE);
+        List<GameCard> deck = getDeck(DECK_SIZE);
         game = new Game(deck);
 
         game.divideCards();
@@ -56,10 +61,10 @@ class GameTest {
 
     @Test
     void attackCard() throws Exception {
-        List<CreatureCard> attackingCards = getDeck(3);
-        List<CreatureCard> defendingCards = getDeck(3);
-        CreatureCard attackingCard = attackingCards.get(0);
-        CreatureCard defendingCard = defendingCards.get(1);
+        List<GameCard> attackingCards = getDeck(3);
+        List<GameCard> defendingCards = getDeck(3);
+        CreatureCard attackingCard = (CreatureCard) attackingCards.get(0);
+        CreatureCard defendingCard = (CreatureCard) defendingCards.get(1);
         int hpAttackingCard = attackingCard.getHp();
         int hpDefendingCard = defendingCard.getHp();
         game.setRoundCounter(2);
@@ -69,6 +74,24 @@ class GameTest {
 
     }
 
+
+    @Test
+    void isPlayerOutOfCards(){
+        Player player = new Player(getDeck(6), "Lina");
+        List<GameCard> tempCardDeck = player.getCardsInDeck();
+        List<GameCard> tempCardHand = player.getCardsOnHand();
+        assertFalse(game.isPlayerOutOfCards(player));
+        List<CreatureCard> tempCardsOnTableWithCards = Arrays.asList(new CreatureCard(10,"Lina",1,1,2,9, AttackType.FIRE,false));
+        List<CreatureCard> tempCardsOnTableEmpty = Arrays.asList();
+        player.setCardsOnTable(tempCardsOnTableWithCards); // 1 5 1
+        tempCardDeck.clear();
+        player.setCardsInDeck(tempCardDeck);                        // 0 5 1
+        assertFalse(game.isPlayerOutOfCards(player));
+        player.setCardsOnHand(tempCardDeck);                        // 0 0 1
+        assertFalse(game.isPlayerOutOfCards(player));
+        player.setCardsOnTable(tempCardsOnTableEmpty);                       //0 0 0
+        assertTrue(game.isPlayerOutOfCards(player));
+    }
 
     @Test
     void isPlayerDead() {
@@ -94,9 +117,12 @@ class GameTest {
     void attackPlayerWhenHpIsBellow0() throws Exception {
         game.setRoundCounter(2);
         int attackNumber = 10;
+        System.out.println(game.getPlayer1().getHp());
         int hpAfterAttack = game.getPlayer1().getHp() - attackNumber;
+        System.out.println(hpAfterAttack);
         game.attackPlayer(game.getPlayer1(), attackNumber);
-        assertEquals(20, hpAfterAttack);
+
+        assertEquals(hpAfterAttack, game.getPlayer1().getHp() );
 
 
     }

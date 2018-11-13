@@ -9,14 +9,14 @@ public class Player {
     private String name;
     private int energyPoints;
     private int hp;
-    private List<CreatureCard> cardsOnHand;
-    private List<CreatureCard> cardsInDeck;
+    private List<GameCard> cardsOnHand;
+    private List<GameCard> cardsInDeck;
     private List<CreatureCard> cardsOnTable;
-    private List<CreatureCard> graveYard;
+    private List<GameCard> graveYard;
 
     private boolean hasPlayedCard;
 
-    public Player(List<CreatureCard> deck, String name) {
+    public Player(List<GameCard> deck, String name) {
         this.name = name;
         this.hp = 10;
         this.cardsInDeck = deck;
@@ -36,19 +36,19 @@ public class Player {
         this.hp = hp;
     }
 
-    public List<CreatureCard> getCardsOnHand() {
+    public List<GameCard> getCardsOnHand() {
         return cardsOnHand;
     }
 
-    public void setCardsOnHand(List<CreatureCard> cardsOnHand) {
+    public void setCardsOnHand(List<GameCard> cardsOnHand) {
         this.cardsOnHand = cardsOnHand;
     }
 
-    public List<CreatureCard> getCardsInDeck() {
+    public List<GameCard> getCardsInDeck() {
         return cardsInDeck;
     }
 
-    public void setCardsInDeck(List<CreatureCard> cardsInDeck) {
+    public void setCardsInDeck(List<GameCard> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
     }
 
@@ -60,11 +60,11 @@ public class Player {
         this.cardsOnTable = cardsOnTable;
     }
 
-    public List<CreatureCard> getGraveYard() {
+    public List<GameCard> getGraveYard() {
         return graveYard;
     }
 
-    public void setGraveYard(List<CreatureCard> graveYard) {
+    public void setGraveYard(List<GameCard> graveYard) {
         this.graveYard = graveYard;
     }
 
@@ -120,7 +120,7 @@ public class Player {
     public void playCard(int index) throws Exception {
         if(index >= 0 && index < cardsOnHand.size()) {
             if (!hasPlayedCard) {
-                cardsOnTable.add(cardsOnHand.get(index));
+                cardsOnTable.add((CreatureCard) cardsOnHand.get(index));
                 cardsOnHand.remove(index);
                 hasPlayedCard = true;
                 Print.actionMessage("    Played card: " + (index + 1) + "    ");
@@ -137,7 +137,7 @@ public class Player {
         cardsOnTable.stream()
                 .filter(c -> c.getHp() <= 0)
                 .forEach(card -> graveYard.add(card));
-        cardsOnTable.removeIf(card -> card.getHp() < 0);
+        cardsOnTable.removeIf(card -> card.getHp() <= 0);
     }
 
     public void reduceHp(int damage) {

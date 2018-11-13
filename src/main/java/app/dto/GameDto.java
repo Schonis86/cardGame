@@ -1,8 +1,10 @@
 package app.dto;
 
 import app.entities.CreatureCard;
+import app.entities.GameCard;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +17,7 @@ public class GameDto implements Serializable {
     int player2Hp;
     List<CreatureCard> player1CardsOnTable;
     List<CreatureCard> player2CardsOnTable;
-    List<CreatureCard> cardsOnHand;
+    List<GameCard> cardsOnHand;
 
     @JsonCreator
     public GameDto(@JsonProperty("turn") int turn,
@@ -25,7 +27,7 @@ public class GameDto implements Serializable {
                    @JsonProperty("player2Hp") int player2Hp,
                    @JsonProperty("player1CardsOnTable") List<CreatureCard> player1CardsOnTable,
                    @JsonProperty("player2CardsOnTable") List<CreatureCard> player2CardsOnTable,
-                   @JsonProperty("cardsOnHand") List<CreatureCard> cardsOnHand) {
+                   @JsonProperty("cardsOnHand") List<GameCard> cardsOnHand) {
         this.turn = turn;
         this.round = round;
         this.playerOneTurn = playerOneTurn;
@@ -92,11 +94,11 @@ public class GameDto implements Serializable {
         this.player2CardsOnTable = player2CardsOnTable;
     }
 
-    public List<CreatureCard> getCardsOnHand() {
+    public List<GameCard> getCardsOnHand() {
         return cardsOnHand;
     }
 
-    public void setCardsOnHand(List<CreatureCard> cardsOnHand) {
+    public void setCardsOnHand(List<GameCard> cardsOnHand) {
         this.cardsOnHand = cardsOnHand;
     }
 }

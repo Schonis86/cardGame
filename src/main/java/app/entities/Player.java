@@ -137,7 +137,7 @@ public class Player {
         cardsOnTable.stream()
                 .filter(c -> c.getHp() <= 0)
                 .forEach(card -> graveYard.add(card));
-        cardsOnTable.removeIf(card -> card.getHp() < 0);
+        cardsOnTable.removeIf(card -> card.getHp() <= 0);
     }
 
     public void reduceHp(int damage) {

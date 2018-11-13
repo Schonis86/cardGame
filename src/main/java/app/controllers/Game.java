@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
+import app.entities.MagicCard;
 import app.entities.Player;
 import app.gui.Print;
 import app.network.ServerNetwork;
@@ -81,7 +82,6 @@ public class Game {
                 player2.drawCard();
             }
         }
-        sendInfoAllPlayers();
         getUserInput();
     }
 
@@ -103,6 +103,7 @@ public class Game {
 
         while (!endTurn) {
             try {
+                sendInfoAllPlayers();
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
                 outAttackingPlayer.println("your turn, what do you want to do ?");
                 String msgFromClient = inAttackingPlayer.readLine();
@@ -161,6 +162,8 @@ public class Game {
         CARD1 = msgFromClientArray.length > 1 ? Integer.parseInt(msgFromClientArray[1]) - 1 : -1;
         CARD2 = msgFromClientArray.length > 2 ? Integer.parseInt(msgFromClientArray[2]) - 1 : -1;
     }
+
+
 
     public boolean attackCard(CreatureCard attackingCard, CreatureCard defendingCard) throws Exception {
         if (roundCounter <= 1) {

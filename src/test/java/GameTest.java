@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 import app.controllers.Game;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,6 +69,23 @@ class GameTest {
 
     }
 
+
+    @Test
+    void isPlayerOutOfCards(){
+        Player player = new Player(getDeck(6), "Lina");
+        List<CreatureCard> tempCardDeck = player.getCardsInDeck();
+        List<CreatureCard> tempCardHand = player.getCardsOnHand();    //1 5 0
+        assertFalse(game.isPlayerOutOfCards(player));
+        player.setCardsOnTable(tempCardDeck);
+        tempCardDeck.clear();
+        player.setCardsInDeck(tempCardDeck);                        // 0 5 1
+        assertFalse(game.isPlayerOutOfCards(player));
+        player.setCardsOnTable(tempCardHand);                       // 0 5 5
+        player.setCardsOnHand(tempCardDeck);                        // 0 0 5
+        assertFalse(game.isPlayerOutOfCards(player));
+        player.setCardsOnTable(tempCardDeck);                       //0 0 0
+        assertTrue(game.isPlayerOutOfCards(player));
+    }
 
     @Test
     void isPlayerDead() {

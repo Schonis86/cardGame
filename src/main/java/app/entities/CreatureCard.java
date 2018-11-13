@@ -1,5 +1,6 @@
 package app.entities;
 
+import app.AttackType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,7 +19,7 @@ public class CreatureCard implements Serializable, GameCard {
     private int attackPoints;
     private int defencePoint;
     private int coolDown;
-    private Enum attackType;
+    private AttackType attackType;
     private boolean isUsed;
 
 
@@ -29,7 +30,7 @@ public class CreatureCard implements Serializable, GameCard {
                         @JsonProperty("attackPoints") int attackPoints,
                         @JsonProperty("defencePoints") int defencePoint,
                         @JsonProperty("coolDown") int coolDown,
-                        @JsonProperty("attackType") Enum attackType,
+                        @JsonProperty("attackType") AttackType attackType,
                         @JsonProperty("isUsed") boolean isUsed) {
         this.hp = hp;
         this.name = name;
@@ -136,7 +137,7 @@ public class CreatureCard implements Serializable, GameCard {
         return attackType;
     }
 
-    public void setAttackType(Enum attackType) {
+    public void setAttackType(AttackType attackType) {
         this.attackType = attackType;
     }
 }

@@ -1,13 +1,24 @@
 package app.entities;
 
+import app.AttackType;
+import app.MagicMethod;
+
 public class MagicCard {
 
     private String name;
-
     Player player;
+    private MagicMethod magicMethod;
+    private int energyCost;
+    private int attackPoints;
 
-    public MagicCard(String name) {
+    public MagicCard(String name, int energyCost, int attackPoints) {
         this.name = name;
+        this.energyCost = energyCost;
+        this.attackPoints = attackPoints;
+    }
+
+    public MagicMethod getMagicMethod() {
+        return magicMethod;
     }
 
     public String getName() {

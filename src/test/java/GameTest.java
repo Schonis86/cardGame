@@ -3,6 +3,7 @@ import app.entities.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static app.AttackType.FIRE;
 import static org.junit.jupiter.api.Assertions.*;
 
 import app.controllers.Game;
@@ -34,7 +35,7 @@ class GameTest {
     List<CreatureCard> getDeck(int deckSize) {
         List<CreatureCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            CreatureCard card = new CreatureCard("kort" + (i + 1));
+            CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
             deck.add(card);
         }
         return deck;

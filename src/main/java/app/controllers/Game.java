@@ -229,30 +229,40 @@ public class Game {
         }
     }
 
+    //Omedelbara effekter
     public void castMagicMethod( MagicCard magicCard ) {
 
-//        switch (magicCard.getMagicMethod.name()){
-//            case HEALPLAYER:
-//
-//                magic.selfHealPlayer( attackingPlayer );
-//                break;
-//
-//            case HEALCARD:
-//
-//                break;
-//            case HEALALLCARDS:
-//
-//                break;
-//            case DAMAGEPLAYER:
-//
-//                break;
-//            case DAMAGECARD:
-//
-//                break;
-//            case DAMAGEALLCARDS:
-//                break;
-//        }
+        switch ( magicCard.getMagicMethod() ){
+            case HEALPLAYER:
+                magic.selfHealPlayer( attackingPlayer, 2 );
+                break;
 
+            case DAMAGEPLAYER:
+                magic.damageEnemyPlayer( defendingPlayer, 2 );
+                break;
+
+            case HEALALLCARDS:
+                magic.healFriendlyCards( attackingPlayer.getCardsOnTable(), 2 );
+                break;
+
+            case DAMAGEALLCARDS:
+                magic.damageEnemyCards( defendingPlayer.getCardsOnTable(), 2 );
+                break;
+        }
+    }
+
+    // Riktade effekter
+    public void castMagicMethod( MagicCard magicCard, CreatureCard creatureCard ) {
+
+        switch ( magicCard.getMagicMethod() ){
+            case DAMAGECARD:
+                magic.damageOneCard( creatureCard, 2 );
+                break;
+
+            case HEALCARD:
+                magic.healOneCard( creatureCard, 2 );
+                break;
+        }
     }
 
     public Boolean isPlayerDead(Player player) {

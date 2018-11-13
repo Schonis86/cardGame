@@ -1,7 +1,4 @@
-import app.entities.CreatureCard;
-import app.entities.Magic;
-import app.entities.MagicCard;
-import app.entities.Player;
+import app.entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +21,7 @@ class MagicTest {
     List<CreatureCard> cardsOnTable;
 
     @Mock
-    private List<CreatureCard> mockDeck;
+    private List<GameCard> mockDeck;
 
     @BeforeEach
     void setUp() {

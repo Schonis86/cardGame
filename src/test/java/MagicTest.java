@@ -35,6 +35,7 @@ class MagicTest {
         cardsOnTable = new ArrayList();
     }
 
+    //ej klar
     @Test
     void selfHealPlayer() {
         int currentPlayerHp = player.getHp();
@@ -43,6 +44,7 @@ class MagicTest {
         assertEquals(currentPlayerHp + 2, hpIncreased);
     }
 
+    //ej klar
     @Test
     void damageEnemyPlayer() {
         int currentPlayerHp = player.getHp();
@@ -51,15 +53,16 @@ class MagicTest {
         assertEquals(currentPlayerHp - 2, hpDecreased);
     }
 
+    //ej klar
     @Test
     void healFriendlyCards() {
-        int currentCardsHp = monsterCard.getHp();
+        int currentCardHp = monsterCard.getHp();
         List<CreatureCard> tempList = new ArrayList<>();
         tempList.add(monsterCard);
         magic.healFriendlyCards( tempList, 2 );
-        int cardsHpIncreased = monsterCard.getHp();
-        assertFalse(cardsHpIncreased <= currentCardsHp );
-        assertTrue( cardsHpIncreased > currentCardsHp );
+        int cardHpIncreased = tempList.get(0).getHp();
+        assertFalse(cardHpIncreased <= currentCardHp );
+        assertTrue( cardHpIncreased > currentCardHp );
     }
 
     @Test
@@ -75,7 +78,7 @@ class MagicTest {
 
     @Test
     void damageEnemyCardsOverKill() {
-        monsterCard.setHp(1);
+        monsterCard.setHp(0);
         List<CreatureCard> tempList = new ArrayList<>();
         tempList.add(monsterCard);
         magic.damageEnemyCards( tempList, 10 );
@@ -86,6 +89,7 @@ class MagicTest {
         assertTrue( cardsHpDecreased >= 0 );
     }
 
+    //ej klar
     @Test
     void healOneCard() {
         int currentCreatureCardHp = monsterCard.getHp();
@@ -95,6 +99,7 @@ class MagicTest {
         assertFalse(currentCreatureCardHp <= creatureCardHpIncreased );
     }
 
+    //ej klar
     @Test
     void damageOneCard() {
         int currentCreatureCardHp = monsterCard.getHp();

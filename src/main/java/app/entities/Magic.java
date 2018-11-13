@@ -24,7 +24,10 @@ public class Magic {
         int damage = getRandomPoints( attackPoints );
 
         cardsOnTable.stream()
-            .forEach( card -> card.setHp( card.getHp() - damage ));
+            .forEach( card -> {
+                int cardHp = card.getHp();
+                card.setHp(damage > cardHp ? 0 : cardHp - damage );
+            });
     }
 
     // omedelbar effek - öka sina egna korts HP med 2

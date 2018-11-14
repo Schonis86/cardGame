@@ -2,31 +2,39 @@ package client;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
-import app.gui.Print;
-import com.fasterxml.jackson.core.type.TypeReference;
+import client.component.gameBoard.GameBoardController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Scanner;
 
 public class ClientGame extends Thread {
-    public ClientNetwork clientNetwork;
 
-    String player;
+    public static ClientNetwork clientNetwork;
+
+    public static ClientNetwork getClientNetwork () {
+        return clientNetwork;
+    }
+
+    static String player;
     int turn;
     int round;
     String playerTurn;
-    int player1Hp;
-    int player2Hp;
+    static int player1Hp;
+    static int player2Hp;
     List<CreatureCard> player1CardsOnTable;
     List<CreatureCard> player2CardsOnTable;
     List<CreatureCard> cardsOnHand;
     ObjectMapper objectMapper;
     Scanner scanner;
+    static GameDto gameData;
 
-    public ClientGame(String address, int port) throws IOException {
+    GameBoardController controller;
+
+    public ClientGame(String address, int port, GameBoardController controller) throws IOException {
+        this.controller = controller;
         this.clientNetwork = new ClientNetwork();
         clientNetwork.startConnection(address, port);
         objectMapper = new ObjectMapper();
@@ -50,7 +58,7 @@ public class ClientGame extends Thread {
                     System.out.println("YOU ARE PLAYER: " + player);
                 }
                 else if (!msgFromServer.startsWith("GUI")) {
-                    Print.actionMessage(msgFromServer);
+                    System.out.println(msgFromServer);
                 } else {
                     try {
                         deserializeMsgFromServer(msgFromServer);
@@ -70,9 +78,21 @@ public class ClientGame extends Thread {
     }
 
     public void deserializeMsgFromServer(String msg) throws IOException {
-        System.out.println(msg);
         String parsedString = msg.replace("GUI", "");
         GameDto gameDto = objectMapper.readValue(parsedString, GameDto.class);
+        gameData = gameDto;
+        player2Hp = gameDto.getPlayer2Hp();
+        player1Hp = gameDto.getPlayer1Hp();
+
+        controller.update();
+
+        //gameDto contains all information about the game example getCardsOnhand:
+        //  gameDto.getCardsOnHand().forEach(c -> System.out.println(c.getName()));
     }
+
+    public static GameDto getDto() {
+        return gameData;
+    }
+    public static String getPlayer() {return player; }
 
 }

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static app.AttackType.FIRE;
+
 public class Main{
 
 //    @Override
@@ -26,7 +28,7 @@ public class Main{
 
             List<GameCard> deck = new ArrayList();
             for(int i = 0; i < 20; i++) {
-                CreatureCard card = new CreatureCard("kort" + (i+1));
+        CreatureCard card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, FIRE, false);
                 deck.add(card);
             }
         Game game = new Game(deck);

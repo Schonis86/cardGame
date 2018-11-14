@@ -2,6 +2,8 @@ package app.controllers;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
+import app.entities.Magic;
+import app.entities.MagicCard;
 import app.entities.GameCard;
 import app.entities.MagicCard;
 
@@ -15,6 +17,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
+
+import static app.MagicMethod.*;
 
 public class Game {
 
@@ -34,6 +38,8 @@ public class Game {
     private List<GameCard> player2Cards;
     private Player player1;
     private Player player2;
+
+    Magic magic;
 
     private Player defendingPlayer, attackingPlayer;
     private PrintWriter outDefendingPlayer, outAttackingPlayer;
@@ -241,6 +247,42 @@ public class Game {
 
     public boolean isPlayerOutOfCards(Player player){
         return(player.getCardsInDeck().size()==0 && player.getCardsOnHand().size()==0 && player.getCardsOnTable().size()==0);
+    }
+
+    //Omedelbara effekter
+    public void castMagicMethod( MagicCard magicCard ) {
+
+        switch ( magicCard.getMagicMethod() ){
+            case HEALPLAYER:
+                magic.selfHealPlayer( attackingPlayer, 2 );
+                break;
+
+            case DAMAGEPLAYER:
+                magic.damageEnemyPlayer( defendingPlayer, 2 );
+                break;
+
+            case HEALALLCARDS:
+                magic.healFriendlyCards( attackingPlayer.getCardsOnTable(), 2 );
+                break;
+
+            case DAMAGEALLCARDS:
+                magic.damageEnemyCards( defendingPlayer.getCardsOnTable(), 2 );
+                break;
+        }
+    }
+
+    // Riktade effekter
+    public void castMagicMethod( MagicCard magicCard, CreatureCard creatureCard ) {
+
+        switch ( magicCard.getMagicMethod() ){
+            case DAMAGECARD:
+                magic.damageOneCard( creatureCard, 2 );
+                break;
+
+            case HEALCARD:
+                magic.healOneCard( creatureCard, 2 );
+                break;
+        }
     }
 
     public Boolean isPlayerDead(Player player) {

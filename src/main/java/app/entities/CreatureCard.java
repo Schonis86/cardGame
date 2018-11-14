@@ -41,12 +41,12 @@ public class CreatureCard implements Serializable, GameCard {
         this.isUsed = isUsed;
     }
 
-    public CreatureCard(String name) {
-        hp = 4; //Random 1-7
-        attackPoints = 4;
-        this.name = name;
-        isUsed = false;
-    }
+//    public CreatureCard(String name) {
+//        hp = 4; //Random 1-7
+//        attackPoints = 4;
+//        this.name = name;
+//        isUsed = false;
+//    }
 
     public void increaseHp(int heal) {
         int oldHp = getHp();

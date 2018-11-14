@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import static app.AttackType.FIRE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -33,7 +34,7 @@ class PlayerTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            card = new CreatureCard("Card " + 1);
+            card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, FIRE, false);
             deck.add(card);
         }
         return deck;
@@ -106,7 +107,7 @@ class PlayerTest {
         assertEquals(5, player.getCardsOnTable().size());
         assertTrue(player.getGraveYard().size() <= 0);
 
-        deck2.get(3).decreaseHp(4);
+        deck2.get(3).decreaseHp( deck2.get(3).getHp() );
 
         player.removeCardIfDead();
         assertEquals(4, player.getCardsOnTable().size());

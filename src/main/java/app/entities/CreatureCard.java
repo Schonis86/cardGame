@@ -1,12 +1,10 @@
 package app.entities;
 
 import app.AttackType;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -19,7 +17,8 @@ public class CreatureCard implements Serializable, GameCard {
     private int attackPoints;
     private int defencePoint;
     private int coolDown;
-    public AttackType attackType;
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    private AttackType attackType;
     private boolean isUsed;
 
 
@@ -42,12 +41,12 @@ public class CreatureCard implements Serializable, GameCard {
         this.isUsed = isUsed;
     }
 
-    public CreatureCard(String name) {
-        hp = 4; //Random 1-7
-        attackPoints = 4;
-        this.name = name;
-        isUsed = false;
-    }
+//    public CreatureCard(String name) {
+//        hp = 4; //Random 1-7
+//        attackPoints = 4;
+//        this.name = name;
+//        isUsed = false;
+//    }
 
     public void increaseHp(int heal) {
         int oldHp = getHp();

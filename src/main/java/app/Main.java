@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static app.AttackType.FIRE;
+
 public class Main{
 
 //    @Override
@@ -34,11 +36,10 @@ public class Main{
 //        }
 
 
-        try
-        {
+        try {
             // create our mysql database connection
             String myDriver = "com.mysql.cj.jdbc.Driver";
-            String myUrl="jdbc:mysql://localhost/cardgame_tdd?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String myUrl = "jdbc:mysql://localhost/cardgame_tdd?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             //String myUrl = "jdbc:mysql://localhost:3306/cardgame_tdd";
             Class.forName(myDriver);
             Connection conn = DriverManager.getConnection(myUrl, "root", "linasdatabas");
@@ -54,8 +55,7 @@ public class Main{
             ResultSet rs = st.executeQuery(query);
 
             // iterate through the java resultset
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 int hp = rs.getInt("hp");
@@ -67,25 +67,29 @@ public class Main{
                 //int isUsed = rs.getInt("isUsed");
                 String imageUrl = rs.getString("imageUrl");
                 String specialAbility = rs.getString("specialAbility");
-                if(hp!=0) {
+                if (hp != 0) {
                     deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
-                }else if (hp == 0){
+                } else if (hp == 0) {
                     deck.add(new MagicCard());
                 }
                 // print the results
                 System.out.format("%s, %s\n", id, name);
+//        launch(args);
+
+//                List<GameCard> deck = new ArrayList();
+//                for (int i = 0; i < 20; i++) {
+//                    CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
+//                    deck.add(card);
+//                }
+                st.close();
+                Game game = new Game(deck);
+            }}
+        catch(Exception e)
+            {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
             }
-            st.close();
-            Game game = new Game(deck);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Got an exception! ");
-            System.err.println(e.getMessage());
-        }
-    }
 
 
 
-
-    }
+    }}

@@ -19,7 +19,7 @@ public class CreatureCard implements Serializable, GameCard {
     private int attackPoints;
     private int defencePoint;
     private int coolDown;
-    private AttackType attackType;
+    public AttackType attackType;
     private boolean isUsed;
 
 

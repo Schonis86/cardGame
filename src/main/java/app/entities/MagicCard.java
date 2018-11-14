@@ -4,6 +4,14 @@ public class MagicCard implements GameCard{
 
     private String name;
     private int attackPoints;
+    // LINAS EGNA TILLÄGG FÖR ATT FÅ DATABAS ATT FUNKA!
+
+
+
+
+
+
+    //SLUT PÅ LINAS EGNA TILLÄGG FÖR ATT FÅ DATABAS ATT FUNKA!
     public String getName() {
         return name;
     }

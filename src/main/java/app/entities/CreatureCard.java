@@ -29,7 +29,7 @@ public class CreatureCard implements Serializable, GameCard {
                         @JsonProperty("attackPoints") int attackPoints,
                         @JsonProperty("defencePoints") int defencePoint,
                         @JsonProperty("coolDown") int coolDown,
-                        @JsonProperty("attackType") AttackType attackType,
+                       // @JsonProperty("attackType") AttackType attackType,
                         @JsonProperty("isUsed") boolean isUsed) {
         this.hp = hp;
         this.name = name;
@@ -37,7 +37,7 @@ public class CreatureCard implements Serializable, GameCard {
         this.attackPoints = attackPoints;
         this.defencePoint = defencePoint;
         this.coolDown = coolDown;
-        this.attackType = attackType;
+        //this.attackType = attackType;
         this.isUsed = isUsed;
     }
 

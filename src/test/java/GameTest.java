@@ -40,7 +40,7 @@ class GameTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
+            CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, false);
             deck.add(card);
         }
         return deck;
@@ -81,7 +81,7 @@ class GameTest {
         List<GameCard> tempCardDeck = player.getCardsInDeck();
         List<GameCard> tempCardHand = player.getCardsOnHand();
         assertFalse(game.isPlayerOutOfCards(player));
-        List<CreatureCard> tempCardsOnTableWithCards = Arrays.asList(new CreatureCard(10,"Lina",1,1,2,9, AttackType.FIRE,false));
+        List<CreatureCard> tempCardsOnTableWithCards = Arrays.asList(new CreatureCard(10,"Lina",1,1,2,9, false));
         List<CreatureCard> tempCardsOnTableEmpty = Arrays.asList();
         player.setCardsOnTable(tempCardsOnTableWithCards); // 1 5 1
         tempCardDeck.clear();

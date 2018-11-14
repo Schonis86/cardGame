@@ -27,7 +27,7 @@ class MagicTest {
     void setUp() {
         magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
         magic = new Magic();
-        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
+        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, false);
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }
@@ -93,7 +93,7 @@ class MagicTest {
         magic.healOneCard( monsterCard, 2 );
         int creatureCardHpIncreased = monsterCard.getHp();
 //        assertEquals(currentCreatureCardHp + 2, creatureCardHpIncreased);
-        assertFalse(currentCreatureCardHp <= creatureCardHpIncreased );
+        assertTrue(currentCreatureCardHp <= creatureCardHpIncreased );
     }
 
     //ej klar

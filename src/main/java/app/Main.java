@@ -56,24 +56,24 @@ public class Main{
 
             // iterate through the java resultset
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("hp");
                 String name = rs.getString("name");
                 int hp = rs.getInt("hp");
                 int energyCost = rs.getInt("energyCost");
                 int attackPoints = rs.getInt("attackPoints");
                 int defencePoints = rs.getInt("defencePoints");
                 int coolDown = rs.getInt("coolDown");
-                AttackType attackType = (AttackType.valueOf(rs.getString("attackType")));
+                //AttackType attackType = (AttackType.valueOf(rs.getString("attackType")));
                 //int isUsed = rs.getInt("isUsed");
                 String imageUrl = rs.getString("imageUrl");
                 String specialAbility = rs.getString("specialAbility");
                 if (hp != 0) {
-                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
+                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, false));
                 } else if (hp == 0) {
-                    deck.add(new MagicCard());
+                    //deck.add(new MagicCard(name, energyCost, attackPoints));
                 }
                 // print the results
-                System.out.format("%s, %s\n", id, name);
+                //System.out.format("%s, %s\n", id, name);
 //        launch(args);
 
 //                List<GameCard> deck = new ArrayList();
@@ -81,15 +81,19 @@ public class Main{
 //                    CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
 //                    deck.add(card);
 //                }
-                st.close();
-                Game game = new Game(deck);
-            }}
+
+            }
+            st.close();
+            Game game = new Game(deck);
+            game.start();
+
+
+        }
         catch(Exception e)
             {
                 System.err.println("Got an exception! ");
                 System.err.println(e.getMessage());
             }
-
 
 
     }}

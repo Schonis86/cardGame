@@ -91,7 +91,7 @@ class MagicTest {
         magic.healOneCard( monsterCard, 2 );
         int creatureCardHpIncreased = monsterCard.getHp();
 //        assertEquals(currentCreatureCardHp + 2, creatureCardHpIncreased);
-        assertFalse(currentCreatureCardHp <= creatureCardHpIncreased );
+        assertTrue(currentCreatureCardHp <= creatureCardHpIncreased );
     }
 
     //ej klar

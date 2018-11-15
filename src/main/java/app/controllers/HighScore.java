@@ -73,18 +73,18 @@ public class HighScore {
                 System.err.println("Got an exception! ");
                 System.err.println(e.getMessage());
             }
+            Collections.sort(highScore, HighScore.sort);
 
+            int numberToShow;
+            if(highScore.size()<numberOfPlayers) {numberToShow = highScore.size();}
+            else {numberToShow = numberOfPlayers;}
 
-
-
-            Collections.sort(highScore, HighScore.par);
             System.out.println("Plc: Namn:   Poäng:");
-
-            for (int i = 0; i <highScore.size() ; i++) {
-                System.out.println((i+1) + "  "+highScore.get(i).getKey() + "      " + highScore.get(i).getValue());
+            for (int i = 0; i <numberToShow ; i++) {
+                System.out.println((i+1) + "     "+highScore.get(i).getKey() + "   " + highScore.get(i).getValue());
 
             }}
-    public static final Comparator<Pair> par = new Comparator<Pair>(){
+    public static final Comparator<Pair> sort = new Comparator<Pair>(){
     public int compare(Pair p1, Pair p2){
                 return (Integer)p2.getValue()-(Integer)p1.getValue();
 };};

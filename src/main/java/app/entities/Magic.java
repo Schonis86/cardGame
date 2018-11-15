@@ -67,10 +67,18 @@ public class Magic {
     public void damageOneCard( CreatureCard creatureCard, int attackPoints ) {
 
         int damage = getRandomPoints( attackPoints );
-        creatureCard.setHp( creatureCard.getHp() - damage );
+
+        if(damage > creatureCard.getHp()){
+            creatureCard.setHp(0);
+
+        }
+        else {
+            creatureCard.setHp(creatureCard.getHp() - damage);
+
+        }
     }
 
-    private int getRandomPoints( int number ) {
+    public int getRandomPoints( int number ) {
         Random r = new Random();
         return r.nextInt( number ) + 1;
     }

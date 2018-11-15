@@ -25,7 +25,7 @@ class MagicTest {
     void setUp() {
         magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
         magic = new Magic();
-        monsterCard = new CreatureCard(15, "Ali", 5, 2, 2, 2, "FIRE", false);
+        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false);
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }
@@ -133,7 +133,15 @@ class MagicTest {
     void damageOneCard() {
         int currentCreatureCardHp = monsterCard.getHp();
         magic.damageOneCard( monsterCard, 2 );
-        int creatureCardHpDecreased = monsterCard.getHp();
-        assertEquals(currentCreatureCardHp - 2, creatureCardHpDecreased);
+        assertTrue(currentCreatureCardHp != monsterCard.getHp());
+        assertTrue(monsterCard.getHp() < monsterCard.gethpMax() || monsterCard.getHp() >= monsterCard.gethpMax()-2);
+    }
+
+    @Test
+    void damageOneCardOverKill(){
+        monsterCard.setHp(0);
+        magic.damageOneCard(monsterCard, 10);  //from 1-10
+
+        assertEquals(0, monsterCard.getHp());
     }
 }

@@ -241,6 +241,9 @@ public class Game {
             } else {
                 Print.actionMessage(player2.getName() + " won!");
             }
+            System.out.println("Lina");
+            HighScore.addPlayers(player1, player2);
+            HighScore.showTopPlayers(5);
             System.exit(0);
         }
     }

@@ -4,7 +4,8 @@ import app.dto.GameDto;
 import app.entities.CreatureCard;
 import app.entities.GameCard;
 import client.ClientGame;
-import client.component.creatureCard.CreatureCardComponent;
+import client.component.creatureCard.CreatureCardController;
+import client.component.eventButtons.EventButtonsController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,20 +23,27 @@ import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable {
 
-    @FXML public GridPane ENEMY_CARDS_ON_TABLE, PLAYER_CARDS_ON_TABLE, CARD_GRIDPANE;
-    @FXML public AnchorPane BOTTOM_PANE ,TOP_PANE, BTN_ANCHOR_PANE;
-    @FXML public ProgressBar PLAYER_HP_PROGRESSBAR, ENEMY_HP_PROGRESSBAR;
-    @FXML public Label PLAYER_NAME;
+    @FXML
+    public GridPane ENEMY_CARDS_ON_TABLE, PLAYER_CARDS_ON_TABLE, CARD_GRIDPANE;
+    @FXML
+    public AnchorPane BOTTOM_PANE, TOP_PANE, BTN_ANCHOR_PANE;
+    @FXML
+    public ProgressBar PLAYER_HP_PROGRESSBAR, ENEMY_HP_PROGRESSBAR;
+    @FXML
+    public Label PLAYER_NAME;
 
     GameDto gameDto;
     List<CreatureCard> playerCards, enemyCards;
     int playerHp, enemyHp;
+    EventButtonsController eventController;
+
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            eventController = new EventButtonsController();
             renderEventBtn();
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +69,7 @@ public class GameBoardController implements Initializable {
     }
 
 
-//    Måste ändra namn till något bra!
+    //    Måste ändra namn till något bra!
     public void assignCards() {
 
         switch (ClientGame.getPlayer()) {
@@ -91,9 +99,10 @@ public class GameBoardController implements Initializable {
 
         for (int i = 0; i < cardList.size(); i++) {
             if (cardList.get(i) instanceof CreatureCard) {
-                CreatureCardComponent card = new CreatureCardComponent();
-                card.setIndex(i);
-                AnchorPane pane = card.RenderCard((CreatureCard) cardList.get(i));
+                FXMLLoader loader = new FXMLLoader();
+                AnchorPane pane = loader.load(getClass().getResource("../../component/creatureCard/creatureCard.fxml").openStream());
+                CreatureCardController controller = loader.getController();
+                controller.setValues((CreatureCard) cardList.get(i), i, "hand");
                 CARD_GRIDPANE.addColumn(i, pane);
             } else {
                 // LÄGG TILL MAGIC CARDS
@@ -112,9 +121,10 @@ public class GameBoardController implements Initializable {
         thePane.addRow(0);
         if (cards != null) {
             for (int i = 0; i < cards.size(); i++) {
-                CreatureCardComponent card = new CreatureCardComponent();
-                card.setIndex(i);
-                AnchorPane pane = card.RenderCard(cards.get(i));
+                FXMLLoader loader = new FXMLLoader();
+                AnchorPane pane = loader.load(getClass().getResource("../../component/creatureCard/creatureCard.fxml").openStream());
+                CreatureCardController controller = loader.getController();
+                controller.setValues(cards.get(i), i, table);
                 thePane.addColumn(i, pane);
             }
         }
@@ -129,6 +139,8 @@ public class GameBoardController implements Initializable {
     }
 
     public void renderEventBtn() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(eventController);
         GridPane gridPane = FXMLLoader.load(getClass().getResource("../eventButtons/eventbuttons.fxml"));
         BTN_ANCHOR_PANE.getChildren().setAll(gridPane);
 

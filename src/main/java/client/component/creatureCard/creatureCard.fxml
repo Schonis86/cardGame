@@ -4,20 +4,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane fx:id="CREATURE_CARD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClick" prefHeight="170.0" prefWidth="119.0" style="-fx-background-image: /Users/carl-johanschonberg/Desktop/Projects/School/Testdriven utveckling/CardGameClient/src/sample/cardTemplate.png;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.component.creatureCard.CreatureCardComponent">
+
+<AnchorPane fx:id="CREATURE_CARD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClick" prefHeight="170.0" prefWidth="119.0"  xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.component.creatureCard.CreatureCardController">
    <children>
       <ImageView fitHeight="170.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../img/cardTemplate.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="81.0" fitWidth="110.0" layoutX="9.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../img/jonas.jpg" />
+            <Image url="@/client/img/cardTemplate.png" />
          </image>
       </ImageView>
 
       <Label layoutX="13.0" layoutY="129.0" text="HP: " />
+      <Label fx:id="CARD_NAME" layoutX="43.0" layoutY="14.0" text="Label" />
+      <Label fx:id="CARD_HP" layoutX="39.0" layoutY="129.0" text="Label" />
 
    </children>
 </AnchorPane>

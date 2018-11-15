@@ -2,6 +2,7 @@ package client;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
+import client.component.eventButtons.EventButtonsController;
 import client.component.gameBoard.GameBoardController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -85,6 +86,7 @@ public class ClientGame extends Thread {
         player1Hp = gameDto.getPlayer1Hp();
 
         controller.update();
+        EventButtonsController.getInstance().update();
 
         //gameDto contains all information about the game example getCardsOnhand:
         //  gameDto.getCardsOnHand().forEach(c -> System.out.println(c.getName()));

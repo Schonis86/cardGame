@@ -39,27 +39,24 @@ public class GameBoardController implements Initializable {
 
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        try {
-//            eventController = new EventButtonsController();
-//            renderEventBtn();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            renderEventBtn();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update() {
-        System.out.println("hej");
-       /* try {
+        try {
             gameDto = ClientGame.getDto();
             new Thread(() -> {
                 Platform.runLater(() -> {
-                        assignCards();
                     try {
+                        assignCards();
                         printCardsOnHand();
-//                        printCardsOnBoard(playerCards, enemyCards);
+                        printCardsOnBoard(playerCards, enemyCards);
                         printPlayerInfo();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -67,12 +64,12 @@ public class GameBoardController implements Initializable {
                 });
             }).start();
         } catch (Exception e) {
-        }*/
+        }
     }
 
 
     //    Måste ändra namn till något bra!
-    public void assignCards() {
+    private void assignCards() {
 
         switch (ClientGame.getPlayer()) {
             case " player1":
@@ -94,30 +91,29 @@ public class GameBoardController implements Initializable {
     }
 
 
-    public void printCardsOnHand() throws IOException {
+    private void printCardsOnHand() throws IOException {
+        CARD_GRIDPANE.getChildren().clear();
+        CARD_GRIDPANE.addRow(0);
 
         List<GameCard> cardList = ClientGame.getDto().getCardsOnHand();
 
         for (int i = 0; i < cardList.size(); i++) {
             if (cardList.get(i) instanceof CreatureCard) {
-                FXMLLoader loader = new FXMLLoader();
-                AnchorPane pane = loader.load(getClass().getResource("/creatureCard.fxml").openStream());
-                CreatureCardController controller = loader.getController();
-                controller.setValues((CreatureCard) cardList.get(i), i, "hand");
-                CARD_GRIDPANE.addColumn(i, pane);
+                System.out.println(cardList.get(i).getName());
+
             } else {
                 // LÄGG TILL MAGIC CARDS
             }
         }
     }
 
-    /*public void printCardsOnBoard(List<CreatureCard> playerCards, List<CreatureCard> enemyCards) throws IOException {
+    private void printCardsOnBoard(List<CreatureCard> playerCards, List<CreatureCard> enemyCards) throws IOException {
         printCardsOnHand();
         printCardsOnTable(PLAYER_CARDS_ON_TABLE, playerCards, "playerTable");
         printCardsOnTable(ENEMY_CARDS_ON_TABLE, enemyCards, "enemyTable");
-    }*/
+    }
 
-   /* public void printCardsOnTable(GridPane thePane, List<CreatureCard> cards, String table) throws IOException {
+   private void printCardsOnTable(GridPane thePane, List<CreatureCard> cards, String table) throws IOException {
         thePane.getChildren().clear();
         thePane.addRow(0);
         if (cards != null) {
@@ -129,9 +125,9 @@ public class GameBoardController implements Initializable {
                 thePane.addColumn(i, pane);
             }
         }
-    }*/
+    }
 
-    public void printPlayerInfo() {
+    private void printPlayerInfo() {
 
         PLAYER_HP_PROGRESSBAR.setProgress(playerHp / 10);
         PLAYER_NAME.setText(ClientGame.getPlayer());
@@ -139,12 +135,9 @@ public class GameBoardController implements Initializable {
 
     }
 
-   /* public void renderEventBtn() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setController(eventController);
-        GridPane gridPane = FXMLLoader.load(getClass().getResource("../eventButtons/eventbuttons.fxml"));
+    private void renderEventBtn() throws IOException {
+        GridPane gridPane = FXMLLoader.load(getClass().getResource("/eventbuttons.fxml"));
         BTN_ANCHOR_PANE.getChildren().setAll(gridPane);
-
-    }*/
+    }
 
 }

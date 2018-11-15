@@ -34,7 +34,7 @@
                </children>
             </AnchorPane>
             <ProgressBar fx:id="PLAYER_HP_PROGRESSBAR" layoutX="14.0" layoutY="80.0" prefHeight="20.0" prefWidth="100.0" progress="0.0" />
-            <Label fx:id="PLAYER_NAME" layoutX="40.0" layoutY="14.0" text="Player 1" />
+            <Label fx:id="PLAYER_NAME" layoutX="40.0" layoutY="14.0" text=" " />
             <Label layoutX="55.0" layoutY="63.0" text="HP" />
             <AnchorPane fx:id="BTN_ANCHOR_PANE" layoutX="993.0" prefHeight="220.0" prefWidth="210.0" />
          </children></AnchorPane>

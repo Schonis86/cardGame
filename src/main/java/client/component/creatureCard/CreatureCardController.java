@@ -16,11 +16,11 @@ import java.io.IOException;
 
 public class CreatureCardController {
 
-    @FXML
-    public AnchorPane CREATURE_CARD;
-    @FXML
+
+    public AnchorPane CREATURE_CARD ;
+
     public Label CARD_NAME;
-    @FXML
+
     public Label CARD_HP;
 
     private int index;
@@ -36,7 +36,7 @@ public class CreatureCardController {
     }
 
 
-    public void onClick(MouseEvent mouseEvent) throws IOException {
+    public void onClick() throws IOException {
         switch (table) {
             case "hand":
                 playCardOnTable();

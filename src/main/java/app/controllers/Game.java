@@ -52,6 +52,8 @@ public class Game {
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
         player2 = new Player(player2Cards, "Robin");
+        HighScore.addPlayers(player1,player2);
+        HighScore.showTopPlayers(2);
         this.player1Turn = false;
         objectMapper = new ObjectMapper();
     }
@@ -241,7 +243,6 @@ public class Game {
             } else {
                 Print.actionMessage(player2.getName() + " won!");
             }
-            System.out.println("Lina");
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(5);
             System.exit(0);

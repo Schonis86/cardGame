@@ -2,11 +2,15 @@ package app.controllers;
 
 import app.entities.CreatureCard;
 import app.entities.Player;
+import com.mysql.cj.conf.ConnectionUrlParser;
+import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class HighScore {
     public static void addPlayers(Player player1, Player player2){
@@ -19,11 +23,13 @@ public class HighScore {
 
         Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
 
-        String query = "INSERT INTO high score (Name, Points) VALUES" + player1.getName() +"," + player1.getHp()+ "(Name, Points) VALUES)" + player2.getName() +"," + player2.getHp();
+        String query1 = "INSERT INTO highScore (Name, Points) VALUES('" + player1.getName() +"','" + (player1.getHp()-1) + "')";
+        String query2 = "INSERT INTO highScore (Name, Points) VALUES('" + player2.getName() +"','" + (player2.getHp()+2)+ "')";
 
         Statement st = conn.createStatement();
 
-        ResultSet rs = st.executeQuery(query);
+        st.executeUpdate(query1);
+        st.executeUpdate(query2);
 
         st.close();
 
@@ -35,6 +41,9 @@ public class HighScore {
         System.err.println(e.getMessage());
     }}
         public static void showTopPlayers(int numberOfPlayers){
+            List<Pair> highScore = new ArrayList<>();
+            Pair<String, Integer> player;
+
             try {
                 String myDriver = "com.mysql.cj.jdbc.Driver";
 
@@ -44,15 +53,20 @@ public class HighScore {
 
                 Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
 
-                String query = "SELECT * FROM high score";
+                String query = "SELECT * FROM highScore";
 
                 Statement st = conn.createStatement();
 
                 ResultSet rs = st.executeQuery(query);
 
+                while(rs.next()){
+                    String name = rs.getString("Name");
+                    int points = rs.getInt("Points");
+                    player = new Pair<>(name, points);
+                    highScore.add(player);
+                }
+
                 st.close();
-
-
             }
             catch(Exception e)
             {
@@ -60,4 +74,19 @@ public class HighScore {
                 System.err.println(e.getMessage());
             }
 
-}}
+
+
+
+            Collections.sort(highScore, HighScore.par);
+            System.out.println("Plc: Namn:   Poäng:");
+
+            for (int i = 0; i <highScore.size() ; i++) {
+                System.out.println((i+1) + "  "+highScore.get(i).getKey() + "      " + highScore.get(i).getValue());
+
+            }}
+    public static final Comparator<Pair> par = new Comparator<Pair>(){
+    public int compare(Pair p1, Pair p2){
+                return (Integer)p2.getValue()-(Integer)p1.getValue();
+};};
+
+}

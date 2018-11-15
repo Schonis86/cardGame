@@ -39,14 +39,16 @@ public class Main{
         try {
             // create our mysql database connection
             String myDriver = "com.mysql.cj.jdbc.Driver";
-            String myUrl = "jdbc:mysql://localhost/cardgame_tdd?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            //String myUrl = "jdbc:mysql://localhost/cardgame_tdd?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
             //String myUrl = "jdbc:mysql://localhost:3306/cardgame_tdd";
             Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "linasdatabas");
+            //Connection conn = DriverManager.getConnection(myUrl, "root", "linasdatabas");
+            Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
 
             // our SQL SELECT query.
             // if you only need a few columns, specify them by name instead of using "*"
-            String query = "SELECT * FROM gamecards";
+            String query = "SELECT * FROM character1";
 
             // create the java statement
             Statement st = conn.createStatement();
@@ -63,24 +65,19 @@ public class Main{
                 int attackPoints = rs.getInt("attackPoints");
                 int defencePoints = rs.getInt("defencePoints");
                 int coolDown = rs.getInt("coolDown");
-                //AttackType attackType = (AttackType.valueOf(rs.getString("attackType")));
+                String attackType = rs.getString("attackType");
                 //int isUsed = rs.getInt("isUsed");
                 String imageUrl = rs.getString("imageUrl");
                 String specialAbility = rs.getString("specialAbility");
                 if (hp != 0) {
-                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, false));
+                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
                 } else if (hp == 0) {
                     //deck.add(new MagicCard(name, energyCost, attackPoints));
                 }
-                // print the results
-                //System.out.format("%s, %s\n", id, name);
+
 //        launch(args);
 
-//                List<GameCard> deck = new ArrayList();
-//                for (int i = 0; i < 20; i++) {
-//                    CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
-//                    deck.add(card);
-//                }
+//
 
             }
             st.close();

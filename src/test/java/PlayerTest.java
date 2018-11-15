@@ -34,7 +34,7 @@ class PlayerTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, false);
+            card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, null,false);
             deck.add(card);
         }
         return deck;

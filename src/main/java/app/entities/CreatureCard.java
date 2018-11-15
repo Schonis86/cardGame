@@ -18,7 +18,7 @@ public class CreatureCard implements Serializable, GameCard {
     private int defencePoint;
     private int coolDown;
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-    private AttackType attackType;
+    private String attackType;
     private boolean isUsed;
 
 
@@ -29,7 +29,7 @@ public class CreatureCard implements Serializable, GameCard {
                         @JsonProperty("attackPoints") int attackPoints,
                         @JsonProperty("defencePoints") int defencePoint,
                         @JsonProperty("coolDown") int coolDown,
-                       // @JsonProperty("attackType") AttackType attackType,
+                        @JsonProperty("attackType") String attackType,
                         @JsonProperty("isUsed") boolean isUsed) {
         this.hp = hp;
         this.name = name;
@@ -37,7 +37,7 @@ public class CreatureCard implements Serializable, GameCard {
         this.attackPoints = attackPoints;
         this.defencePoint = defencePoint;
         this.coolDown = coolDown;
-        //this.attackType = attackType;
+        this.attackType = attackType;
         this.isUsed = isUsed;
     }
 
@@ -132,11 +132,11 @@ public class CreatureCard implements Serializable, GameCard {
         this.coolDown = coolDown;
     }
 
-    public Enum getAttackType() {
+    public String getAttackType() {
         return attackType;
     }
 
-    public void setAttackType(AttackType attackType) {
+    public void setAttackType(String attackType) {
         this.attackType = attackType;
     }
 }

@@ -7,8 +7,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static app.AttackType.FIRE;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,7 +25,7 @@ class MagicTest {
     void setUp() {
         magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
         magic = new Magic();
-        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, null, false);
+        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false);
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }

@@ -1,13 +1,10 @@
 package app.entities;
 
-import app.AttackType;
 import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
 
 
 public class CreatureCard implements Serializable, GameCard {

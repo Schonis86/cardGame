@@ -14,7 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static app.AttackType.FIRE;
 
 public class Main{
 

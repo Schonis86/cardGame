@@ -39,9 +39,6 @@ public class Magic {
 
         int heal = getRandomPoints( healPoints );
 
-//        cardsOnTable.stream()
-//            .forEach( card -> card.setHp( card.getHp() + heal ) );
-
         cardsOnTable.stream()
                 .forEach( card -> {
                     int maxHp = card.gethpMax();
@@ -59,13 +56,6 @@ public class Magic {
         int damagedCreatureCard = maxHp - creatureCard.getHp();
 
         creatureCard.setHp( heal >= damagedCreatureCard ? maxHp : creatureCard.getHp() + heal );
-
-        //if ( heal >= damagedCreatureCard ) {
-//            creatureCard.setHp(maxHp);
-//        }
-//        else {
-//            creatureCard.setHp( creatureCard.getHp() + heal );
-//        }
     }
 
     // riktad effekt - minska ett korts HP med 2

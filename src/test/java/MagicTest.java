@@ -48,7 +48,6 @@ class MagicTest {
         assertEquals(currentPlayerHp - 2, hpDecreased);
     }
 
-    //ej klar
     @Test
     void healFriendlyCards() {
         monsterCard.setHp(5);
@@ -67,10 +66,8 @@ class MagicTest {
         assertTrue( cardHpIncreased > currentCreatureCardHp || cardHpIncreased == hpMax );
     }
 
-    //ej klar
     @Test
     void healFriendlyCardsOverHeal() {
-
         int currentCreatureCardHp = monsterCard.getHp();
         int hpMax = monsterCard.gethpMax();
 
@@ -83,8 +80,6 @@ class MagicTest {
         System.out.println(creatureCardHpIncreased);
 
         assertTrue( creatureCardHpIncreased == currentCreatureCardHp || creatureCardHpIncreased == hpMax);
-
-
     }
 
     @Test

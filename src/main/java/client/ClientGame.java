@@ -5,6 +5,7 @@ import app.entities.CreatureCard;
 import client.component.eventButtons.EventButtonsController;
 import client.component.gameBoard.GameBoardController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.fxml.FXMLLoader;
 
 
 import java.io.IOException;
@@ -32,10 +33,7 @@ public class ClientGame extends Thread {
     Scanner scanner;
     static GameDto gameData;
 
-    GameBoardController controller;
-
-    public ClientGame(String address, int port, GameBoardController controller) throws IOException {
-        this.controller = controller;
+    public ClientGame(String address, int port) throws IOException {
         this.clientNetwork = new ClientNetwork();
         clientNetwork.startConnection(address, port);
         objectMapper = new ObjectMapper();
@@ -85,6 +83,8 @@ public class ClientGame extends Thread {
         player2Hp = gameDto.getPlayer2Hp();
         player1Hp = gameDto.getPlayer1Hp();
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
+        GameBoardController controller = loader.getController();
         controller.update();
         EventButtonsController.getInstance().update();
 

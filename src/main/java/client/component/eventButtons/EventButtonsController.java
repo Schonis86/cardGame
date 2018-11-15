@@ -29,8 +29,10 @@ public class EventButtonsController implements Initializable {
     }
 
 
+    @FXML
     public Button ATTACK_BTN;
 
+    @FXML
     public Button END_TURN_BTN;
 
     private GameDto gameDto;
@@ -60,16 +62,14 @@ public class EventButtonsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Button END_TURN_BTN = new Button();
-        Button ATTACK_BTN = new Button();
 
         END_TURN_BTN.setOnAction(  (event -> {
             System.out.println("test");
-           /* try {
+            try {
                 endTurn();
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
         }));
 
     }

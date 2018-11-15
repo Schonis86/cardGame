@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable {
 
+
     @FXML
     public GridPane ENEMY_CARDS_ON_TABLE, PLAYER_CARDS_ON_TABLE, CARD_GRIDPANE;
     @FXML
@@ -35,29 +36,30 @@ public class GameBoardController implements Initializable {
     GameDto gameDto;
     List<CreatureCard> playerCards, enemyCards;
     int playerHp, enemyHp;
-    EventButtonsController eventController;
 
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            eventController = new EventButtonsController();
-            renderEventBtn();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            eventController = new EventButtonsController();
+//            renderEventBtn();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void update() {
-        try {
+        System.out.println("hej");
+       /* try {
             gameDto = ClientGame.getDto();
             new Thread(() -> {
                 Platform.runLater(() -> {
-                    try {
                         assignCards();
-                        printCardsOnBoard(playerCards, enemyCards);
+                    try {
+                        printCardsOnHand();
+//                        printCardsOnBoard(playerCards, enemyCards);
                         printPlayerInfo();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -65,7 +67,7 @@ public class GameBoardController implements Initializable {
                 });
             }).start();
         } catch (Exception e) {
-        }
+        }*/
     }
 
 
@@ -93,14 +95,13 @@ public class GameBoardController implements Initializable {
 
 
     public void printCardsOnHand() throws IOException {
-        CARD_GRIDPANE.getChildren().clear();
-        CARD_GRIDPANE.addRow(0);
+
         List<GameCard> cardList = ClientGame.getDto().getCardsOnHand();
 
         for (int i = 0; i < cardList.size(); i++) {
             if (cardList.get(i) instanceof CreatureCard) {
                 FXMLLoader loader = new FXMLLoader();
-                AnchorPane pane = loader.load(getClass().getResource("../../component/creatureCard/creatureCard.fxml").openStream());
+                AnchorPane pane = loader.load(getClass().getResource("/creatureCard.fxml").openStream());
                 CreatureCardController controller = loader.getController();
                 controller.setValues((CreatureCard) cardList.get(i), i, "hand");
                 CARD_GRIDPANE.addColumn(i, pane);
@@ -110,13 +111,13 @@ public class GameBoardController implements Initializable {
         }
     }
 
-    public void printCardsOnBoard(List<CreatureCard> playerCards, List<CreatureCard> enemyCards) throws IOException {
+    /*public void printCardsOnBoard(List<CreatureCard> playerCards, List<CreatureCard> enemyCards) throws IOException {
         printCardsOnHand();
         printCardsOnTable(PLAYER_CARDS_ON_TABLE, playerCards, "playerTable");
         printCardsOnTable(ENEMY_CARDS_ON_TABLE, enemyCards, "enemyTable");
-    }
+    }*/
 
-    public void printCardsOnTable(GridPane thePane, List<CreatureCard> cards, String table) throws IOException {
+   /* public void printCardsOnTable(GridPane thePane, List<CreatureCard> cards, String table) throws IOException {
         thePane.getChildren().clear();
         thePane.addRow(0);
         if (cards != null) {
@@ -128,7 +129,7 @@ public class GameBoardController implements Initializable {
                 thePane.addColumn(i, pane);
             }
         }
-    }
+    }*/
 
     public void printPlayerInfo() {
 
@@ -138,12 +139,12 @@ public class GameBoardController implements Initializable {
 
     }
 
-    public void renderEventBtn() throws IOException {
+   /* public void renderEventBtn() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(eventController);
         GridPane gridPane = FXMLLoader.load(getClass().getResource("../eventButtons/eventbuttons.fxml"));
         BTN_ANCHOR_PANE.getChildren().setAll(gridPane);
 
-    }
+    }*/
 
 }

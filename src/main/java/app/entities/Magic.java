@@ -19,7 +19,12 @@ public class Magic {
     public void damageEnemyPlayer( Player player, int attackPoints ) {
 
         int damage = getRandomPoints( attackPoints );
-        player.setHp( player.getHp() - damage );
+        if (damage >= player.getHp()){
+            player.setHp(0);
+        }
+        else{
+            player.setHp( player.getHp() - damage );
+        }
     }
 
     // omedelbar effek - ge direkt skada till motståndarens kort med 2

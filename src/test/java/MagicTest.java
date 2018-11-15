@@ -39,14 +39,27 @@ class MagicTest {
         assertEquals(currentPlayerHp + 2, hpIncreased);
     }
 
-    //ej klar
+
     @Test
     void damageEnemyPlayer() {
         int currentPlayerHp = player.getHp();
         magic.damageEnemyPlayer( player, 2 );
         int hpDecreased = player.getHp();
-        assertEquals(currentPlayerHp - 2, hpDecreased);
+        assertFalse(currentPlayerHp == player.getHp());
+        assertTrue(player.getHp() == hpDecreased);
     }
+
+    @Test
+    void damageEnemyPlayerOverkill(){
+        player.setHp(0);
+        magic.damageEnemyPlayer(player,10);
+
+        assertEquals(0, player.getHp());
+    }
+
+
+
+
 
     //ej klar
     @Test
@@ -96,8 +109,8 @@ class MagicTest {
         int cardsHpDecreased = tempList.get(0).getHp();
 
         System.out.println(cardsHpDecreased);
-
         assertTrue( cardsHpDecreased >= 0 );
+
     }
 
     @Test

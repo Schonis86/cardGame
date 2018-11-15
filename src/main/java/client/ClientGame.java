@@ -33,6 +33,7 @@ public class ClientGame extends Thread {
     ObjectMapper objectMapper;
     Scanner scanner;
     static GameDto gameData;
+    GameBoardController controller;
 
     public ClientGame(String address, int port) throws IOException {
         this.clientNetwork = new ClientNetwork();
@@ -84,6 +85,7 @@ public class ClientGame extends Thread {
         player2Hp = gameDto.getPlayer2Hp();
         player1Hp = gameDto.getPlayer1Hp();
 
+        controller.update();
         EventButtonsController.getInstance().update();
 
 

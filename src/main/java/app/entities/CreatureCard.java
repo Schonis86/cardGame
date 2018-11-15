@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CreatureCard implements Serializable, GameCard {
     private int hp;
+    private int hpMax;
     private String name;
     private int energyCost;
     private int attackPoints;
@@ -29,6 +30,7 @@ public class CreatureCard implements Serializable, GameCard {
                         @JsonProperty("attackType") String attackType,
                         @JsonProperty("isUsed") boolean isUsed) {
         this.hp = hp;
+        this.hpMax = hp;
         this.name = name;
         this.energyCost = energyCost;
         this.attackPoints = attackPoints;
@@ -65,6 +67,10 @@ public class CreatureCard implements Serializable, GameCard {
 
     public int getHp() {
         return hp;
+    }
+
+    public int gethpMax() {
+        return hpMax;
     }
 
     public void setIsUsed(boolean isUsed) {

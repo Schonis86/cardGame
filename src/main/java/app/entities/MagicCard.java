@@ -1,6 +1,5 @@
 package app.entities;
 
-import app.AttackType;
 import app.MagicMethod;
 
 

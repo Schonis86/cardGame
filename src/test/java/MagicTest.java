@@ -25,11 +25,7 @@ class MagicTest {
     void setUp() {
         magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
         magic = new Magic();
-        magiCardDamageTest
         monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false);
-
-        
-        MagicCard-Class
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }

@@ -25,7 +25,11 @@ class MagicTest {
     void setUp() {
         magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
         magic = new Magic();
-        monsterCard = new CreatureCard(9, "Ali", 5, 2, 2, 2, "FIRE", false);
+        magiCardDamageTest
+        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false);
+
+        
+        MagicCard-Class
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }
@@ -39,15 +43,25 @@ class MagicTest {
         assertEquals(currentPlayerHp + 2, hpIncreased);
     }
 
-    //ej klar
+
     @Test
     void damageEnemyPlayer() {
         int currentPlayerHp = player.getHp();
         magic.damageEnemyPlayer( player, 2 );
         int hpDecreased = player.getHp();
-        assertEquals(currentPlayerHp - 2, hpDecreased);
+        assertFalse(currentPlayerHp == player.getHp());
+        assertTrue(player.getHp() == hpDecreased);
     }
 
+
+    @Test
+    void damageEnemyPlayerOverkill(){
+        player.setHp(0);
+        magic.damageEnemyPlayer(player,10);
+
+        assertEquals(0, player.getHp());
+    }
+  
     @Test
     void healFriendlyCards() {
         monsterCard.setHp(5);
@@ -102,8 +116,8 @@ class MagicTest {
         int cardsHpDecreased = tempList.get(0).getHp();
 
         System.out.println(cardsHpDecreased);
-
         assertTrue( cardsHpDecreased >= 0 );
+
     }
 
     @Test
@@ -133,13 +147,20 @@ class MagicTest {
 
         assertTrue( creatureCardHpIncreased <= currentCreatureCardHp || creatureCardHpIncreased >= hpMax );
     }
-
-    //ej klar
+  
     @Test
     void damageOneCard() {
         int currentCreatureCardHp = monsterCard.getHp();
         magic.damageOneCard( monsterCard, 2 );
-        int creatureCardHpDecreased = monsterCard.getHp();
-        assertEquals(currentCreatureCardHp - 2, creatureCardHpDecreased);
+        assertTrue(currentCreatureCardHp != monsterCard.getHp());
+        assertTrue(monsterCard.getHp() < monsterCard.gethpMax() || monsterCard.getHp() >= monsterCard.gethpMax()-2);
+    }
+
+    @Test
+    void damageOneCardOverKill(){
+        monsterCard.setHp(0);
+        magic.damageOneCard(monsterCard, 10);  //from 1-10
+
+        assertEquals(0, monsterCard.getHp());
     }
 }

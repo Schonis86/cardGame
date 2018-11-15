@@ -19,11 +19,11 @@ public class ActionClass {
     private int enemyCard;
 
     public void setPlayerCard(int playerCard) {
-        this.playerCard = playerCard;
+        this.playerCard = playerCard + 1;
     }
 
     public void setEnemyCard(int enemyCard) throws IOException {
-        this.enemyCard = enemyCard;
+        this.enemyCard = enemyCard + 1;
         attack();
     }
 

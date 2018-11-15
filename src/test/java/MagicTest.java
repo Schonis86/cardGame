@@ -27,7 +27,7 @@ class MagicTest {
     void setUp() {
         magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
         magic = new Magic();
-        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, FIRE, false);
+        monsterCard = new CreatureCard(15, "Ali", 5, 2, 2, 2, FIRE, false);
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }
@@ -63,12 +63,27 @@ class MagicTest {
     }
 
     @Test
+    void healFriendlyCardsOverHeal() {
+
+        int currentCreatureCardHp = monsterCard.getHp();
+        int hpMax = monsterCard.gethpMax();
+        monsterCard.setHp(50);
+
+        magic.healOneCard( monsterCard, 2);
+        int creatureCardHpIncreased = monsterCard.getHp();
+
+        System.out.println(creatureCardHpIncreased);
+
+//        assertTrue( creatureCardHpIncreased <= currentCreatureCardHp || creatureCardHpIncreased >= hpMax );
+    }
+
+    @Test
     void damageEnemyCards() {
         int currentCardsHp = monsterCard.getHp();
         List<CreatureCard> tempList = new ArrayList<>();
         tempList.add(monsterCard);
         magic.damageEnemyCards( tempList, 2 );
-        int cardsHpDecreased = monsterCard.getHp();
+        int cardsHpDecreased = tempList.get(0).getHp();
         assertFalse( cardsHpDecreased >= currentCardsHp );
         assertTrue( cardsHpDecreased < currentCardsHp );
     }
@@ -86,14 +101,32 @@ class MagicTest {
         assertTrue( cardsHpDecreased >= 0 );
     }
 
-    //ej klar
     @Test
     void healOneCard() {
         int currentCreatureCardHp = monsterCard.getHp();
+        int hpMax = monsterCard.gethpMax();
+        monsterCard.setHp(5);
+
         magic.healOneCard( monsterCard, 2 );
         int creatureCardHpIncreased = monsterCard.getHp();
-//        assertEquals(currentCreatureCardHp + 2, creatureCardHpIncreased);
-        assertFalse(currentCreatureCardHp <= creatureCardHpIncreased );
+
+        System.out.println(creatureCardHpIncreased);
+
+        assertTrue( creatureCardHpIncreased > currentCreatureCardHp || currentCreatureCardHp == hpMax );
+    }
+
+    @Test
+    void healOneCardOverHeal() {
+        int currentCreatureCardHp = monsterCard.getHp();
+        int hpMax = monsterCard.gethpMax();
+        monsterCard.setHp(50);
+
+        magic.healOneCard( monsterCard, 2);
+        int creatureCardHpIncreased = monsterCard.getHp();
+
+        System.out.println(creatureCardHpIncreased);
+
+        assertTrue( creatureCardHpIncreased <= currentCreatureCardHp || creatureCardHpIncreased >= hpMax );
     }
 
     //ej klar

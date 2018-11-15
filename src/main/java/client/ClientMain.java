@@ -29,7 +29,7 @@ public class ClientMain extends Application {
     public static void main(String[] args) {
         Thread thread = new Thread(() -> {
             try {
-                ClientGame clientGame = new ClientGame("localhost", 6666);
+                ClientGame clientGame = new ClientGame("localhost", 6666, controller);
             } catch (IOException e) {
                 e.printStackTrace();
             }

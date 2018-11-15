@@ -19,10 +19,11 @@ public class EventButtonsController implements Initializable {
 
     public static EventButtonsController instance;
 
-    public EventButtonsController(){}
+    public EventButtonsController() {
+    }
 
-    public static EventButtonsController getInstance(){
-        if(instance == null){
+    public static EventButtonsController getInstance() {
+        if (instance == null) {
             instance = new EventButtonsController();
         }
         return instance;
@@ -63,7 +64,7 @@ public class EventButtonsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
-        END_TURN_BTN.setOnAction(  (event -> {
+      /*  END_TURN_BTN.setOnAction(  (event -> {
             System.out.println("test");
             try {
                 endTurn();
@@ -72,13 +73,14 @@ public class EventButtonsController implements Initializable {
             }
         }));
 
+        ATTACK_BTN.setOnAction((event -> {
+            System.out.println("CardOne:" + cardOne);
+            System.out.println("CardTwo:" + cardTwo);
+        }));
+*/
     }
 
-    public void attack(ActionEvent actionEvent) throws IOException {
-        System.out.println("CardOne:" + cardOne);
-        System.out.println("CardTwo:" + cardTwo);
-    }
-
+    @FXML
     private void endTurn() throws IOException {
         ClientGame.getClientNetwork().sendMessage("END_TURN");
     }

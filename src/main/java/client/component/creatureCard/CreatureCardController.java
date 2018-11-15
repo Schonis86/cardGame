@@ -64,10 +64,6 @@ public class CreatureCardController {
         ClientGame.getClientNetwork().sendMessage("PLAY_CARD:" + (index + 1));
     }
 
-    private void playerCardOnTable() {
-
-    }
-
     private void setBorderColor() {
         int depth = 70;
         DropShadow borderGlow = new DropShadow();

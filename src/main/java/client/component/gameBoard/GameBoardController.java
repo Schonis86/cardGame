@@ -39,6 +39,7 @@ public class GameBoardController implements Initializable {
 
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -99,7 +100,11 @@ public class GameBoardController implements Initializable {
 
         for (int i = 0; i < cardList.size(); i++) {
             if (cardList.get(i) instanceof CreatureCard) {
-                System.out.println(cardList.get(i).getName());
+                FXMLLoader loader = new FXMLLoader();
+                AnchorPane pane = loader.load(getClass().getResource("/creatureCard.fxml").openStream());
+                CreatureCardController controller = loader.getController();
+                controller.setValues((CreatureCard) cardList.get(i), i, "hand");
+                CARD_GRIDPANE.addColumn(i, pane);
 
             } else {
                 // LÄGG TILL MAGIC CARDS
@@ -119,7 +124,7 @@ public class GameBoardController implements Initializable {
         if (cards != null) {
             for (int i = 0; i < cards.size(); i++) {
                 FXMLLoader loader = new FXMLLoader();
-                AnchorPane pane = loader.load(getClass().getResource("../../component/creatureCard/creatureCard.fxml").openStream());
+                AnchorPane pane = loader.load(getClass().getResource("/creatureCard.fxml").openStream());
                 CreatureCardController controller = loader.getController();
                 controller.setValues(cards.get(i), i, table);
                 thePane.addColumn(i, pane);
@@ -128,11 +133,9 @@ public class GameBoardController implements Initializable {
     }
 
     private void printPlayerInfo() {
-
         PLAYER_HP_PROGRESSBAR.setProgress(playerHp / 10);
         PLAYER_NAME.setText(ClientGame.getPlayer());
         ENEMY_HP_PROGRESSBAR.setProgress(enemyHp / 10);
-
     }
 
     private void renderEventBtn() throws IOException {

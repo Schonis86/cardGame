@@ -15,8 +15,8 @@ public class ActionClass {
         return instance;
     }
 
-    private int playerCard = -1;
-    private int enemyCard = -1;
+    private int playerCard;
+    private int enemyCard;
 
     public void setPlayerCard(int playerCard) {
         this.playerCard = playerCard;
@@ -28,7 +28,6 @@ public class ActionClass {
     }
 
     private void attack() throws IOException {
-        System.out.println("ATTACK" + playerCard +":" + enemyCard);
         if (playerCard >= 0) {
             System.out.println("ATTACK_CARD:"+ playerCard+":"+ enemyCard);
             ClientGame.getClientNetwork().sendMessage("ATTACK_CARD:"+ playerCard+":"+ enemyCard);

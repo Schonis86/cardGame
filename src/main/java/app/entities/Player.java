@@ -9,6 +9,7 @@ public class Player {
     private String name;
     private int energyPoints;
     private int hp;
+    private int maxHp;
     private List<GameCard> cardsOnHand;
     private List<GameCard> cardsInDeck;
     private List<CreatureCard> cardsOnTable;
@@ -18,7 +19,8 @@ public class Player {
 
     public Player(List<GameCard> deck, String name) {
         this.name = name;
-        this.hp = 10;
+        this.hp = 20;
+        this.maxHp = 20;
         this.cardsInDeck = deck;
         this.cardsOnHand = new ArrayList();
         this.cardsOnTable = new ArrayList();
@@ -30,6 +32,10 @@ public class Player {
 
     public int getHp() {
         return hp;
+    }
+
+    public int getMaxHp(){
+        return maxHp;
     }
 
     public void setHp(int hp) {

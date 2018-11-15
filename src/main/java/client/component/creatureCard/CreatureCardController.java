@@ -1,8 +1,10 @@
 package client.component.creatureCard;
 
 import app.entities.CreatureCard;
+import client.ActionClass;
 import client.ClientGame;
 import client.component.eventButtons.EventButtonsController;
+import client.component.gameBoard.GameBoardController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -11,11 +13,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 
 public class CreatureCardController {
-
 
     public AnchorPane CREATURE_CARD ;
 
@@ -42,7 +44,7 @@ public class CreatureCardController {
                 playCardOnTable();
                 break;
             case "playerTable":
-                handlePlayerCards();
+                handlePlayerCardsOnTable();
                 break;
             case "enemyTable":
                 handleEnemyTable();
@@ -50,14 +52,15 @@ public class CreatureCardController {
 
     }
 
-    private void handleEnemyTable() {
+    private void handleEnemyTable() throws IOException {
         setBorderColor();
-        EventButtonsController.getInstance().setCardTwo(index);
+        ActionClass.getInstance().setEnemyCard(index);
     }
 
-    private void handlePlayerCards() {
+    private void handlePlayerCardsOnTable() {
         setBorderColor();
-        EventButtonsController.getInstance().setCardOne(index);
+        ActionClass.getInstance().setPlayerCard(index);
+
     }
 
     private void playCardOnTable() throws IOException {

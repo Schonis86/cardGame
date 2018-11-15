@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable {
 
-
     @FXML
     public GridPane ENEMY_CARDS_ON_TABLE, PLAYER_CARDS_ON_TABLE, CARD_GRIDPANE;
     @FXML
@@ -37,12 +36,11 @@ public class GameBoardController implements Initializable {
     List<CreatureCard> playerCards, enemyCards;
     int playerHp, enemyHp;
 
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         try {
+
             renderEventBtn();
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,6 +57,7 @@ public class GameBoardController implements Initializable {
                         printCardsOnHand();
                         printCardsOnBoard(playerCards, enemyCards);
                         printPlayerInfo();
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

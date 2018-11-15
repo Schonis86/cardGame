@@ -2,6 +2,7 @@ package client.component.eventButtons;
 
 import app.dto.GameDto;
 import client.ClientGame;
+import client.component.gameBoard.GameBoardController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -16,19 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EventButtonsController implements Initializable {
-
-    public static EventButtonsController instance;
-
-    public EventButtonsController() {
-    }
-
-    public static EventButtonsController getInstance() {
-        if (instance == null) {
-            instance = new EventButtonsController();
-        }
-        return instance;
-    }
-
+    private GameBoardController controller;
 
     @FXML
     public Button ATTACK_BTN;
@@ -44,6 +33,7 @@ public class EventButtonsController implements Initializable {
 
     public void setCardOne(int cardOne) {
         this.cardOne = cardOne;
+        System.out.println(cardOne);
     }
 
     public void setCardTwo(int cardTwo) {
@@ -54,7 +44,7 @@ public class EventButtonsController implements Initializable {
         try {
             gameDto = ClientGame.getDto();
             new Thread(() -> {
-//                Platform.runLater(this::disableEndTurnButton);
+                System.out.println("Test från Knapparna");
             }).start();
         } catch (Exception e) {
         }
@@ -63,26 +53,15 @@ public class EventButtonsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-      /*  END_TURN_BTN.setOnAction(  (event -> {
-            System.out.println("test");
-            try {
-                endTurn();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }));
-
-        ATTACK_BTN.setOnAction((event -> {
-            System.out.println("CardOne:" + cardOne);
-            System.out.println("CardTwo:" + cardTwo);
-        }));
-*/
     }
 
     @FXML
     private void endTurn() throws IOException {
         ClientGame.getClientNetwork().sendMessage("END_TURN");
+    }
+
+    public void init(GameBoardController gameBoardController) {
+        controller = gameBoardController;
     }
 
 

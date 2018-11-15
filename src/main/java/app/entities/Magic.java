@@ -45,9 +45,11 @@ public class Magic {
         int heal = getRandomPoints( healPoints );
 
         cardsOnTable.stream()
-            .forEach( card -> card.setHp( card.getHp() + heal ) );
-
-
+                .forEach( card -> {
+                    int maxHp = card.gethpMax();
+                    int damagedCreatureCard =  maxHp - card.getHp();
+                    card.setHp( heal >= damagedCreatureCard ? maxHp : card.getHp() + heal  );
+                });
 
     }
 
@@ -57,13 +59,6 @@ public class Magic {
 
         int heal = getRandomPoints( healPoints );
         int damagedCreatureCard = maxHp - creatureCard.getHp();
-
-//        if ( heal >= damagedCreatureCard ) {
-//            creatureCard.setHp(maxHp);
-//        }
-//        else {
-//            creatureCard.setHp( creatureCard.getHp() + heal );
-//        }
 
         creatureCard.setHp( heal >= damagedCreatureCard ? maxHp : creatureCard.getHp() + heal );
     }

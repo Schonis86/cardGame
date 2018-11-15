@@ -10,9 +10,14 @@ public class Magic {
 
     //omedelbar effekt - öka Player1/2 HP med 2
     public void selfHealPlayer( Player player, int healPoints ) {
-
         int heal = getRandomPoints( healPoints );
+        if (player.getHp()+heal >= player.getMaxHp()){
+            player.setHp(20);
+        }
+        else{
         player.setHp( player.getHp() + heal );
+
+        }
     }
 
     //omedelbar effekt - ge skada till Player1/2 HP med 2

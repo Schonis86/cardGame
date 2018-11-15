@@ -30,13 +30,18 @@ class MagicTest {
         cardsOnTable = new ArrayList();
     }
 
-    //ej klar
     @Test
     void selfHealPlayer() {
-        int currentPlayerHp = player.getHp();
-        magic.selfHealPlayer( player, 2 );
-        int hpIncreased = player.getHp();
-        assertEquals(currentPlayerHp + 2, hpIncreased);
+        player.setHp(10);
+        magic.selfHealPlayer( player, 5 );
+
+        assertTrue(player.getHp()>10 || player.getHp()<=15);
+    }
+    @Test
+    void selfHealPlayerOverHeal(){
+        magic.selfHealPlayer(player, 10);
+        assertEquals(20, player.getHp() );
+
     }
 
 

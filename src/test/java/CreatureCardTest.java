@@ -1,7 +1,6 @@
 import app.entities.CreatureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CreatureCardTest {
@@ -10,7 +9,7 @@ class CreatureCardTest {
 
     @BeforeEach
     void setUp() {
-        card = new CreatureCard("card1");
+        card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, "FIRE", false);
     }
 
     @Test

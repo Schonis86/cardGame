@@ -1,13 +1,10 @@
 package app.entities;
 
-import app.AttackType;
 import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
 
 
 public class CreatureCard implements Serializable, GameCard {
@@ -18,7 +15,7 @@ public class CreatureCard implements Serializable, GameCard {
     private int defencePoint;
     private int coolDown;
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-    private AttackType attackType;
+    private String attackType;
     private boolean isUsed;
 
 
@@ -29,7 +26,7 @@ public class CreatureCard implements Serializable, GameCard {
                         @JsonProperty("attackPoints") int attackPoints,
                         @JsonProperty("defencePoints") int defencePoint,
                         @JsonProperty("coolDown") int coolDown,
-                        @JsonProperty("attackType") AttackType attackType,
+                        @JsonProperty("attackType") String attackType,
                         @JsonProperty("isUsed") boolean isUsed) {
         this.hp = hp;
         this.name = name;
@@ -41,12 +38,12 @@ public class CreatureCard implements Serializable, GameCard {
         this.isUsed = isUsed;
     }
 
-    public CreatureCard(String name) {
-        hp = 4; //Random 1-7
-        attackPoints = 4;
-        this.name = name;
-        isUsed = false;
-    }
+//    public CreatureCard(String name) {
+//        hp = 4; //Random 1-7
+//        attackPoints = 4;
+//        this.name = name;
+//        isUsed = false;
+//    }
 
     public void increaseHp(int heal) {
         int oldHp = getHp();
@@ -132,11 +129,11 @@ public class CreatureCard implements Serializable, GameCard {
         this.coolDown = coolDown;
     }
 
-    public Enum getAttackType() {
+    public String getAttackType() {
         return attackType;
     }
 
-    public void setAttackType(AttackType attackType) {
+    public void setAttackType(String attackType) {
         this.attackType = attackType;
     }
 }

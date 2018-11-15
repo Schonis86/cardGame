@@ -3,6 +3,7 @@ package client.component.gameBoard;
 import app.dto.GameDto;
 import app.entities.CreatureCard;
 import app.entities.GameCard;
+import app.entities.MagicCard;
 import client.ClientGame;
 import client.component.creatureCard.CreatureCardController;
 import client.component.eventButtons.EventButtonsController;
@@ -35,36 +36,40 @@ public class GameBoardController implements Initializable {
     GameDto gameDto;
     List<CreatureCard> playerCards, enemyCards;
     int playerHp, enemyHp;
-    EventButtonsController eventController;
 
-
-
+    EventButtonsController eventButtonsController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            eventController = new EventButtonsController();
-            renderEventBtn();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/eventbuttons.fxml"));
+            loader.load();
+            eventButtonsController = loader.getController();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void update() {
+        System.out.println("UPDATE");
         try {
             gameDto = ClientGame.getDto();
             new Thread(() -> {
                 Platform.runLater(() -> {
                     try {
                         assignCards();
-                        printCardsOnBoard(playerCards, enemyCards);
+                        printCardsOnHand();
+                        //         printCardsOnBoard(playerCards, enemyCards);
                         printPlayerInfo();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
                 });
             }).start();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -98,16 +103,17 @@ public class GameBoardController implements Initializable {
         List<GameCard> cardList = ClientGame.getDto().getCardsOnHand();
 
         for (int i = 0; i < cardList.size(); i++) {
-            if (cardList.get(i) instanceof CreatureCard) {
+
+            if (!(cardList.get(i) instanceof MagicCard)) {
                 FXMLLoader loader = new FXMLLoader();
-                AnchorPane pane = loader.load(getClass().getResource("../../component/creatureCard/creatureCard.fxml").openStream());
+                AnchorPane pane = loader.load(getClass().getResource("/creatureCard.fxml").openStream());
                 CreatureCardController controller = loader.getController();
                 controller.setValues((CreatureCard) cardList.get(i), i, "hand");
                 CARD_GRIDPANE.addColumn(i, pane);
             } else {
-                // LÄGG TILL MAGIC CARDS
             }
         }
+        System.out.println(CARD_GRIDPANE.getChildren().size());
     }
 
     public void printCardsOnBoard(List<CreatureCard> playerCards, List<CreatureCard> enemyCards) throws IOException {
@@ -139,8 +145,6 @@ public class GameBoardController implements Initializable {
     }
 
     public void renderEventBtn() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setController(eventController);
         GridPane gridPane = FXMLLoader.load(getClass().getResource("/eventbuttons.fxml"));
         BTN_ANCHOR_PANE.getChildren().setAll(gridPane);
 

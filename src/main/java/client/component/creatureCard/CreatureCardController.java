@@ -27,7 +27,7 @@ public class CreatureCardController {
     private String table;
     private boolean clicked = false;
 
-
+    @FXML
     public void setValues(CreatureCard card, int index, String value) {
         this.table = value;
         this.index = index;

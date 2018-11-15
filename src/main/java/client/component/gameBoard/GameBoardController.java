@@ -122,7 +122,7 @@ public class GameBoardController implements Initializable {
         if (cards != null) {
             for (int i = 0; i < cards.size(); i++) {
                 FXMLLoader loader = new FXMLLoader();
-                AnchorPane pane = loader.load(getClass().getResource("../../component/creatureCard/creatureCard.fxml").openStream());
+                AnchorPane pane = loader.load(getClass().getResource("/creatureCard.fxml").openStream());
                 CreatureCardController controller = loader.getController();
                 controller.setValues(cards.get(i), i, table);
                 thePane.addColumn(i, pane);
@@ -141,7 +141,7 @@ public class GameBoardController implements Initializable {
     public void renderEventBtn() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(eventController);
-        GridPane gridPane = FXMLLoader.load(getClass().getResource("../eventButtons/eventbuttons.fxml"));
+        GridPane gridPane = FXMLLoader.load(getClass().getResource("/eventbuttons.fxml"));
         BTN_ANCHOR_PANE.getChildren().setAll(gridPane);
 
     }

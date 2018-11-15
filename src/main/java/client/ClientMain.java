@@ -11,15 +11,11 @@ import java.io.IOException;
 
 public class ClientMain extends Application {
 
-    static GameBoardController controller = new GameBoardController();
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader;
         Parent parent;
-        loader = new FXMLLoader(getClass().getResource("resources/gameboard.fxml"));
-        loader.setController(controller);
-        parent = loader.load();
+        parent = FXMLLoader.load(getClass().getResource("/gameboard.fxml"));
         primaryStage.setTitle("CARD GAME");
         primaryStage.setScene(new Scene(parent, 1200, 700));
         primaryStage.show();
@@ -30,7 +26,7 @@ public class ClientMain extends Application {
     public static void main(String[] args) {
         Thread thread = new Thread(() -> {
             try {
-                ClientGame clientGame = new ClientGame("localhost", 6666, controller);
+                ClientGame clientGame = new ClientGame("localhost", 6666);
             } catch (IOException e) {
                 e.printStackTrace();
             }

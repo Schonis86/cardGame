@@ -5,6 +5,7 @@ import app.entities.CreatureCard;
 import client.component.eventButtons.EventButtonsController;
 import client.component.gameBoard.GameBoardController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.fxml.FXMLLoader;
 
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class ClientGame extends Thread {
 
     public static ClientNetwork clientNetwork;
 
-    public static ClientNetwork getClientNetwork () {
+    public static ClientNetwork getClientNetwork() {
         return clientNetwork;
     }
 
@@ -34,8 +35,7 @@ public class ClientGame extends Thread {
 
     GameBoardController controller;
 
-    public ClientGame(String address, int port, GameBoardController controller) throws IOException {
-        this.controller = controller;
+    public ClientGame(String address, int port) throws IOException {
         this.clientNetwork = new ClientNetwork();
         clientNetwork.startConnection(address, port);
         objectMapper = new ObjectMapper();
@@ -53,12 +53,11 @@ public class ClientGame extends Thread {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(msgFromServer.startsWith("PLAYER")){
+                if (msgFromServer.startsWith("PLAYER")) {
                     String[] playerString = msgFromServer.split(":");
                     player = playerString[1];
                     System.out.println("YOU ARE PLAYER: " + player);
-                }
-                else if (!msgFromServer.startsWith("GUI")) {
+                } else if (!msgFromServer.startsWith("GUI")) {
                     System.out.println(msgFromServer);
                 } else {
                     try {
@@ -85,8 +84,9 @@ public class ClientGame extends Thread {
         player2Hp = gameDto.getPlayer2Hp();
         player1Hp = gameDto.getPlayer1Hp();
 
-        controller.update();
-        EventButtonsController.getInstance().update();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
+        GameBoardController gameBoardController = loader.getController();
+        gameBoardController.update();
 
         //gameDto contains all information about the game example getCardsOnhand:
         //  gameDto.getCardsOnHand().forEach(c -> System.out.println(c.getName()));
@@ -95,6 +95,9 @@ public class ClientGame extends Thread {
     public static GameDto getDto() {
         return gameData;
     }
-    public static String getPlayer() {return player; }
+
+    public static String getPlayer() {
+        return player;
+    }
 
 }

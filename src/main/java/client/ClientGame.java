@@ -87,10 +87,7 @@ public class ClientGame extends Thread {
         EventButtonsController.getInstance().update();
 
 
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("/gameboard.fxml"));
-       loader.load();
-       GameBoardController GBC = loader.getController();
-       GBC.update();
+
 
         //gameDto contains all information about the game example getCardsOnhand:
         //  gameDto.getCardsOnHand().forEach(c -> System.out.println(c.getName()));

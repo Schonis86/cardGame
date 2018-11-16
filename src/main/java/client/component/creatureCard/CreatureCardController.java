@@ -6,6 +6,7 @@ import client.ClientGame;
 import client.component.eventButtons.EventButtonsController;
 import client.component.gameBoard.GameBoardController;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -15,26 +16,37 @@ import javafx.scene.paint.Color;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 public class CreatureCardController {
 
-    public AnchorPane CREATURE_CARD ;
 
+    public AnchorPane CREATURE_CARD ;
     public Label CARD_NAME;
 
     public Label CARD_HP;
 
     private int index;
     private String table;
-    private boolean clicked = false;
+    private boolean isUsed;
+
 
 
     public void setValues(CreatureCard card, int index, String value) {
         this.table = value;
         this.index = index;
+        this.isUsed = card.getIsUsed();
         CARD_NAME.setText(card.getName());
         CARD_HP.setText(Integer.toString(card.getHp()));
+        checkIfUsedAndDisable();
+    }
+
+    private void checkIfUsedAndDisable() {
+        if (isUsed) {
+            CREATURE_CARD.setDisable(true);
+        }
     }
 
 

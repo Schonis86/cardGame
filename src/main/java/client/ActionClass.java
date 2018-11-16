@@ -15,8 +15,8 @@ public class ActionClass {
         return instance;
     }
 
-    private int playerCard;
-    private int enemyCard;
+    private int playerCard = -1;
+    private int enemyCard = -1;
 
     public void setPlayerCard(int playerCard) {
         this.playerCard = playerCard + 1;

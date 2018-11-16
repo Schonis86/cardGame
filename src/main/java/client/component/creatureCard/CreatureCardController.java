@@ -22,16 +22,22 @@ import java.util.ResourceBundle;
 
 public class CreatureCardController {
 
+    @FXML
+    public AnchorPane CARDS_ON_HAND;
 
-    public AnchorPane CREATURE_CARD ;
+    @FXML
+    public AnchorPane CREATURE_CARD;
+    @FXML
     public Label CARD_NAME;
-
+    @FXML
     public Label CARD_HP;
 
     private int index;
     private String table;
     private boolean isUsed;
-
+    private String currentPlayer;
+    private boolean playerOneTurn;
+    private boolean turn;
 
 
     public void setValues(CreatureCard card, int index, String value) {
@@ -41,10 +47,11 @@ public class CreatureCardController {
         CARD_NAME.setText(card.getName());
         CARD_HP.setText(Integer.toString(card.getHp()));
         checkIfUsedAndDisable();
+        getPlayerAndPlayerTurn();
     }
 
     private void checkIfUsedAndDisable() {
-        if (isUsed) {
+        if (isUsed && table.equals("playerTable")) {
             CREATURE_CARD.setDisable(true);
         }
     }
@@ -90,5 +97,24 @@ public class CreatureCardController {
 
         CREATURE_CARD.setEffect(borderGlow);
     }
+
+    private void getPlayerAndPlayerTurn() {
+        currentPlayer = ClientGame.getPlayer();
+        playerOneTurn = ClientGame.getDto().getPlayerOneTurn();
+
+        switch (currentPlayer) {
+            case " player1":
+                if (!playerOneTurn) {
+                    this.CREATURE_CARD.setDisable(true);
+                }
+                break;
+            case " player2":
+                if (playerOneTurn) {
+                    this.CREATURE_CARD.setDisable(true);
+                }
+                break;
+        }
+    }
+
 
 }

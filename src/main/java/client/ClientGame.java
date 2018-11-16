@@ -2,13 +2,8 @@ package client;
 
 import app.dto.GameDto;
 import app.entities.CreatureCard;
-import client.component.eventButtons.EventButtonsController;
 import client.component.gameBoard.GameBoardController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;

@@ -5,17 +5,26 @@ import app.entities.CreatureCard;
 import app.entities.GameCard;
 import client.ActionClass;
 import client.ClientGame;
+import client.component.InfoPrinterController;
 import client.component.creatureCard.CreatureCardController;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 
 import java.io.IOException;
@@ -31,6 +40,10 @@ public class GameBoardController implements Initializable {
     public ProgressBar PLAYER_HP_PROGRESSBAR, ENEMY_HP_PROGRESSBAR;
     @FXML
     public Label PLAYER_NAME;
+    @FXML
+    private BorderPane GAME_BOARD;
+    @FXML
+    private AnchorPane infoPan, CARDS_ON_TABLE;
 
     @FXML
     public Button END_TURN_BTN;
@@ -39,12 +52,18 @@ public class GameBoardController implements Initializable {
     GameDto gameDto;
     List<CreatureCard> playerCards, enemyCards;
     int playerHp, enemyHp;
-    private  String currentPlayer;
+    private String currentPlayer;
     private boolean playerOneTurn;
+    private InfoPrinterController infoPrinterController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         action = ActionClass.getInstance();
+        try {
+            loadPrintComponent();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         END_TURN_BTN.setOnAction((event -> {
             try {
@@ -67,6 +86,7 @@ public class GameBoardController implements Initializable {
                         printCardsOnHand();
                         printCardsOnBoard(playerCards, enemyCards);
                         printPlayerInfo();
+                        printInfo("Test");
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -127,7 +147,7 @@ public class GameBoardController implements Initializable {
         printCardsOnTable(ENEMY_CARDS_ON_TABLE, enemyCards, "enemyTable");
     }
 
-   private void printCardsOnTable(GridPane thePane, List<CreatureCard> cards, String table) throws IOException {
+    private void printCardsOnTable(GridPane thePane, List<CreatureCard> cards, String table) throws IOException {
         thePane.getChildren().clear();
         thePane.addRow(0);
         if (cards != null) {
@@ -148,7 +168,6 @@ public class GameBoardController implements Initializable {
     }
 
 
-
     private void getPlayerAndPlayerTurn() {
         currentPlayer = ClientGame.getPlayer();
         playerOneTurn = ClientGame.getDto().getPlayerOneTurn();
@@ -156,7 +175,7 @@ public class GameBoardController implements Initializable {
         switch (currentPlayer) {
             case " player1":
                 if (!playerOneTurn) {
-                  END_TURN_BTN.setDisable(true);
+                    END_TURN_BTN.setDisable(true);
                 } else {
                     END_TURN_BTN.setDisable(false);
                 }
@@ -169,6 +188,24 @@ public class GameBoardController implements Initializable {
                 }
                 break;
         }
+    }
+
+    private void loadPrintComponent() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        infoPan = loader.load(getClass().getResource("/infoPrinter.fxml").openStream());
+        infoPrinterController = loader.getController();
+    }
+
+    private void printInfo(String text) {
+        infoPrinterController.setINFO_TEXT_INPUT(text);
+        CARDS_ON_TABLE.getChildren().addAll(infoPan);
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae ->deletePrintedInfo() ));
+        timeline.play();
+    }
+    private void deletePrintedInfo() {
+        CARDS_ON_TABLE.getChildren().remove(infoPan);
     }
 
 }

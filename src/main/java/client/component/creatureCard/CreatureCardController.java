@@ -25,6 +25,7 @@ public class CreatureCardController {
     private String currentPlayer;
     private boolean playerOneTurn;
 
+
     public void setValues(CreatureCard card, int index, String value) {
         this.table = value;
         this.index = index;
@@ -33,6 +34,7 @@ public class CreatureCardController {
         CARD_HP.setText(Integer.toString(card.getHp()));
         checkIfUsedAndDisable();
         getPlayerAndPlayerTurn();
+
     }
 
     private void checkIfUsedAndDisable() {
@@ -60,7 +62,7 @@ public class CreatureCardController {
         action.setEnemyCard(index);
     }
 
-    private void handlePlayerCardsOnTable() {
+    private void handlePlayerCardsOnTable() throws IOException {
         setBorderColor();
         action.setPlayerCard(index);
     }

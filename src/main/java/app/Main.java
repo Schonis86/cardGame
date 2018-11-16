@@ -5,6 +5,7 @@ import app.entities.CreatureCard;
 import app.controllers.Game;
 import app.entities.GameCard;
 import app.entities.MagicCard;
+import app.entities.SpecialCreature;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -69,7 +70,11 @@ public class Main{
                 String imageUrl = rs.getString("imageUrl");
                 String specialAbility = rs.getString("specialAbility");
                 if (hp != 0) {
-                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
+                    if(specialAbility == null || specialAbility.isEmpty()) {
+                        deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
+                    } else {
+                        deck.add(new SpecialCreature(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false, specialAbility));
+                    }
                 } else if (hp == 0) {
                     //deck.add(new MagicCard(name, energyCost, attackPoints));
                 }

@@ -8,11 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+
 import java.io.IOException;
 
 public class CreatureCardController {
 
-    ActionClass action = ActionClass.getInstance();
+    private ActionClass action = ActionClass.getInstance();
 
     @FXML
     public AnchorPane CREATURE_CARD;
@@ -25,7 +26,6 @@ public class CreatureCardController {
     private String currentPlayer;
     private boolean playerOneTurn;
 
-
     public void setValues(CreatureCard card, int index, String value) {
         this.table = value;
         this.index = index;
@@ -34,7 +34,6 @@ public class CreatureCardController {
         CARD_HP.setText(Integer.toString(card.getHp()));
         checkIfUsedAndDisable();
         getPlayerAndPlayerTurn();
-
     }
 
     private void checkIfUsedAndDisable() {
@@ -54,7 +53,6 @@ public class CreatureCardController {
             case "enemyTable":
                 handleEnemyTable();
         }
-
     }
 
     private void handleEnemyTable() throws IOException {
@@ -85,6 +83,7 @@ public class CreatureCardController {
     private void getPlayerAndPlayerTurn() {
         currentPlayer = ClientGame.getPlayer();
         playerOneTurn = ClientGame.getDto().getPlayerOneTurn();
+
         switch (currentPlayer) {
             case " player1":
                 if (!playerOneTurn) {

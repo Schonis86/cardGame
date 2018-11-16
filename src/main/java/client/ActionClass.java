@@ -1,10 +1,7 @@
 package client;
 
-import client.component.InfoPrinterController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +12,6 @@ public class ActionClass implements Initializable {
 
     private ActionClass() {
     }
-
     public static ActionClass getInstance() {
         if (instance == null) {
             instance = new ActionClass();
@@ -23,12 +19,8 @@ public class ActionClass implements Initializable {
         return instance;
     }
 
-
     public void initialize(URL location, ResourceBundle resources) {
     }
-
-
-
 
     private String currentPlayer;
     private  boolean playerOneTurn;
@@ -80,9 +72,5 @@ public class ActionClass implements Initializable {
     public void endTurn() throws IOException {
             ClientGame.getClientNetwork().sendMessage("END_TURN");
     }
-
-
-
-
 
 }

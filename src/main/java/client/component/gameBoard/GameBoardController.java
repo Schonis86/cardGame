@@ -82,7 +82,7 @@ public class GameBoardController implements Initializable {
                 Platform.runLater(() -> {
                     try {
                         getPlayerAndPlayerTurn();
-                       infoPrinterController.nextPlayerTurn(playerOneTurn);
+                        infoPrinterController.nextPlayerTurn(playerOneTurn);
                         assignCards();
                         printCardsOnHand();
                         printCardsOnBoard(playerCards, enemyCards);
@@ -118,7 +118,6 @@ public class GameBoardController implements Initializable {
                 break;
         }
     }
-
 
     private void printCardsOnHand() throws IOException {
         CARD_GRIDPANE.getChildren().clear();
@@ -166,7 +165,6 @@ public class GameBoardController implements Initializable {
         ENEMY_HP_PROGRESSBAR.setProgress(enemyHp / 10);
     }
 
-
     private void getPlayerAndPlayerTurn() {
         currentPlayer = ClientGame.getPlayer();
         playerOneTurn = ClientGame.getDto().getPlayerOneTurn();
@@ -195,7 +193,6 @@ public class GameBoardController implements Initializable {
         infoPrinterController = loader.getController();
         CARDS_ON_TABLE.getChildren().addAll(infoPan);
     }
-
 
 
 }

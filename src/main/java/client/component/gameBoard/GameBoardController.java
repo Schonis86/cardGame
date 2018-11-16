@@ -82,12 +82,11 @@ public class GameBoardController implements Initializable {
                 Platform.runLater(() -> {
                     try {
                         getPlayerAndPlayerTurn();
+                       infoPrinterController.nextPlayerTurn(playerOneTurn);
                         assignCards();
                         printCardsOnHand();
                         printCardsOnBoard(playerCards, enemyCards);
                         printPlayerInfo();
-                        printInfo("Test");
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -194,18 +193,9 @@ public class GameBoardController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         infoPan = loader.load(getClass().getResource("/infoPrinter.fxml").openStream());
         infoPrinterController = loader.getController();
+        CARDS_ON_TABLE.getChildren().addAll(infoPan);
     }
 
-    private void printInfo(String text) {
-        infoPrinterController.setINFO_TEXT_INPUT(text);
-        CARDS_ON_TABLE.getChildren().addAll(infoPan);
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae ->deletePrintedInfo() ));
-        timeline.play();
-    }
-    private void deletePrintedInfo() {
-        CARDS_ON_TABLE.getChildren().remove(infoPan);
-    }
+
 
 }

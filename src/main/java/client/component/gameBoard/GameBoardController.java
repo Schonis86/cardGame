@@ -3,13 +3,15 @@ package client.component.gameBoard;
 import app.dto.GameDto;
 import app.entities.CreatureCard;
 import app.entities.GameCard;
+import client.ActionClass;
 import client.ClientGame;
 import client.component.creatureCard.CreatureCardController;
-import client.component.eventButtons.EventButtonsController;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
@@ -26,25 +28,32 @@ public class GameBoardController implements Initializable {
     @FXML
     public GridPane ENEMY_CARDS_ON_TABLE, PLAYER_CARDS_ON_TABLE, CARD_GRIDPANE;
     @FXML
-    public AnchorPane BOTTOM_PANE, TOP_PANE, BTN_ANCHOR_PANE;
-    @FXML
     public ProgressBar PLAYER_HP_PROGRESSBAR, ENEMY_HP_PROGRESSBAR;
     @FXML
     public Label PLAYER_NAME;
 
+    @FXML
+    public Button END_TURN_BTN;
+
+    private ActionClass action;
     GameDto gameDto;
     List<CreatureCard> playerCards, enemyCards;
     int playerHp, enemyHp;
+    private  String currentPlayer;
+    private boolean playerOneTurn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        action = ActionClass.getInstance();
 
-        try {
+        END_TURN_BTN.setOnAction((event -> {
+            try {
+                action.endTurn();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
 
-            renderEventBtn();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void update() {
@@ -53,6 +62,7 @@ public class GameBoardController implements Initializable {
             new Thread(() -> {
                 Platform.runLater(() -> {
                     try {
+                        getPlayerAndPlayerTurn();
                         assignCards();
                         printCardsOnHand();
                         printCardsOnBoard(playerCards, enemyCards);
@@ -137,9 +147,28 @@ public class GameBoardController implements Initializable {
         ENEMY_HP_PROGRESSBAR.setProgress(enemyHp / 10);
     }
 
-    private void renderEventBtn() throws IOException {
-        GridPane gridPane = FXMLLoader.load(getClass().getResource("/eventbuttons.fxml"));
-        BTN_ANCHOR_PANE.getChildren().setAll(gridPane);
+
+
+    private void getPlayerAndPlayerTurn() {
+        currentPlayer = ClientGame.getPlayer();
+        playerOneTurn = ClientGame.getDto().getPlayerOneTurn();
+
+        switch (currentPlayer) {
+            case " player1":
+                if (!playerOneTurn) {
+                  END_TURN_BTN.setDisable(true);
+                } else {
+                    END_TURN_BTN.setDisable(false);
+                }
+                break;
+            case " player2":
+                if (playerOneTurn) {
+                    END_TURN_BTN.setDisable(true);
+                } else {
+                    END_TURN_BTN.setDisable(false);
+                }
+                break;
+        }
     }
 
 }

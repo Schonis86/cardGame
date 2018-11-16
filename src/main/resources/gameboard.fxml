@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,7 +37,10 @@
             <ProgressBar fx:id="PLAYER_HP_PROGRESSBAR" layoutX="14.0" layoutY="80.0" prefHeight="20.0" prefWidth="100.0" progress="0.0" />
             <Label fx:id="PLAYER_NAME" layoutX="40.0" layoutY="14.0" text=" " />
             <Label layoutX="55.0" layoutY="63.0" text="HP" />
-            <AnchorPane fx:id="BTN_ANCHOR_PANE" layoutX="993.0" prefHeight="220.0" prefWidth="210.0" />
+            <AnchorPane fx:id="BTN_ANCHOR_PANE" layoutX="993.0" prefHeight="220.0" prefWidth="210.0">
+               <children>
+                  <Button fx:id="END_TURN_BTN" layoutX="42.0" layoutY="110.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="126.0" text="END TURN" />
+               </children></AnchorPane>
          </children></AnchorPane>
    </bottom>
    <center>

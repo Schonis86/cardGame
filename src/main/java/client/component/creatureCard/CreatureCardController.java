@@ -3,42 +3,27 @@ package client.component.creatureCard;
 import app.entities.CreatureCard;
 import client.ActionClass;
 import client.ClientGame;
-import client.component.eventButtons.EventButtonsController;
-import client.component.gameBoard.GameBoardController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-
-
-import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 
 public class CreatureCardController {
 
-    @FXML
-    public AnchorPane CARDS_ON_HAND;
+    ActionClass action = ActionClass.getInstance();
 
     @FXML
     public AnchorPane CREATURE_CARD;
     @FXML
-    public Label CARD_NAME;
-    @FXML
-    public Label CARD_HP;
+    public Label CARD_NAME, CARD_HP;
 
     private int index;
     private String table;
     private boolean isUsed;
     private String currentPlayer;
     private boolean playerOneTurn;
-    private boolean turn;
-
 
     public void setValues(CreatureCard card, int index, String value) {
         this.table = value;
@@ -56,7 +41,6 @@ public class CreatureCardController {
         }
     }
 
-
     public void onClick() throws IOException {
         switch (table) {
             case "hand":
@@ -73,13 +57,12 @@ public class CreatureCardController {
 
     private void handleEnemyTable() throws IOException {
         setBorderColor();
-        ActionClass.getInstance().setEnemyCard(index);
+        action.setEnemyCard(index);
     }
 
     private void handlePlayerCardsOnTable() {
         setBorderColor();
-        ActionClass.getInstance().setPlayerCard(index);
-
+        action.setPlayerCard(index);
     }
 
     private void playCardOnTable() throws IOException {
@@ -94,14 +77,12 @@ public class CreatureCardController {
         borderGlow.setColor(Color.RED);
         borderGlow.setWidth(depth);
         borderGlow.setHeight(depth);
-
         CREATURE_CARD.setEffect(borderGlow);
     }
 
     private void getPlayerAndPlayerTurn() {
         currentPlayer = ClientGame.getPlayer();
         playerOneTurn = ClientGame.getDto().getPlayerOneTurn();
-
         switch (currentPlayer) {
             case " player1":
                 if (!playerOneTurn) {
@@ -115,6 +96,5 @@ public class CreatureCardController {
                 break;
         }
     }
-
 
 }

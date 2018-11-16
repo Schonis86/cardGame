@@ -33,4 +33,7 @@ public class ActionClass {
             ClientGame.getClientNetwork().sendMessage("ATTACK_CARD:"+ playerCard+":"+ enemyCard);
         }
     }
+    public void endTurn() throws IOException {
+        ClientGame.getClientNetwork().sendMessage("END_TURN");
+    }
 }

@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EventButtonsController implements Initializable {
-    private GameBoardController controller;
 
     @FXML
     public Button ATTACK_BTN;
@@ -28,17 +27,13 @@ public class EventButtonsController implements Initializable {
     private GameDto gameDto;
     private String currentPlayer;
     private boolean playerOneTurn;
-    private int cardOne;
-    private int cardTwo;
 
-    public void setCardOne(int cardOne) {
-        this.cardOne = cardOne;
-        System.out.println(cardOne);
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 
-    public void setCardTwo(int cardTwo) {
-        this.cardTwo = cardTwo;
-    }
 
     public void update() {
         try {
@@ -50,42 +45,12 @@ public class EventButtonsController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 
     @FXML
     private void endTurn() throws IOException {
         ClientGame.getClientNetwork().sendMessage("END_TURN");
     }
 
-    public void init(GameBoardController gameBoardController) {
-        controller = gameBoardController;
-    }
 
-
-    /*public void disableEndTurnButton() {
-        System.out.println(this.END_TURN_BTN);
-        switch (currentPlayer) {
-            case " player1":
-                if (playerOneTurn) {
-                    this.END_TURN_BTN.setDisable(false);
-                } else {
-                    this.END_TURN_BTN.setDisable(true);
-                }
-                break;
-            case " player2":
-                if (playerOneTurn) {
-                    this.END_TURN_BTN.setDisable(true);
-                } else {
-                    this.END_TURN_BTN.setDisable(false);
-                }
-                break;
-            default:
-                System.out.println("Ingen spelare");
-                break;
-        }
-    }*/
 
 }

@@ -132,9 +132,11 @@ public class Game {
                         break;
                     case "ATTACK_PLAYER":
                         CreatureCard creatureCard = attackingPlayer.getCardsOnTable().get(CARD1);
-                        if (!creatureCard.getIsUsed()) {
+                        if (!creatureCard.getIsUsed() && creatureCard.getCoolDown()==0) {
                             attackPlayer(defendingPlayer, creatureCard.getAttackPoints());
                             attackingPlayer.getCardsOnTable().get(CARD1).setIsUsed(true);
+                        }else{
+                            throw new Exception("Card is already used or has to cooldown");
                         }
                         break;
                     case "CAST_MAGIC_INSTANT":
@@ -162,6 +164,7 @@ public class Game {
                         break;
                     case "END_TURN":
                         endTurn = true;
+                        decreaseCoolDownOnplayerTable(attackingPlayer);
                         break;
                 }
             } catch (Exception e) {
@@ -173,6 +176,12 @@ public class Game {
         }
         attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
+    }
+
+    public void decreaseCoolDownOnplayerTable(Player player){
+        List<CreatureCard> cardsOnTable = new ArrayList<>();
+        cardsOnTable = player.getCardsOnTable();
+        cardsOnTable.forEach(card->card.setCoolDown(card.getCoolDown()-1));
     }
 
     public void sendInfoAllPlayers() throws JsonProcessingException {
@@ -209,6 +218,9 @@ public class Game {
         }
         if (attackingCard.getIsUsed()) {
             throw new Exception("Card has already attacked this round !");
+        }
+        if(attackingCard.getCoolDown()!=0){
+            throw new Exception("Card has to cooldown before it's played");
         }
         CreatureCard player1Card;
         CreatureCard player2Card;
@@ -252,8 +264,9 @@ public class Game {
             throw new Exception("Cant make attack move first round!");
         }
         if (player.getCardsOnTable().size() != 0) {
-            throw new Exception("Can't attack player with cards on table!");
+            throw new Exception("Can't attack a player with cards on table!");
         }
+
         player.reduceHp(attackNumber);
         sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
         checkDeath(player);

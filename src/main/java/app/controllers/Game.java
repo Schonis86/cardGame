@@ -118,7 +118,6 @@ public class Game {
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                outAttackingPlayer.println("MESSAGE:your turn, what do you want to do ?");
                 String msgFromClient = inAttackingPlayer.readLine();
 
                 splitMsgFromClient(msgFromClient);
@@ -141,30 +140,20 @@ public class Game {
                         }
                         break;
                     case "CAST_MAGIC_INSTANT":
-                        if (roundCounter == 1) {
-                            throw new Exception("Cant play Magic card on first round");
-                        }
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         castMagicMethod(magicCard);
                         break;
                     case "CAST_MAGIC_TARGET_DAMAGE":
-                        if (roundCounter == 1) {
-                            throw new Exception("Cant play Magic card on first round");
-                        }
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         castMagicMethod(magicCard, defendingCard);
                         break;
                     case "CAST_MAGIC_TARGET_HEAL":
-                        if (roundCounter == 1) {
-                            throw new Exception("Cant play Magic card on first round");
-                        }
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         defendingCard = attackingPlayer.getCardsOnTable().get(CARD2);
                         castMagicMethod(magicCard, defendingCard);
                         break;
                     case "END_TURN":
-
                         decreaseCoolDownOnplayerTable(attackingPlayer);
                         endTurn = true;
                         break;
@@ -181,7 +170,7 @@ public class Game {
     }
 
     public void decreaseCoolDownOnplayerTable(Player player) {
-        player.getCardsOnTable().forEach(card -> card.setCoolDown(card.getCoolDown()-1));
+        player.getCardsOnTable().forEach(card -> card.setCoolDown(card.getCoolDown() - 1));
     }
 
     public void sendInfoAllPlayers() throws JsonProcessingException {
@@ -253,13 +242,11 @@ public class Game {
         String player1CardAttackType = player1Card.getAttackType();
         String player2CardAttacktype = player2Card.getAttackType();
 
-        if(player1CardAttackType=="FIRE" && player2CardAttacktype =="WIND" || player1CardAttackType == "WIND" && player2CardAttacktype == "WATER" || player1CardAttackType == "WATER" && player2CardAttacktype =="FIRE"){
-            player1FightingPoints +=2;
-        }
-        else if(player1CardAttackType==player2CardAttacktype){
-        }
-        else{
-            player2FightingPoints +=2;
+        if (player1CardAttackType == "FIRE" && player2CardAttacktype == "WIND" || player1CardAttackType == "WIND" && player2CardAttacktype == "WATER" || player1CardAttackType == "WATER" && player2CardAttacktype == "FIRE") {
+            player1FightingPoints += 2;
+        } else if (player1CardAttackType == player2CardAttacktype) {
+        } else {
+            player2FightingPoints += 2;
         }
         int fightResult = player1FightingPoints - player2FightingPoints;
         if (fightResult < 0) {
@@ -310,7 +297,6 @@ public class Game {
         if (roundCounter == 1) {
             throw new Exception("Can't play magic card on first round");
         }
-        System.out.println(magicCard.getMagicType());
         switch (magicCard.getMagicType()) {
             case "HEALPLAYER":
                 magic.selfHealPlayer(attackingPlayer, magicCard.getAttackPoints());
@@ -325,6 +311,7 @@ public class Game {
                 magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
                 break;
         }
+        sendMessageAllPlayers(attackingPlayer + " casted " + magicCard.getMagicType());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
@@ -333,7 +320,6 @@ public class Game {
         if (roundCounter == 1) {
             throw new Exception("Can't play magic card on first round");
         }
-        System.out.println(magicCard.getMagicType());
         switch (magicCard.getMagicType()) {
             case "DAMAGEONECARD":
                 magic.damageOneCard(creatureCard, magicCard.getAttackPoints());
@@ -342,6 +328,7 @@ public class Game {
                 magic.healOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
         }
+        sendMessageAllPlayers(attackingPlayer + " casted " + magicCard.getMagicType());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 

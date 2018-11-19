@@ -97,7 +97,6 @@ public class Game {
     }
 
     public void getUserInput() throws JsonProcessingException {
-        sendInfoAllPlayers();
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -114,7 +113,7 @@ public class Game {
         CreatureCard defendingCard;
         CreatureCard attackingCard;
         MagicCard magicCard;
-
+        sendInfoAllPlayers();
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);

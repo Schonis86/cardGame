@@ -236,17 +236,17 @@ public class Game {
             player2FightingPoints = randomNumber(player2FightingRange);
         } while (player1FightingPoints == player2FightingPoints);
 
-
         sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
         String player1CardAttackType = player1Card.getAttackType();
         String player2CardAttacktype = player2Card.getAttackType();
 
-        if (player1CardAttackType == "FIRE" && player2CardAttacktype == "WIND" || player1CardAttackType == "WIND" && player2CardAttacktype == "WATER" || player1CardAttackType == "WATER" && player2CardAttacktype == "FIRE") {
-            player1FightingPoints += 2;
-        } else if (player1CardAttackType == player2CardAttacktype) {
+        if (player1CardAttackType.equals("FIRE") && player2CardAttacktype.equals("WIND") || player1CardAttackType.equals("WIND") && player2CardAttacktype.equals("WATER") || player1CardAttackType.equals("WATER") && player2CardAttacktype.equals("FIRE")) {
+            player1FightingPoints += 3;
+        } else if (player1CardAttackType.equals(player2CardAttacktype) ) {
         } else {
-            player2FightingPoints += 2;
+            player2FightingPoints += 3;
         }
+
         int fightResult = player1FightingPoints - player2FightingPoints;
         if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);

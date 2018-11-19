@@ -138,16 +138,28 @@ public class Game {
                         }
                         break;
                     case "CAST_MAGIC_INSTANT":
+                        if(roundCounter==1){
+                            throw new Exception("Cant play Magic card on first round");
+                            }
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         castMagicMethod(magicCard);
+                        break;
                     case "CAST_MAGIC_TARGET_DAMAGE":
+                        if(roundCounter==1){
+                            throw new Exception("Cant play Magic card on first round");
+                        }
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         castMagicMethod(magicCard, defendingCard);
+                        break;
                     case "CAST_MAGIC_TARGET_HEAL":
+                        if(roundCounter==1){
+                            throw new Exception("Cant play Magic card on first round");
+                        }
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         defendingCard = attackingPlayer.getCardsOnTable().get(CARD2);
                         castMagicMethod(magicCard, defendingCard);
+                        break;
                     case "END_TURN":
                         endTurn = true;
                         break;
@@ -266,28 +278,26 @@ public class Game {
     //Omedelbara effekter
     public void castMagicMethod(MagicCard magicCard) {
 
-        switch ( magicCard.getMagicType() ){
-            case "HEALPLAYER":
-                magic.selfHealPlayer( attackingPlayer, 2 );
-                break;
+    switch (magicCard.getMagicType()) {
+        case "HEALPLAYER":
+            magic.selfHealPlayer(attackingPlayer, 2);
+            break;
+        case "DAMAGEPLAYER":
+            magic.damageEnemyPlayer(defendingPlayer, 2);
+            break;
 
-            case "DAMAGEPLAYER":
-                magic.damageEnemyPlayer( defendingPlayer, 2 );
-                break;
+        case "HEALALLCARDS":
+            magic.healFriendlyCards(attackingPlayer.getCardsOnTable(), 2);
+            break;
 
-            case "HEALALLCARDS":
-                magic.healFriendlyCards( attackingPlayer.getCardsOnTable(), 2 );
-                break;
-
-            case "DAMAGEALLCARDS":
-                magic.damageEnemyCards( defendingPlayer.getCardsOnTable(), 2 );
-                break;
+        case "DAMAGEALLCARDS":
+            magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), 2);
+            break;
         }
     }
 
     // Riktade effekter
     public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard) {
-
         switch ( magicCard.getMagicType() ){
             case "DAMAGECARD":
                 magic.damageOneCard( creatureCard, 2 );

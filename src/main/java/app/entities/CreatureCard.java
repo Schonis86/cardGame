@@ -124,6 +124,7 @@ public class CreatureCard implements Serializable, GameCard {
     }
 
     public void setCoolDown(int coolDown) {
+        if(this.coolDown!=0)
         this.coolDown = coolDown;
     }
 

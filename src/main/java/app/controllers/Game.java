@@ -218,20 +218,17 @@ public class Game {
         player2.removeCardIfDead();
         checkDeath(player1);
         checkDeath(player2);
-        if (didPlayer1LoseAttack){
 
-        assignScoreAfterAttack(player2);
+        if (didPlayer1LoseAttack){
+            player2.assignOnePoint();
         }
         if (!didPlayer1LoseAttack){
-            assignScoreAfterAttack(player1);
+            player1.assignOnePoint();
         }
 
         return didPlayer1LoseAttack;
     }
 
-    public void assignScoreAfterAttack(Player player){
-        player.assignOnePoint();
-    }
 
     public void attackPlayer(Player player, int attackNumber) throws Exception {
         if (roundCounter <= 1) {
@@ -250,12 +247,14 @@ public class Game {
             Print.actionMessage(player.getName() + " died!");
             if (player1Turn) {
                 Print.actionMessage(player1.getName() + " won!");
+                player1.assignCardPoints();
             } else {
                 Print.actionMessage(player2.getName() + " won!");
+                player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(10);
-            System.exit(0);
+
         }
     }
 

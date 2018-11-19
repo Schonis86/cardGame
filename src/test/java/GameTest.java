@@ -68,7 +68,6 @@ class GameTest {
         game.attackCard(attackingCard, defendingCard);
         assertTrue(attackingCard.getIsUsed() == true);
         assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
-
     }
 
 
@@ -102,6 +101,8 @@ class GameTest {
         assertFalse(game.isPlayerDead(player));
 
     }
+
+
 
     @Test
     void attackPlayer() throws Exception {

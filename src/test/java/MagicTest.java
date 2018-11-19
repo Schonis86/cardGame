@@ -23,9 +23,9 @@ class MagicTest {
 
     @BeforeEach
     void setUp() {
-        magicCard = new MagicCard("DarkHole", 2, 2); // <-- not needed here ?
+        magicCard = new MagicCard("DarkHole", 2, 2,"DAMAGEALL", "DAMAGEALL"); // <-- not needed here ?
         magic = new Magic();
-        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false);
+        monsterCard = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false, "bild");
         player = new Player(mockDeck, "player1");
         cardsOnTable = new ArrayList();
     }

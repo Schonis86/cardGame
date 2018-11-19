@@ -186,10 +186,10 @@ public class Game {
 
     public void sendInfoAllPlayers() throws JsonProcessingException {
         GameDto gameDtoP1 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
-                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand());
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand(), player1.getCardsInDeck().size());
 
         GameDto gameDtoP2 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
-                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand());
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand(), player2.getCardsInDeck().size());
 
         String gameDtoP1String = objectMapper.writeValueAsString(gameDtoP1);
         String gameDtoP2String = objectMapper.writeValueAsString(gameDtoP2);

@@ -261,10 +261,10 @@ public class Game {
         checkDeath(player1);
         checkDeath(player2);
 
-        if (didPlayer1LoseAttack){
+        if (didPlayer1LoseAttack) {
             player2.assignOnePoint();
         }
-        if (!didPlayer1LoseAttack){
+        if (!didPlayer1LoseAttack) {
             player1.assignOnePoint();
         }
 
@@ -282,15 +282,15 @@ public class Game {
 
         player.reduceHp(attackNumber);
 
-        if (player.getName().equals("player1")){
+        if (player.getName().equals("player1")) {
             player2.assignFivePoints();
         }
 
-        if(player.getName().equals("player2")){
+        if (player.getName().equals("player2")) {
             player1.assignFivePoints();
         }
 
-       sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
+        sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
 
         checkDeath(player);
     }
@@ -299,11 +299,11 @@ public class Game {
         if (isPlayerDead(player)) {
             sendMessageAllPlayers(player.getName() + " died!");
             if (player1Turn) {
-               sendMessageAllPlayers(player1.getName() + " won!");
-               player1.assignCardPoints();
+                sendMessageAllPlayers(player1.getName() + " won!");
+                player1.assignCardPoints();
             } else {
                 sendMessageAllPlayers(player2.getName() + " won!");
-                 player2.assignCardPoints();
+                player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(10);
@@ -334,7 +334,10 @@ public class Game {
                 magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
                 break;
         }
-        sendMessageAllPlayers(attackingPlayer + " casted " + magicCard.getMagicType());
+
+        String whoCasted = player1Turn ? "Player 1" : "Player 2";
+
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getMagicType());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
@@ -351,7 +354,10 @@ public class Game {
                 magic.healOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
         }
-        sendMessageAllPlayers(attackingPlayer + " casted " + magicCard.getMagicType());
+
+        String whoCasted = player1Turn ? "Player 1" : "Player 2";
+
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getMagicType() + " on " + creatureCard.getName());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 

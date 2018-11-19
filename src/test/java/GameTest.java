@@ -1,3 +1,4 @@
+import app.controllers.HighScore;
 import app.entities.CreatureCard;
 import app.entities.GameCard;
 import app.entities.Player;
@@ -67,8 +68,9 @@ class GameTest {
         game.attackCard(attackingCard, defendingCard);
         assertTrue(attackingCard.getIsUsed() == true);
         assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
-
     }
+
+
 
 
     @Test
@@ -99,6 +101,8 @@ class GameTest {
         assertFalse(game.isPlayerDead(player));
 
     }
+
+
 
     @Test
     void attackPlayer() throws Exception {

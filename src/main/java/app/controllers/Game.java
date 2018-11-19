@@ -303,7 +303,7 @@ public class Game {
             player1.assignFivePoints();
         }
 
-       sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
+        sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
 
         checkDeath(player);
     }
@@ -340,12 +340,14 @@ public class Game {
                 break;
             case "DAMAGEPLAYER":
                 magic.damageEnemyPlayer(defendingPlayer, magicCard.getAttackPoints());
+                attackingPlayer.assignFivePoints();
                 break;
             case "HEALALLCARDS":
                 magic.healFriendlyCards(attackingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
                 break;
             case "DAMAGEALLCARDS":
                 magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
+                attackingPlayer.assignFivePoints();
                 break;
         }
         attackingPlayer.getCardsOnHand().remove(CARD1);
@@ -360,6 +362,7 @@ public class Game {
         switch (magicCard.getMagicType()) {
             case "DAMAGEONECARD":
                 magic.damageOneCard(creatureCard, magicCard.getAttackPoints());
+                attackingPlayer.assignOnePoint();
                 break;
             case "HEALONECARD":
                 magic.healOneCard(creatureCard, magicCard.getAttackPoints());

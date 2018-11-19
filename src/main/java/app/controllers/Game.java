@@ -199,7 +199,6 @@ public class Game {
         CARD2 = msgFromClientArray.length > 2 ? Integer.parseInt(msgFromClientArray[2]) - 1 : -1;
     }
 
-
     public boolean attackCard(CreatureCard attackingCard, CreatureCard defendingCard) throws Exception {
         if (roundCounter <= 1) {
             throw new Exception("Cant make attack move first round!");
@@ -242,7 +241,7 @@ public class Game {
 
         if (player1CardAttackType.equals("FIRE") && player2CardAttacktype.equals("WIND") || player1CardAttackType.equals("WIND") && player2CardAttacktype.equals("WATER") || player1CardAttackType.equals("WATER") && player2CardAttacktype.equals("FIRE")) {
             player1FightingPoints += 3;
-        } else if (player1CardAttackType.equals(player2CardAttacktype) ) {
+        } else if (player1CardAttackType.equals(player2CardAttacktype)) {
         } else {
             player2FightingPoints += 3;
         }
@@ -305,6 +304,8 @@ public class Game {
             }
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(10);
+            outP1.close();
+            outP2.close();
         }
     }
 
@@ -354,7 +355,7 @@ public class Game {
 
         String whoCasted = player1Turn ? "Player 1" : "Player 2";
 
-        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName()+ " on " + creatureCard.getName());
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName() + " on " + creatureCard.getName());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 

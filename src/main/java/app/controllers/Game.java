@@ -164,8 +164,9 @@ public class Game {
                         castMagicMethod(magicCard, defendingCard);
                         break;
                     case "END_TURN":
-                        endTurn = true;
+
                         decreaseCoolDownOnplayerTable(attackingPlayer);
+                        endTurn = true;
                         break;
                 }
             } catch (Exception e) {
@@ -180,9 +181,7 @@ public class Game {
     }
 
     public void decreaseCoolDownOnplayerTable(Player player) {
-        List<CreatureCard> cardsOnTable = new ArrayList<>();
-        cardsOnTable = player.getCardsOnTable();
-        cardsOnTable.forEach(card -> card.setCoolDown(card.getCoolDown() - 1));
+        player.getCardsOnTable().forEach(card -> card.setCoolDown(card.getCoolDown()-1));
     }
 
     public void sendInfoAllPlayers() throws JsonProcessingException {

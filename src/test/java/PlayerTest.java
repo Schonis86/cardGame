@@ -38,6 +38,28 @@ class PlayerTest {
     }
 
     @Test
+     void assignOnePoint(){
+        player.setPoints(1);
+        assertEquals(1, player.getPoints());
+    }
+
+    @Test
+    void assignFivePoints(){
+        player.setPoints(5);
+        assertEquals(5, player.getPoints());
+    }
+
+    @Test
+    void assignCardPoints(){
+        for (int i = 0; i <player.getCardsOnHand().size() ; i++) {
+            player.setPoints(1);
+        }
+
+        assertEquals(player.getCardsOnHand().size(), player.getPoints());
+
+    }
+
+    @Test
     void reduceHp() {
         int hpBefore = player.getHp();
         final int DAMAGE = 5;

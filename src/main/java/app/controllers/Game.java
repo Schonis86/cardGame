@@ -237,7 +237,16 @@ public class Game {
         if (player.getCardsOnTable().size() != 0) {
             throw new Exception("Can't attack player with cards on table!");
         }
+
         player.reduceHp(attackNumber);
+        if (player.getName().equals("player1")){
+            player2.assignFivePoints();
+        }
+
+        if(player.getName().equals("player2")){
+            player1.assignFivePoints();
+        }
+
         Print.actionMessage((player.getName() + " " + "took " + attackNumber + " damage!"));
         checkDeath(player);
     }

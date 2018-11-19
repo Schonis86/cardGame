@@ -51,8 +51,8 @@ public class Game {
         magic = new Magic();
         this.allCards = deck;
         divideCards();
-        player1 = new Player(player1Cards, "Jonas");
-        player2 = new Player(player2Cards, "Robin");
+        player1 = new Player(player1Cards, "Player 1");
+        player2 = new Player(player2Cards, "Player 2");
         this.player1Turn = false;
         objectMapper = new ObjectMapper();
     }
@@ -296,17 +296,15 @@ public class Game {
 
     public void checkDeath(Player player) {
         if (isPlayerDead(player)) {
-            sendMessageAllPlayers(player.getName() + " died!");
             if (player1Turn) {
-                sendMessageAllPlayers(player1.getName() + " won!");
+                sendMessageAllPlayers(player1.getName() + " WON!");
                 player1.assignCardPoints();
             } else {
-                sendMessageAllPlayers(player2.getName() + " won!");
+                sendMessageAllPlayers(player2.getName() + " WON!");
                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(10);
-
         }
     }
 
@@ -336,7 +334,7 @@ public class Game {
 
         String whoCasted = player1Turn ? "Player 1" : "Player 2";
 
-        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getMagicType());
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
@@ -356,7 +354,7 @@ public class Game {
 
         String whoCasted = player1Turn ? "Player 1" : "Player 2";
 
-        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getMagicType() + " on " + creatureCard.getName());
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName()+ " on " + creatureCard.getName());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 

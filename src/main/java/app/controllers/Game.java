@@ -63,8 +63,8 @@ public class Game {
         this.outP2 = serverNetwork.getOutP2();
         this.inP1 = serverNetwork.getInP1();
         this.inP2 = serverNetwork.getInP2();
-        outP1.println("PLAYER: player1");
-        outP2.println("PLAYER: player2");
+        outP1.println("PLAYER:player1");
+        outP2.println("PLAYER:player2");
         toggleTurn();
     }
 
@@ -110,47 +110,54 @@ public class Game {
             defendingPlayer = player1;
         }
         attackingPlayer.setCardsToUnUsed();
+        CreatureCard defendingCard;
+        CreatureCard attackingCard;
+        MagicCard magicCard;
 
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                outAttackingPlayer.println("your turn, what do you want to do ?");
+                outAttackingPlayer.println("MESSAGE:your turn, what do you want to do ?");
                 String msgFromClient = inAttackingPlayer.readLine();
 
                 splitMsgFromClient(msgFromClient);
-                //EXAMPLE:   msgFromClient = "ATTACK_CARD:1:2"   OPTION=ATTACK_CARD, CARD1=1, CARD2=2
-                //EXAMPLE:   msgFromClient = "PLAY_CARD:3"       OPTION=PLAY_CARD, CARD=3
                 switch (OPTION) {
                     case "PLAY_CARD":
                         attackingPlayer.playCard(CARD1);
-                        checkDeath(player1);
-                        checkDeath(player2);
-                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_CARD":
-                        CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
-                        CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
+                        attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
+                        defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         attackCard(attackingCard, defendingCard);
-                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_PLAYER":
                         CreatureCard creatureCard = attackingPlayer.getCardsOnTable().get(CARD1);
                         if (!creatureCard.getIsUsed()) {
                             attackPlayer(defendingPlayer, creatureCard.getAttackPoints());
                             attackingPlayer.getCardsOnTable().get(CARD1).setIsUsed(true);
-                        } else {
-                            throw new Exception("Card has already attacked this round !");
                         }
-                        sendInfoAllPlayers();
                         break;
+                    case "CAST_MAGIC_INSTANT":
+                        magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
+                        castMagicMethod(magicCard);
+                    case "CAST_MAGIC_TARGET_DAMAGE":
+                        magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
+                        defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
+                        castMagicMethod(magicCard, defendingCard);
+                    case "CAST_MAGIC_TARGET_HEAL":
+                        magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
+                        defendingCard = attackingPlayer.getCardsOnTable().get(CARD2);
+                        castMagicMethod(magicCard, defendingCard);
                     case "END_TURN":
                         endTurn = true;
                         break;
                 }
             } catch (Exception e) {
-                Print.actionMessage(e.getMessage());
-                outAttackingPlayer.println(e.getMessage());
+                outAttackingPlayer.println("ERROR:" + e.getMessage());
             }
+            checkDeath(player1);
+            checkDeath(player2);
+            sendInfoAllPlayers();
         }
         attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
@@ -166,8 +173,14 @@ public class Game {
         String gameDtoP1String = objectMapper.writeValueAsString(gameDtoP1);
         String gameDtoP2String = objectMapper.writeValueAsString(gameDtoP2);
 
-        outP1.println("GUI" + gameDtoP1String);
-        outP2.println("GUI" + gameDtoP2String);
+        outP1.println("GUI:" + gameDtoP1String);
+        outP2.println("GUI:" + gameDtoP2String);
+    }
+
+    public void sendMessageAllPlayers(String msg) {
+        Print.actionMessage(msg);
+        outP1.println("MESSAGE:" + msg);
+        outP2.println("MESSAGE:" + msg);
     }
 
     public void splitMsgFromClient(String msgFromClient) {
@@ -206,7 +219,8 @@ public class Game {
         } while (player1FightingPoints == player2FightingPoints);
 
         int fightResult = player1FightingPoints - player2FightingPoints;
-        Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+        sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+
         if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);
             didPlayer1LoseAttack = true;
@@ -229,28 +243,28 @@ public class Game {
             throw new Exception("Can't attack player with cards on table!");
         }
         player.reduceHp(attackNumber);
-        Print.actionMessage((player.getName() + " " + "took " + attackNumber + " damage!"));
+        sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
         checkDeath(player);
     }
 
-    public void checkDeath(Player player){
+    public void checkDeath(Player player) {
         if (isPlayerDead(player)) {
-            Print.actionMessage(player.getName() + " died!");
+            sendMessageAllPlayers(player.getName() + " died!");
             if (player1Turn) {
-                Print.actionMessage(player1.getName() + " won!");
+                sendMessageAllPlayers(player1.getName() + " won!");
             } else {
-                Print.actionMessage(player2.getName() + " won!");
+                sendMessageAllPlayers(player2.getName() + " won!");
             }
             System.exit(0);
         }
     }
 
-    public boolean isPlayerOutOfCards(Player player){
-        return(player.getCardsInDeck().size()==0 && player.getCardsOnHand().size()==0 && player.getCardsOnTable().size()==0);
+    public boolean isPlayerOutOfCards(Player player) {
+        return (player.getCardsInDeck().size() == 0 && player.getCardsOnHand().size() == 0 && player.getCardsOnTable().size() == 0);
     }
 
     //Omedelbara effekter
-    public void castMagicMethod( MagicCard magicCard ) {
+    public void castMagicMethod(MagicCard magicCard) {
 
         switch ( magicCard.getMagicType() ){
             case "HEALPLAYER":
@@ -272,7 +286,7 @@ public class Game {
     }
 
     // Riktade effekter
-    public void castMagicMethod( MagicCard magicCard, CreatureCard creatureCard ) {
+    public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard) {
 
         switch ( magicCard.getMagicType() ){
             case "DAMAGECARD":

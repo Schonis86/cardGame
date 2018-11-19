@@ -83,7 +83,6 @@ public class Main{
             Game game = new Game(deck);
             game.start();
 
-
         }
         catch(Exception e)
             {

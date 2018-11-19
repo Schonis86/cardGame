@@ -22,7 +22,7 @@ public class Magic {
 
     //omedelbar effekt - ge skada till Player1/2 HP med 2
     public void damageEnemyPlayer( Player player, int attackPoints ) {
-
+        System.out.println("DAMAGE ENEMY PLAYER");
         int damage = getRandomPoints( attackPoints );
         if (damage >= player.getHp()){
             player.setHp(0);

@@ -48,6 +48,7 @@ public class Game {
     ObjectMapper objectMapper;
 
     public Game(List<GameCard> deck) throws IOException {
+        magic = new Magic();
         this.allCards = deck;
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
@@ -140,14 +141,17 @@ public class Game {
                     case "CAST_MAGIC_INSTANT":
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         castMagicMethod(magicCard);
+                        break;
                     case "CAST_MAGIC_TARGET_DAMAGE":
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         castMagicMethod(magicCard, defendingCard);
+                        break;
                     case "CAST_MAGIC_TARGET_HEAL":
                         magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
                         defendingCard = attackingPlayer.getCardsOnTable().get(CARD2);
                         castMagicMethod(magicCard, defendingCard);
+                        break;
                     case "END_TURN":
                         endTurn = true;
                         break;
@@ -265,22 +269,26 @@ public class Game {
 
     //Omedelbara effekter
     public void castMagicMethod(MagicCard magicCard) {
-
-        switch ( magicCard.getMagicType() ){
+        System.out.println(magicCard.getMagicType());
+        switch (magicCard.getMagicType()) {
             case "HEALPLAYER":
-                magic.selfHealPlayer( attackingPlayer, 2 );
+                magic.selfHealPlayer(attackingPlayer, magicCard.getAttackPoints());
+                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
 
             case "DAMAGEPLAYER":
-                magic.damageEnemyPlayer( defendingPlayer, 2 );
+                magic.damageEnemyPlayer(defendingPlayer, magicCard.getAttackPoints());
+                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
 
             case "HEALALLCARDS":
-                magic.healFriendlyCards( attackingPlayer.getCardsOnTable(), 2 );
+                magic.healFriendlyCards(attackingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
+                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
 
             case "DAMAGEALLCARDS":
-                magic.damageEnemyCards( defendingPlayer.getCardsOnTable(), 2 );
+                magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
+                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
         }
     }
@@ -288,13 +296,13 @@ public class Game {
     // Riktade effekter
     public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard) {
 
-        switch ( magicCard.getMagicType() ){
+        switch (magicCard.getMagicType()) {
             case "DAMAGECARD":
-                magic.damageOneCard( creatureCard, 2 );
+                magic.damageOneCard(creatureCard, 2);
                 break;
 
             case "HEALCARD":
-                magic.healOneCard( creatureCard, 2 );
+                magic.healOneCard(creatureCard, 2);
                 break;
         }
     }

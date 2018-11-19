@@ -48,6 +48,7 @@ public class Game {
     ObjectMapper objectMapper;
 
     public Game(List<GameCard> deck) throws IOException {
+        magic = new Magic();
         this.allCards = deck;
         divideCards();
         player1 = new Player(player1Cards, "Jonas");
@@ -63,8 +64,8 @@ public class Game {
         this.outP2 = serverNetwork.getOutP2();
         this.inP1 = serverNetwork.getInP1();
         this.inP2 = serverNetwork.getInP2();
-        outP1.println("PLAYER: player1");
-        outP2.println("PLAYER: player2");
+        outP1.println("PLAYER:player1");
+        outP2.println("PLAYER:player2");
         toggleTurn();
     }
 
@@ -110,64 +111,97 @@ public class Game {
             defendingPlayer = player1;
         }
         attackingPlayer.setCardsToUnUsed();
+        CreatureCard defendingCard;
+        CreatureCard attackingCard;
+        MagicCard magicCard;
 
         while (!endTurn) {
             try {
                 Print.cardsVisibleForActivePlayer(attackingPlayer, defendingPlayer);
-                outAttackingPlayer.println("your turn, what do you want to do ?");
+                outAttackingPlayer.println("MESSAGE:your turn, what do you want to do ?");
                 String msgFromClient = inAttackingPlayer.readLine();
 
                 splitMsgFromClient(msgFromClient);
-                //EXAMPLE:   msgFromClient = "ATTACK_CARD:1:2"   OPTION=ATTACK_CARD, CARD1=1, CARD2=2
-                //EXAMPLE:   msgFromClient = "PLAY_CARD:3"       OPTION=PLAY_CARD, CARD=3
                 switch (OPTION) {
                     case "PLAY_CARD":
                         attackingPlayer.playCard(CARD1);
-                        checkDeath(player1);
-                        checkDeath(player2);
-                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_CARD":
-                        CreatureCard attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
-                        CreatureCard defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
+                        attackingCard = attackingPlayer.getCardsOnTable().get(CARD1);
+                        defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
                         attackCard(attackingCard, defendingCard);
-                        sendInfoAllPlayers();
                         break;
                     case "ATTACK_PLAYER":
                         CreatureCard creatureCard = attackingPlayer.getCardsOnTable().get(CARD1);
-                        if (!creatureCard.getIsUsed()) {
+                        if (!creatureCard.getIsUsed() && creatureCard.getCoolDown() == 0) {
                             attackPlayer(defendingPlayer, creatureCard.getAttackPoints());
                             attackingPlayer.getCardsOnTable().get(CARD1).setIsUsed(true);
                         } else {
-                            throw new Exception("Card has already attacked this round !");
+                            throw new Exception("Card is already used or has to cooldown");
                         }
-                        sendInfoAllPlayers();
+                        break;
+                    case "CAST_MAGIC_INSTANT":
+                        if (roundCounter == 1) {
+                            throw new Exception("Cant play Magic card on first round");
+                        }
+                        magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
+                        castMagicMethod(magicCard);
+                        break;
+                    case "CAST_MAGIC_TARGET_DAMAGE":
+                        if (roundCounter == 1) {
+                            throw new Exception("Cant play Magic card on first round");
+                        }
+                        magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
+                        defendingCard = defendingPlayer.getCardsOnTable().get(CARD2);
+                        castMagicMethod(magicCard, defendingCard);
+                        break;
+                    case "CAST_MAGIC_TARGET_HEAL":
+                        if (roundCounter == 1) {
+                            throw new Exception("Cant play Magic card on first round");
+                        }
+                        magicCard = (MagicCard) attackingPlayer.getCardsOnHand().get(CARD1);
+                        defendingCard = attackingPlayer.getCardsOnTable().get(CARD2);
+                        castMagicMethod(magicCard, defendingCard);
                         break;
                     case "END_TURN":
+
+                        decreaseCoolDownOnplayerTable(attackingPlayer);
                         endTurn = true;
                         break;
                 }
             } catch (Exception e) {
-                Print.actionMessage(e.getMessage());
-                outAttackingPlayer.println(e.getMessage());
+                outAttackingPlayer.println("ERROR:" + e.getMessage());
             }
+            checkDeath(player1);
+            checkDeath(player2);
+            sendInfoAllPlayers();
         }
         attackingPlayer.setHasPlayedCard(false);
         toggleTurn();
     }
 
+    public void decreaseCoolDownOnplayerTable(Player player) {
+        player.getCardsOnTable().forEach(card -> card.setCoolDown(card.getCoolDown()-1));
+    }
+
     public void sendInfoAllPlayers() throws JsonProcessingException {
         GameDto gameDtoP1 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
-                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand());
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand(), player1.getCardsInDeck().size());
 
         GameDto gameDtoP2 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
-                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand());
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand(), player2.getCardsInDeck().size());
 
         String gameDtoP1String = objectMapper.writeValueAsString(gameDtoP1);
         String gameDtoP2String = objectMapper.writeValueAsString(gameDtoP2);
 
-        outP1.println("GUI" + gameDtoP1String);
-        outP2.println("GUI" + gameDtoP2String);
+        outP1.println("GUI:" + gameDtoP1String);
+        outP2.println("GUI:" + gameDtoP2String);
+    }
+
+    public void sendMessageAllPlayers(String msg) {
+        Print.actionMessage(msg);
+        outP1.println("MESSAGE:" + msg);
+        outP2.println("MESSAGE:" + msg);
     }
 
     public void splitMsgFromClient(String msgFromClient) {
@@ -185,28 +219,49 @@ public class Game {
         if (attackingCard.getIsUsed()) {
             throw new Exception("Card has already attacked this round !");
         }
+        if (attackingCard.getCoolDown() != 0) {
+            throw new Exception("Card has to cooldown before it's played");
+        }
         CreatureCard player1Card;
         CreatureCard player2Card;
         int player1FightingPoints;
         int player2FightingPoints;
+        int player1FightingRange;
+        int player2FightingRange;
         boolean didPlayer1LoseAttack;
 
         if (player1Turn) {
             player1Card = attackingCard;
+            player1FightingRange = player1Card.getAttackPoints();
             player2Card = defendingCard;
+            player2FightingRange = player2Card.getDefencePoint();
             player1Card.setIsUsed(true);
         } else {
             player2Card = attackingCard;
+            player2FightingRange = player2Card.getAttackPoints();
             player1Card = defendingCard;
+            player1FightingRange = player1Card.getDefencePoint();
             player2Card.setIsUsed(true);
         }
         do {
-            player1FightingPoints = randomNumber(6);
-            player2FightingPoints = randomNumber(6);
+            player1FightingPoints = randomNumber(player1FightingRange);
+            player2FightingPoints = randomNumber(player2FightingRange);
         } while (player1FightingPoints == player2FightingPoints);
 
+
+        sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+        String player1CardAttackType = player1Card.getAttackType();
+        String player2CardAttacktype = player2Card.getAttackType();
+
+        if(player1CardAttackType=="FIRE" && player2CardAttacktype =="WIND" || player1CardAttackType == "WIND" && player2CardAttacktype == "WATER" || player1CardAttackType == "WATER" && player2CardAttacktype =="FIRE"){
+            player1FightingPoints +=2;
+        }
+        else if(player1CardAttackType==player2CardAttacktype){
+        }
+        else{
+            player2FightingPoints +=2;
+        }
         int fightResult = player1FightingPoints - player2FightingPoints;
-        Print.actionMessage(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
         if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);
             didPlayer1LoseAttack = true;
@@ -235,10 +290,11 @@ public class Game {
             throw new Exception("Cant make attack move first round!");
         }
         if (player.getCardsOnTable().size() != 0) {
-            throw new Exception("Can't attack player with cards on table!");
+            throw new Exception("Can't attack a player with cards on table!");
         }
 
         player.reduceHp(attackNumber);
+
         if (player.getName().equals("player1")){
             player2.assignFivePoints();
         }
@@ -247,19 +303,20 @@ public class Game {
             player1.assignFivePoints();
         }
 
-        Print.actionMessage((player.getName() + " " + "took " + attackNumber + " damage!"));
+       sendMessageAllPlayers((player.getName() + " " + "took " + attackNumber + " damage!"));
+
         checkDeath(player);
     }
 
-    public void checkDeath(Player player){
+    public void checkDeath(Player player) {
         if (isPlayerDead(player)) {
-            Print.actionMessage(player.getName() + " died!");
+            sendMessageAllPlayers(player.getName() + " died!");
             if (player1Turn) {
-                Print.actionMessage(player1.getName() + " won!");
-                player1.assignCardPoints();
+               sendMessageAllPlayers(player1.getName() + " won!");
+               player1.assignCardPoints();
             } else {
-                Print.actionMessage(player2.getName() + " won!");
-                player2.assignCardPoints();
+                sendMessageAllPlayers(player2.getName() + " won!");
+                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(10);
@@ -267,44 +324,48 @@ public class Game {
         }
     }
 
-    public boolean isPlayerOutOfCards(Player player){
-        return(player.getCardsInDeck().size()==0 && player.getCardsOnHand().size()==0 && player.getCardsOnTable().size()==0);
+    public boolean isPlayerOutOfCards(Player player) {
+        return (player.getCardsInDeck().size() == 0 && player.getCardsOnHand().size() == 0 && player.getCardsOnTable().size() == 0);
     }
 
     //Omedelbara effekter
-    public void castMagicMethod( MagicCard magicCard ) {
-
-        switch ( magicCard.getMagicMethod() ){
-            case HEALPLAYER:
-                magic.selfHealPlayer( attackingPlayer, 2 );
+    public void castMagicMethod(MagicCard magicCard) throws Exception {
+        if (roundCounter == 1) {
+            throw new Exception("Can't play magic card on first round");
+        }
+        System.out.println(magicCard.getMagicType());
+        switch (magicCard.getMagicType()) {
+            case "HEALPLAYER":
+                magic.selfHealPlayer(attackingPlayer, magicCard.getAttackPoints());
                 break;
-
-            case DAMAGEPLAYER:
-                magic.damageEnemyPlayer( defendingPlayer, 2 );
+            case "DAMAGEPLAYER":
+                magic.damageEnemyPlayer(defendingPlayer, magicCard.getAttackPoints());
                 break;
-
-            case HEALALLCARDS:
-                magic.healFriendlyCards( attackingPlayer.getCardsOnTable(), 2 );
+            case "HEALALLCARDS":
+                magic.healFriendlyCards(attackingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
                 break;
-
-            case DAMAGEALLCARDS:
-                magic.damageEnemyCards( defendingPlayer.getCardsOnTable(), 2 );
+            case "DAMAGEALLCARDS":
+                magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
                 break;
         }
+        attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
     // Riktade effekter
-    public void castMagicMethod( MagicCard magicCard, CreatureCard creatureCard ) {
-
-        switch ( magicCard.getMagicMethod() ){
-            case DAMAGECARD:
-                magic.damageOneCard( creatureCard, 2 );
+    public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard) throws Exception {
+        if (roundCounter == 1) {
+            throw new Exception("Can't play magic card on first round");
+        }
+        System.out.println(magicCard.getMagicType());
+        switch (magicCard.getMagicType()) {
+            case "DAMAGEONECARD":
+                magic.damageOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
-
-            case HEALCARD:
-                magic.healOneCard( creatureCard, 2 );
+            case "HEALONECARD":
+                magic.healOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
         }
+        attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
     public Boolean isPlayerDead(Player player) {

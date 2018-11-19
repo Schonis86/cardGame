@@ -10,12 +10,26 @@ public class Magic {
 
     //omedelbar effekt - öka Player1/2 HP med 2
     public void selfHealPlayer( Player player, int healPoints ) {
-        player.setHp( player.getHp() + 2 );
+        int heal = getRandomPoints( healPoints );
+        if (player.getHp()+heal >= player.getMaxHp()){
+            player.setHp(20);
+        }
+        else{
+        player.setHp( player.getHp() + heal );
+
+        }
     }
 
     //omedelbar effekt - ge skada till Player1/2 HP med 2
     public void damageEnemyPlayer( Player player, int attackPoints ) {
-        player.setHp( player.getHp() - 2 );
+        System.out.println("DAMAGE ENEMY PLAYER");
+        int damage = getRandomPoints( attackPoints );
+        if (damage >= player.getHp()){
+            player.setHp(0);
+        }
+        else{
+            player.setHp( player.getHp() - damage );
+        }
     }
 
     // omedelbar effek - ge direkt skada till motståndarens kort med 2
@@ -26,7 +40,7 @@ public class Magic {
         cardsOnTable.stream()
             .forEach( card -> {
                 int cardHp = card.getHp();
-                card.setHp(damage > cardHp ? 0 : cardHp - damage );
+                card.setHp( damage > cardHp ? 0 : cardHp - damage );
             });
     }
 
@@ -36,23 +50,41 @@ public class Magic {
         int heal = getRandomPoints( healPoints );
 
         cardsOnTable.stream()
-            .forEach( card -> card.setHp( card.getHp() + heal ) );
+                .forEach( card -> {
+                    int maxHp = card.getHpMax();
+                    int damagedCreatureCard =  maxHp - card.getHp();
+                    card.setHp( heal >= damagedCreatureCard ? maxHp : card.getHp() + heal  );
+                });
+
     }
 
     // riktad effekt - öka ett korts HP med 2
     public void healOneCard( CreatureCard creatureCard, int healPoints ) {
+        System.out.println("heal one card");
+        int maxHp = creatureCard.getHpMax();
 
         int heal = getRandomPoints( healPoints );
+        int damagedCreatureCard = maxHp - creatureCard.getHp();
 
-        creatureCard.setHp( creatureCard.getHp() + heal );
+        creatureCard.setHp( heal >= damagedCreatureCard ? maxHp : creatureCard.getHp() + heal );
     }
 
     // riktad effekt - minska ett korts HP med 2
     public void damageOneCard( CreatureCard creatureCard, int attackPoints ) {
-        creatureCard.setHp( creatureCard.getHp() - 2 );
+        System.out.println("damage on card");
+        int damage = getRandomPoints( attackPoints );
+
+        if(damage > creatureCard.getHp()){
+            creatureCard.setHp(0);
+
+        }
+        else {
+            creatureCard.setHp(creatureCard.getHp() - damage);
+
+        }
     }
 
-    private int getRandomPoints( int number ) {
+    public int getRandomPoints( int number ) {
         Random r = new Random();
         return r.nextInt( number ) + 1;
     }

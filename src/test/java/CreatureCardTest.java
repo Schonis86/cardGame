@@ -9,7 +9,7 @@ class CreatureCardTest {
 
     @BeforeEach
     void setUp() {
-        card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, "FIRE", false);
+        card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, "FIRE", false, "bild");
     }
 
     @Test

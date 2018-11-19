@@ -69,9 +69,9 @@ public class Main{
                 String imageUrl = rs.getString("imageUrl");
                 String specialAbility = rs.getString("specialAbility");
                 if (hp != 0) {
-                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
+                    deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false, imageUrl));
                 } else if (hp == 0) {
-                    //deck.add(new MagicCard(name, energyCost, attackPoints));
+                    deck.add(new MagicCard(name, energyCost, attackPoints, imageUrl, specialAbility));
                 }
 
 //        launch(args);

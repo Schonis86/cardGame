@@ -1,3 +1,4 @@
+import app.controllers.HighScore;
 import app.entities.CreatureCard;
 import app.entities.GameCard;
 import app.entities.Player;
@@ -69,6 +70,8 @@ class GameTest {
         assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
 
     }
+
+
 
 
     @Test

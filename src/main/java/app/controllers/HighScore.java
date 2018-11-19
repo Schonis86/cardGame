@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HighScore {
+
     public static void addPlayers(Player player1, Player player2){
     try {
         String myDriver = "com.mysql.cj.jdbc.Driver";

@@ -218,7 +218,19 @@ public class Game {
         player2.removeCardIfDead();
         checkDeath(player1);
         checkDeath(player2);
+        if (didPlayer1LoseAttack){
+
+        assignScoreAfterAttack(player2);
+        }
+        if (!didPlayer1LoseAttack){
+            assignScoreAfterAttack(player1);
+        }
+
         return didPlayer1LoseAttack;
+    }
+
+    public void assignScoreAfterAttack(Player player){
+        player.assignOnePoint();
     }
 
     public void attackPlayer(Player player, int attackNumber) throws Exception {

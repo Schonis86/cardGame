@@ -72,9 +72,7 @@ public class CreatureCard implements Serializable, GameCard {
         return hp;
     }
 
-    public int gethpMax() {
-        return hpMax;
-    }
+
 
     public void setIsUsed(boolean isUsed) {
         this.isUsed = isUsed;

@@ -276,8 +276,10 @@ public class Game {
     }
 
     //Omedelbara effekter
-    public void castMagicMethod(MagicCard magicCard) {
-
+    public void castMagicMethod(MagicCard magicCard) throws Exception {
+    if(roundCounter==1){
+        throw new Exception("Can't play magic card on first round");
+    }
     switch (magicCard.getMagicType()) {
         case "HEALPLAYER":
             magic.selfHealPlayer(attackingPlayer, 2);
@@ -297,7 +299,10 @@ public class Game {
     }
 
     // Riktade effekter
-    public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard) {
+    public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard)throws Exception {
+        if(roundCounter==1){
+            throw new Exception("Can't play magic card on first round");
+        }
         switch ( magicCard.getMagicType() ){
             case "DAMAGECARD":
                 magic.damageOneCard( creatureCard, 2 );

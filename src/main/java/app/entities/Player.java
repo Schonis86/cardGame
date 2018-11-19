@@ -129,7 +129,6 @@ public class Player {
                 cardsOnTable.add((CreatureCard) cardsOnHand.get(index));
                 cardsOnHand.remove(index);
                 hasPlayedCard = true;
-                Print.actionMessage("    Played card: " + (index + 1) + "    ");
                 System.out.println(" ");
             } else {
                 throw new Exception("You can only play 1 card each round !");

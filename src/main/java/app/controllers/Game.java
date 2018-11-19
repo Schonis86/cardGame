@@ -164,8 +164,9 @@ public class Game {
                         castMagicMethod(magicCard, defendingCard);
                         break;
                     case "END_TURN":
-                        endTurn = true;
+
                         decreaseCoolDownOnplayerTable(attackingPlayer);
+                        endTurn = true;
                         break;
                 }
             } catch (Exception e) {
@@ -180,9 +181,7 @@ public class Game {
     }
 
     public void decreaseCoolDownOnplayerTable(Player player) {
-        List<CreatureCard> cardsOnTable = new ArrayList<>();
-        cardsOnTable = player.getCardsOnTable();
-        cardsOnTable.forEach(card -> card.setCoolDown(card.getCoolDown() - 1));
+        player.getCardsOnTable().forEach(card -> card.setCoolDown(card.getCoolDown()-1));
     }
 
     public void sendInfoAllPlayers() throws JsonProcessingException {
@@ -227,25 +226,42 @@ public class Game {
         CreatureCard player2Card;
         int player1FightingPoints;
         int player2FightingPoints;
+        int player1FightingRange;
+        int player2FightingRange;
         boolean didPlayer1LoseAttack;
 
         if (player1Turn) {
             player1Card = attackingCard;
+            player1FightingRange = player1Card.getAttackPoints();
             player2Card = defendingCard;
+            player2FightingRange = player2Card.getDefencePoint();
             player1Card.setIsUsed(true);
         } else {
             player2Card = attackingCard;
+            player2FightingRange = player2Card.getAttackPoints();
             player1Card = defendingCard;
+            player1FightingRange = player1Card.getDefencePoint();
             player2Card.setIsUsed(true);
         }
         do {
-            player1FightingPoints = randomNumber(6);
-            player2FightingPoints = randomNumber(6);
+            player1FightingPoints = randomNumber(player1FightingRange);
+            player2FightingPoints = randomNumber(player2FightingRange);
         } while (player1FightingPoints == player2FightingPoints);
 
-        int fightResult = player1FightingPoints - player2FightingPoints;
-        sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
 
+        sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+        String player1CardAttackType = player1Card.getAttackType();
+        String player2CardAttacktype = player2Card.getAttackType();
+
+        if(player1CardAttackType=="FIRE" && player2CardAttacktype =="WIND" || player1CardAttackType == "WIND" && player2CardAttacktype == "WATER" || player1CardAttackType == "WATER" && player2CardAttacktype =="FIRE"){
+            player1FightingPoints +=2;
+        }
+        else if(player1CardAttackType==player2CardAttacktype){
+        }
+        else{
+            player2FightingPoints +=2;
+        }
+        int fightResult = player1FightingPoints - player2FightingPoints;
         if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);
             didPlayer1LoseAttack = true;

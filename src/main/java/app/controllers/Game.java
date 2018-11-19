@@ -290,7 +290,6 @@ public class Game {
     }
 
     //Omedelbara effekter
-
     public void castMagicMethod(MagicCard magicCard) throws Exception {
         if (roundCounter == 1) {
             throw new Exception("Can't play magic card on first round");
@@ -299,25 +298,18 @@ public class Game {
         switch (magicCard.getMagicType()) {
             case "HEALPLAYER":
                 magic.selfHealPlayer(attackingPlayer, magicCard.getAttackPoints());
-                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
-
             case "DAMAGEPLAYER":
                 magic.damageEnemyPlayer(defendingPlayer, magicCard.getAttackPoints());
-                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
-
             case "HEALALLCARDS":
                 magic.healFriendlyCards(attackingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
-                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
-
             case "DAMAGEALLCARDS":
                 magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), magicCard.getAttackPoints());
-                attackingPlayer.getCardsOnHand().remove(CARD1);
                 break;
-
         }
+        attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
     // Riktade effekter
@@ -327,13 +319,13 @@ public class Game {
         }
         switch (magicCard.getMagicType()) {
             case "DAMAGECARD":
-                magic.damageOneCard(creatureCard, 2);
+                magic.damageOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
-
             case "HEALCARD":
-                magic.healOneCard(creatureCard, 2);
+                magic.healOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
         }
+        attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
     public Boolean isPlayerDead(Player player) {

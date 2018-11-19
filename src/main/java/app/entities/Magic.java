@@ -60,6 +60,7 @@ public class Magic {
 
     // riktad effekt - öka ett korts HP med 2
     public void healOneCard( CreatureCard creatureCard, int healPoints ) {
+        System.out.println("heal one card");
         int maxHp = creatureCard.getHpMax();
 
         int heal = getRandomPoints( healPoints );
@@ -70,7 +71,7 @@ public class Magic {
 
     // riktad effekt - minska ett korts HP med 2
     public void damageOneCard( CreatureCard creatureCard, int attackPoints ) {
-
+        System.out.println("damage on card");
         int damage = getRandomPoints( attackPoints );
 
         if(damage > creatureCard.getHp()){

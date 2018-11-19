@@ -317,11 +317,12 @@ public class Game {
         if (roundCounter == 1) {
             throw new Exception("Can't play magic card on first round");
         }
+        System.out.println(magicCard.getMagicType());
         switch (magicCard.getMagicType()) {
-            case "DAMAGECARD":
+            case "DAMAGEONECARD":
                 magic.damageOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
-            case "HEALCARD":
+            case "HEALONECARD":
                 magic.healOneCard(creatureCard, magicCard.getAttackPoints());
                 break;
         }

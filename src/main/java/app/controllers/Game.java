@@ -266,21 +266,21 @@ public class Game {
     //Omedelbara effekter
     public void castMagicMethod(MagicCard magicCard) {
 
-        switch (magicCard.getMagicMethod()) {
-            case HEALPLAYER:
-                magic.selfHealPlayer(attackingPlayer, 2);
+        switch ( magicCard.getMagicType() ){
+            case "HEALPLAYER":
+                magic.selfHealPlayer( attackingPlayer, 2 );
                 break;
 
-            case DAMAGEPLAYER:
-                magic.damageEnemyPlayer(defendingPlayer, 2);
+            case "DAMAGEPLAYER":
+                magic.damageEnemyPlayer( defendingPlayer, 2 );
                 break;
 
-            case HEALALLCARDS:
-                magic.healFriendlyCards(attackingPlayer.getCardsOnTable(), 2);
+            case "HEALALLCARDS":
+                magic.healFriendlyCards( attackingPlayer.getCardsOnTable(), 2 );
                 break;
 
-            case DAMAGEALLCARDS:
-                magic.damageEnemyCards(defendingPlayer.getCardsOnTable(), 2);
+            case "DAMAGEALLCARDS":
+                magic.damageEnemyCards( defendingPlayer.getCardsOnTable(), 2 );
                 break;
         }
     }
@@ -288,13 +288,13 @@ public class Game {
     // Riktade effekter
     public void castMagicMethod(MagicCard magicCard, CreatureCard creatureCard) {
 
-        switch (magicCard.getMagicMethod()) {
-            case DAMAGECARD:
-                magic.damageOneCard(creatureCard, 2);
+        switch ( magicCard.getMagicType() ){
+            case "DAMAGECARD":
+                magic.damageOneCard( creatureCard, 2 );
                 break;
 
-            case HEALCARD:
-                magic.healOneCard(creatureCard, 2);
+            case "HEALCARD":
+                magic.healOneCard( creatureCard, 2 );
                 break;
         }
     }

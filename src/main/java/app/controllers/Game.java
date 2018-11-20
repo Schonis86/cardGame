@@ -188,8 +188,12 @@ public class Game {
 
     public void sendMessageAllPlayers(String msg) {
         Print.actionMessage(msg);
-        outP1.println("MESSAGE:" + msg);
-        outP2.println("MESSAGE:" + msg);
+        try {
+            outP1.println("MESSAGE:" + msg);
+            outP2.println("MESSAGE:" + msg);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public void splitMsgFromClient(String msgFromClient) {

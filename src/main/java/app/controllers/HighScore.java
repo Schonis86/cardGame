@@ -24,8 +24,8 @@ public class HighScore {
 
         Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
 
-        String query1 = "INSERT INTO highScore (Name, Points) VALUES('" + player1.getName() +"','" + (player1.getHp()-1) + "')";
-        String query2 = "INSERT INTO highScore (Name, Points) VALUES('" + player2.getName() +"','" + (player2.getHp()+2)+ "')";
+        String query1 = "INSERT INTO highScore (Name, Points) VALUES('" + player1.getName() +"','" + (player1.getPoints()) + "')";
+        String query2 = "INSERT INTO highScore (Name, Points) VALUES('" + player2.getName() +"','" + (player2.getPoints()) + "')";
 
         Statement st = conn.createStatement();
 

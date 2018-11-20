@@ -79,7 +79,7 @@ public class Game {
         }
     }
 
-    public void toggleTurn() throws JsonProcessingException {
+    public void toggleTurn() throws IOException {
         setPlayer1Turn(!player1Turn);
 
         setTurnCounter(getTurnCounter() + 1);
@@ -96,7 +96,7 @@ public class Game {
         getUserInput();
     }
 
-    public void getUserInput() throws JsonProcessingException {
+    public void getUserInput() throws IOException {
         Boolean endTurn = false;
         if (isPlayer1Turn()) {
             attackingPlayer = player1;
@@ -235,7 +235,7 @@ public class Game {
             player2FightingPoints = randomNumber(player2FightingRange);
         } while (player1FightingPoints == player2FightingPoints);
 
-        sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName());
+
         String player1CardAttackType = player1Card.getAttackType();
         String player2CardAttacktype = player2Card.getAttackType();
 
@@ -250,10 +250,12 @@ public class Game {
         if (fightResult < 0) {
             player1Card.decreaseHp(-fightResult);
             didPlayer1LoseAttack = true;
+            fightResult = -fightResult;
         } else {
             player2Card.decreaseHp(fightResult);
             didPlayer1LoseAttack = false;
         }
+        sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName() + " with " + fightResult + " damage");
         player1.removeCardIfDead();
         player2.removeCardIfDead();
         checkDeath(player1);
@@ -293,7 +295,7 @@ public class Game {
         checkDeath(player);
     }
 
-    public void checkDeath(Player player) {
+    public void checkDeath(Player player) throws IOException {
         if (isPlayerDead(player)) {
             if (player1Turn) {
                 sendMessageAllPlayers(player1.getName() + " WON!");
@@ -306,6 +308,8 @@ public class Game {
             HighScore.showTopPlayers(10);
             outP1.close();
             outP2.close();
+            inP1.close();
+            inP2.close();
         }
     }
 
@@ -335,7 +339,7 @@ public class Game {
 
         String whoCasted = player1Turn ? "Player 1" : "Player 2";
 
-        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName());
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName() + " with effect " + magicCard.getMagicType());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 
@@ -355,7 +359,7 @@ public class Game {
 
         String whoCasted = player1Turn ? "Player 1" : "Player 2";
 
-        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName() + " on " + creatureCard.getName());
+        sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName() + " on " + creatureCard.getName() + "with effect " + magicCard.getMagicType());
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 

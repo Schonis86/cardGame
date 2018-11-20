@@ -160,6 +160,7 @@ public class Game {
             } catch (Exception e) {
                 outAttackingPlayer.println("ERROR:" + e.getMessage());
             }
+
             checkDeath(player1);
             checkDeath(player2);
             sendInfoAllPlayers();
@@ -306,6 +307,7 @@ public class Game {
             }
             HighScore.addPlayers(player1, player2);
             HighScore.showTopPlayers(10);
+            System.exit(0);
             outP1.close();
             outP2.close();
             inP1.close();
@@ -360,6 +362,7 @@ public class Game {
         String whoCasted = player1Turn ? "Player 1" : "Player 2";
 
         sendMessageAllPlayers(whoCasted + " casted " + magicCard.getName() + " on " + creatureCard.getName() + "with effect " + magicCard.getMagicType());
+        defendingPlayer.removeCardIfDead();
         attackingPlayer.getCardsOnHand().remove(CARD1);
     }
 

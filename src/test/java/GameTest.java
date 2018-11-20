@@ -53,6 +53,8 @@ class GameTest {
         int deckSizePlayer2 = game.getPlayer2Cards().size();
         assertEquals(DECK_SIZE / 2, deckSizePlayer1);
         assertEquals(DECK_SIZE / 2, deckSizePlayer2);
+
+
     }
 
 
@@ -68,6 +70,7 @@ class GameTest {
         game.attackCard(attackingCard, defendingCard);
         assertTrue(attackingCard.getIsUsed() == true);
         assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
+        
     }
 
 

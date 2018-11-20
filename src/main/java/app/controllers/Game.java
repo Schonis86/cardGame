@@ -307,7 +307,7 @@ public class Game {
                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
-            HighScore.showTopPlayers(10);
+            HighScore.showTopPlayers();
             outP1.close();
             outP2.close();
         }

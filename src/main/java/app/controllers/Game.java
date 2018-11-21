@@ -189,8 +189,12 @@ public class Game {
 
     public void sendMessageAllPlayers(String msg) {
         Print.actionMessage(msg);
-        outP1.println("MESSAGE:" + msg);
-        outP2.println("MESSAGE:" + msg);
+        try {
+            outP1.println("MESSAGE:" + msg);
+            outP2.println("MESSAGE:" + msg);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public void splitMsgFromClient(String msgFromClient) {
@@ -306,7 +310,7 @@ public class Game {
                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
-            HighScore.showTopPlayers(10);
+            HighScore.showTopPlayers();
             System.exit(0);
             outP1.close();
             outP2.close();

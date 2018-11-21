@@ -37,7 +37,7 @@ class GameTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 2, "FIRE", false, "bild");
+            CreatureCard card = new CreatureCard(10, "Ali", 5, 2, 2, 0, "FIRE", false, "bild");
             deck.add(card);
         }
         return deck;
@@ -53,6 +53,8 @@ class GameTest {
         int deckSizePlayer2 = game.getPlayer2Cards().size();
         assertEquals(DECK_SIZE / 2, deckSizePlayer1);
         assertEquals(DECK_SIZE / 2, deckSizePlayer2);
+
+
     }
 
 
@@ -68,6 +70,7 @@ class GameTest {
         game.attackCard(attackingCard, defendingCard);
         assertTrue(attackingCard.getIsUsed() == true);
         assertTrue(attackingCard.getHp() < hpAttackingCard || defendingCard.getHp() < hpDefendingCard);
+        
     }
 
 

@@ -14,6 +14,7 @@ public class Player {
     private List<GameCard> cardsInDeck;
     private List<CreatureCard> cardsOnTable;
     private List<GameCard> graveYard;
+    private int points;
 
     private boolean hasPlayedCard;
 
@@ -21,6 +22,7 @@ public class Player {
         this.name = name;
         this.hp = 20;
         this.maxHp = 20;
+        this.points = 0;
         this.cardsInDeck = deck;
         this.cardsOnHand = new ArrayList();
         this.cardsOnTable = new ArrayList();
@@ -28,6 +30,20 @@ public class Player {
         this.hasPlayedCard = false;
         this.energyPoints = 10;
         getStartCards();
+    }
+
+    public void assignOnePoint(){
+        this.setPoints(1);
+    }
+
+    public void assignFivePoints(){
+        this.setPoints(5);
+    }
+    public void assignCardPoints(){
+        for (int i = 0; i <this.getCardsOnHand().size() ; i++) {
+            this.setPoints(1);
+        }
+
     }
 
     public int getHp() {
@@ -129,7 +145,6 @@ public class Player {
                 cardsOnTable.add((CreatureCard) cardsOnHand.get(index));
                 cardsOnHand.remove(index);
                 hasPlayedCard = true;
-                Print.actionMessage("    Played card: " + (index + 1) + "    ");
                 System.out.println(" ");
             } else {
                 throw new Exception("You can only play 1 card each round !");
@@ -164,4 +179,11 @@ public class Player {
         cardsOnTable.forEach(card -> card.setIsUsed(false));
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points += points;
+    }
 }

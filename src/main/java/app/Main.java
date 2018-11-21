@@ -71,12 +71,12 @@ public class Main{
                 String specialAbility = rs.getString("specialAbility");
                 if (hp != 0) {
                     if(specialAbility == null || specialAbility.isEmpty()) {
-                        deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false));
+                        deck.add(new CreatureCard(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false, imageUrl));
                     } else {
                         deck.add(new SpecialCreature(id, name, energyCost, attackPoints, defencePoints, coolDown, attackType, false, specialAbility));
                     }
                 } else if (hp == 0) {
-                    //deck.add(new MagicCard(name, energyCost, attackPoints));
+                    deck.add(new MagicCard(name, energyCost, attackPoints, imageUrl, specialAbility));
                 }
 
 //        launch(args);
@@ -87,7 +87,6 @@ public class Main{
             st.close();
             Game game = new Game(deck);
             game.start();
-
 
         }
         catch(Exception e)

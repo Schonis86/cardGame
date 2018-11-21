@@ -31,10 +31,32 @@ class PlayerTest {
     List<GameCard> getDeck(int deckSize) {
         List<GameCard> deck = new ArrayList();
         for (int i = 0; i < deckSize; i++) {
-            card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, "FIRE", false);
+            card = new CreatureCard(10 , "Ali", 5, 2, 2, 2, "FIRE", false, "bild");
             deck.add(card);
         }
         return deck;
+    }
+
+    @Test
+     void assignOnePoint(){
+        player.setPoints(1);
+        assertEquals(1, player.getPoints());
+    }
+
+    @Test
+    void assignFivePoints(){
+        player.setPoints(5);
+        assertEquals(5, player.getPoints());
+    }
+
+    @Test
+    void assignCardPoints(){
+        for (int i = 0; i <player.getCardsOnHand().size() ; i++) {
+            player.setPoints(1);
+        }
+
+        assertEquals(player.getCardsOnHand().size(), player.getPoints());
+
     }
 
     @Test

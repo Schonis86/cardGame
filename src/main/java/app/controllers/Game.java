@@ -52,8 +52,6 @@ public class Game {
         magic = new Magic();
         this.allCards = deck;
         divideCards();
-        player1 = new Player(player1Cards, "Player 1");
-        player2 = new Player(player2Cards, "Player 2");
         this.player1Turn = false;
         objectMapper = new ObjectMapper();
     }
@@ -65,8 +63,12 @@ public class Game {
         this.outP2 = serverNetwork.getOutP2();
         this.inP1 = serverNetwork.getInP1();
         this.inP2 = serverNetwork.getInP2();
+        player1 = new Player(player1Cards, serverNetwork.getPlayer1Name());
+        player2 = new Player(player2Cards, serverNetwork.getPlayer2Name());
         outP1.println("PLAYER:player1");
         outP2.println("PLAYER:player2");
+        outP1.println("NAME:" + player1.getName());
+        outP2.println("NAME:" + player2.getName());
         toggleTurn();
     }
 
@@ -198,7 +200,7 @@ public class Game {
         }
     }
 
-    public static void sendHighScore(PrintWriter out,String msg) {
+    public static void sendHighScore(PrintWriter out, String msg) {
         try {
             out.println("HIGHSCORE:" + msg);
         } catch (Exception e) {
@@ -320,8 +322,8 @@ public class Game {
             }
             HighScore.addPlayers(player1, player2);
             List highScore = HighScore.showTopPlayers();
-            sendHighScore(outP1,highScore.toString());
-            sendHighScore(outP2,highScore.toString());
+            sendHighScore(outP1, highScore.toString());
+            sendHighScore(outP2, highScore.toString());
 
 
             outP1.close();

@@ -28,15 +28,15 @@ public class ServerNetwork {
             out.println("Waiting for players to connect");
             p1 = serverSocket.accept();
             out.println("Player 1 connected");
-            player1Name = inP1.readLine();
             outP1 = new PrintWriter(p1.getOutputStream(), true);
             inP1 = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+            player1Name = inP1.readLine();
             Game.sendHighScore(outP1, HighScore.showTopPlayers().toString());
             p2 = serverSocket.accept();
             out.println("Player 2 connected");
-            player2Name = inP2.readLine();
             outP2 = new PrintWriter(p2.getOutputStream(), true);
             inP2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+            player2Name = inP2.readLine();
             Game.sendHighScore(outP2, HighScore.showTopPlayers().toString());
             out.println("Game has started");
         } catch (IOException e) {

@@ -1,8 +1,12 @@
 package app.network;
 
+import app.controllers.Game;
+import app.controllers.HighScore;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import static java.lang.System.in;
 import static java.lang.System.out;
@@ -22,21 +26,18 @@ public class ServerNetwork {
             out.println("Waiting for players to connect");
             p1 = serverSocket.accept();
             out.println("Player 1 connected");
+            outP1 = new PrintWriter(p1.getOutputStream(), true);
+            inP1 = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+            Game.sendHighScore(outP1, HighScore.showTopPlayers().toString());
             p2 = serverSocket.accept();
             out.println("Player 2 connected");
+            outP2 = new PrintWriter(p2.getOutputStream(), true);
+            inP2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+            Game.sendHighScore(outP2, HighScore.showTopPlayers().toString());
             out.println("Game has started");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            outP1 = new PrintWriter(p1.getOutputStream(),true);
-            outP2 = new PrintWriter(p2.getOutputStream(),true);
-            inP1 = new BufferedReader(new InputStreamReader(p1.getInputStream()));
-            inP2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void stopGame() throws IOException {

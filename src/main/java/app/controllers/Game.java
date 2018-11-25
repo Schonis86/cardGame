@@ -198,10 +198,9 @@ public class Game {
         }
     }
 
-    public void sendHighScore(String msg) {
+    public static void sendHighScore(PrintWriter out,String msg) {
         try {
-            outP1.println("HIGHSCORE:" + msg);
-            outP2.println("HIGHSCORE:" + msg);
+            out.println("HIGHSCORE:" + msg);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -321,8 +320,8 @@ public class Game {
             }
             HighScore.addPlayers(player1, player2);
             List highScore = HighScore.showTopPlayers();
-
-            sendHighScore(highScore.toString());
+            sendHighScore(outP1,highScore.toString());
+            sendHighScore(outP2,highScore.toString());
 
 
             outP1.close();

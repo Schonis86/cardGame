@@ -12,6 +12,7 @@ import app.gui.Print;
 import app.network.ServerNetwork;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -192,7 +193,15 @@ public class Game {
         try {
             outP1.println("MESSAGE:" + msg);
             outP2.println("MESSAGE:" + msg);
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void sendHighScore(PrintWriter out,String msg) {
+        try {
+            out.println("HIGHSCORE:" + msg);
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -310,12 +319,16 @@ public class Game {
                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);
-            HighScore.showTopPlayers();
-            System.exit(0);
+            List highScore = HighScore.showTopPlayers();
+            sendHighScore(outP1,highScore.toString());
+            sendHighScore(outP2,highScore.toString());
+
+
             outP1.close();
             outP2.close();
             inP1.close();
             inP2.close();
+            System.exit(0);
         }
     }
 

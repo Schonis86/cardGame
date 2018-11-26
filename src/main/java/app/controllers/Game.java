@@ -325,10 +325,10 @@ public class Game {
     public void checkDeath(Player player) throws IOException {
         if (isPlayerDead(player)) {
             if (player1Turn) {
-                sendWinMessage(player1.getName() + " WON!");
+                sendWinMessage(player1.getName());
                 player1.assignCardPoints();
             } else {
-                sendWinMessage(player2.getName() + " WON!");
+                sendWinMessage(player2.getName());
                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);

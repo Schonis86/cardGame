@@ -41,7 +41,7 @@ public class HighScore {
         System.err.println("Got an exception! ");
         System.err.println(e.getMessage());
     }}
-        public static void showTopPlayers(){
+        public static List showTopPlayers(){
             List<Pair> highScore = new ArrayList<>();
             Pair<String, Integer> player;
 
@@ -80,5 +80,11 @@ public class HighScore {
             for (int i = 0; i <highScore.size() ; i++) {
                 System.out.println((i+1) + "     "+highScore.get(i).getKey() + "   " + highScore.get(i).getValue());
 
-            }}
+            }
+            return highScore;
+
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package app;
 
+import app.controllers.HighScore;
 import app.entities.CreatureCard;
 
 import app.controllers.Game;
@@ -39,11 +40,13 @@ public class Main{
             // create our mysql database connection
             String myDriver = "com.mysql.cj.jdbc.Driver";
             //String myUrl = "jdbc:mysql://localhost/cardgame_tdd?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
+            //String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
+            String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7266128";
             //String myUrl = "jdbc:mysql://localhost:3306/cardgame_tdd";
             Class.forName(myDriver);
             //Connection conn = DriverManager.getConnection(myUrl, "root", "linasdatabas");
-            Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
+            //Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
+            Connection conn = DriverManager.getConnection(myUrl, "sql7266128", "CZrw58ge33");
 
             // our SQL SELECT query.
             // if you only need a few columns, specify them by name instead of using "*"

@@ -18,11 +18,14 @@ public class HighScore {
     try {
         String myDriver = "com.mysql.cj.jdbc.Driver";
 
-        String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
+        //String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
+        String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7266128";
 
         Class.forName(myDriver);
 
-        Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
+        //Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
+        Connection conn = DriverManager.getConnection(myUrl, "sql7266128", "CZrw58ge33");
+
 
         String query1 = "INSERT INTO highScore (Name, Points) VALUES('" + player1.getName() +"','" + (player1.getPoints()) + "')";
         String query2 = "INSERT INTO highScore (Name, Points) VALUES('" + player2.getName() +"','" + (player2.getPoints()) + "')";
@@ -48,11 +51,13 @@ public class HighScore {
             try {
                 String myDriver = "com.mysql.cj.jdbc.Driver";
 
-                String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
+                //String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7265239";
+                String myUrl = "jdbc:mysql://sql7.freemysqlhosting.net/sql7266128";
 
                 Class.forName(myDriver);
 
-                Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
+                //Connection conn = DriverManager.getConnection(myUrl, "sql7265239", "cmhKZhQUGY");
+                Connection conn = DriverManager.getConnection(myUrl, "sql7266128", "CZrw58ge33");
 
                 String query = "select * FROM highScore order BY  Points desc LIMIT 10";
 

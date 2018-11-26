@@ -68,7 +68,6 @@ public class Game {
         outP1.println("PLAYER:player1");
         outP2.println("PLAYER:player2");
         outP1.println("NAME:" + player1.getName());
-        outP2.println("NAME:" + player2.getName());
         toggleTurn();
     }
 
@@ -200,6 +199,18 @@ public class Game {
         }
     }
 
+    public void sendWinMessage(String msg) {
+        Print.actionMessage(msg);
+        try {
+            outP1.println("WIN:" + msg);
+            outP2.println("WIN:" + msg);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+
+
     public static void sendHighScore(PrintWriter out, String msg) {
         try {
             out.println("HIGHSCORE:" + msg);
@@ -314,10 +325,10 @@ public class Game {
     public void checkDeath(Player player) throws IOException {
         if (isPlayerDead(player)) {
             if (player1Turn) {
-                sendMessageAllPlayers(player1.getName() + " WON!");
+                sendWinMessage(player1.getName() + " WON!");
                 player1.assignCardPoints();
             } else {
-                sendMessageAllPlayers(player2.getName() + " WON!");
+                sendWinMessage(player2.getName() + " WON!");
                 player2.assignCardPoints();
             }
             HighScore.addPlayers(player1, player2);

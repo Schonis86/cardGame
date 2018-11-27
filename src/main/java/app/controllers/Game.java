@@ -176,11 +176,17 @@ public class Game {
     }
 
     public void sendInfoAllPlayers() throws JsonProcessingException {
+        String playerTurn;
+        if (player1Turn) {
+            playerTurn = player1.getName();
+        } else {
+            playerTurn = player2.getName();
+        }
         GameDto gameDtoP1 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
-                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand(), player1.getCardsInDeck().size());
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player1.getCardsOnHand(), player1.getCardsInDeck().size(), playerTurn);
 
         GameDto gameDtoP2 = new GameDto(turnCounter, roundCounter, isPlayer1Turn(), player1.getHp(), player2.getHp(),
-                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand(), player2.getCardsInDeck().size());
+                player1.getCardsOnTable(), player2.getCardsOnTable(), player2.getCardsOnHand(), player2.getCardsInDeck().size(), playerTurn);
 
         String gameDtoP1String = objectMapper.writeValueAsString(gameDtoP1);
         String gameDtoP2String = objectMapper.writeValueAsString(gameDtoP2);
@@ -208,7 +214,6 @@ public class Game {
             System.out.println(e);
         }
     }
-
 
 
     public static void sendHighScore(PrintWriter out, String msg) {
@@ -283,6 +288,7 @@ public class Game {
             didPlayer1LoseAttack = false;
         }
         sendMessageAllPlayers(attackingCard.getName() + " HAS ATTACKED " + defendingCard.getName() + " with " + fightResult + " damage");
+
         player1.removeCardIfDead();
         player2.removeCardIfDead();
         checkDeath(player1);

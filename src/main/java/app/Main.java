@@ -79,6 +79,7 @@ public class Main{
 //
 
             }
+            conn.close();
             st.close();
             Game game = new Game(deck);
             game.start();

@@ -33,7 +33,7 @@ public class HighScore {
         st.executeUpdate(query2);
 
         st.close();
-
+        conn.close();
 
     }
         catch(Exception e)
